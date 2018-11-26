@@ -1,7 +1,8 @@
-// This file coresponds to 
-// https://learnopengl.com/Getting-started/Hello-Triangle
-
-// Excersize 1
+//
+// The main of the Project which sets up the window, renderer, and game loop.
+// 
+// Written by Aaron Dorrance
+// 11/26/18
 
 
 #include<glad.h>
@@ -20,7 +21,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); 
 #endif
 
 	GLFWwindow * window = glfwCreateWindow(800, 600, "Learn OpenGL", NULL, NULL);
@@ -137,10 +138,6 @@ int main()
 	// generally unnesscary so generally won't unbind VAOs or VBOs if not nesscarry 
 	glBindVertexArray(0);
 
-
-	// uncomment this call to draw in wireframe polygons.
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	while (!glfwWindowShouldClose(window))
 	{
 		// input
@@ -153,12 +150,6 @@ int main()
 
 		// Activate the shader
 		glUseProgram(shaderProgram);
-
-		// set the Uniform
-		//float timeValue = glfwGetTime();
-		//float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-		//int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-		//glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f); // set the uniform
 
 		// Draw Triangle
 		glUseProgram(shaderProgram);
