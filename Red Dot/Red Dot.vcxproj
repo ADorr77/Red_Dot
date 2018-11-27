@@ -123,9 +123,18 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TowerDefense.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Hero.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Tower.h" />
+    <ClInclude Include="TowerDefense.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
