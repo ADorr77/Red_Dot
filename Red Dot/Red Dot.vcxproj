@@ -130,6 +130,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Maps.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Render.h" />
