@@ -96,7 +96,9 @@ void TowerDefense::mapinit() {
 
 void TowerDefense::mapSet(int x, int y, char c)
 {
-	map[x][y] = c;
+	if (x >= 0 && x < 25 && y >= 0 && y < 15) {
+		map[x][y] = c;
+	}
 }
 
 void TowerDefense::mapconstSet()

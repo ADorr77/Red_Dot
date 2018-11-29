@@ -2,6 +2,7 @@
 #include<cmath>
 #include<iostream>
 
+
 Tower::Tower(int x, int y, int s)
 {
 	xPos = x;
@@ -23,10 +24,42 @@ void Tower::detect(double x, double y)
 		double ydist = yPos - y;
 		double dist = sqrt(xdist*xdist + ydist * ydist);
 		if (dist < range) {
-			double xV = xdist * speed / dist;
-			double yV = ydist * speed / dist;
-			projectiles[pnumber].setVals(xPos, yPos, xV, yV, strength);
+			pnumber = 1;
+			double xV = -1 * xdist * speed / dist;
+			double yV = -1 * ydist * speed / dist;
+			Projectile *p1 = new Projectile(xPos, yPos, xV, yV, strength);
+			projectiles.push_back(*p1);
+			std::cout << "SHOT";
+
+		
 		}
-		std::cout << "SHOT";
 	}
+}
+
+void Tower::advanceProjectiles(int pnum)
+{
+	projectiles[pnum].advance();
+}
+
+void Tower::cool()
+{
+	if (timer > 0) {
+		--timer;
+	}
+}
+
+double Tower::get_pnumber() {
+	return pnumber;
+
+}
+
+double Tower::get_projectile_x(int pnum)
+{
+	return projectiles[pnum].get_xPos();
+	
+}
+
+double Tower::get_projectile_y(int pnum)
+{
+	return projectiles[pnum].get_yPos();
 }

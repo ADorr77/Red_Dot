@@ -22,8 +22,14 @@ public:
 	Tower(int x, int y, int s);
 	// update method to fire from it
 	void detect(double x, double y);
+	void advanceProjectiles(int pnum);
+	void cool();
 
+	double get_pnumber();
+	double get_projectile_x(int pnum);
+	double get_projectile_y(int pnum);
 	// getters
+	
 	double get_strength() const;
 	double get_xPos() const;
 	double get_yPos() const;

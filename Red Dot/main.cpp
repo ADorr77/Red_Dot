@@ -31,9 +31,19 @@ int main()
 		Sleep(200);
 		td.mapinit();
 		td.mapSet(6, 5, 'T');
-
+		t1.cool();
 		for (int j = 0; j < e.size(); ++j) {
 			e[j].advance();
+			t1.detect(e[j].get_xPos(), e[j].get_yPos());
+
+			int c = t1.get_pnumber();
+			while (c > 0) {
+				t1.advanceProjectiles(c-1);
+				int x = t1.get_projectile_x(c-1);
+				int y = t1.get_projectile_y(c-1);
+				td.mapSet(x, y, '.');
+				--c;
+			}
 			td.mapSet((int)e[j].get_xPos(), (int)e[j].get_yPos(), 'e');
 		}
 		td.renderAscii();

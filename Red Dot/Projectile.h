@@ -14,7 +14,8 @@ private:
 
 public:
 	// Tower constructor (pass in whatever you decide)
-	Projectile(int power, double xVel, double yVel, double xPos, double yPos);
+	Projectile(int p);
+	Projectile(double x, double y, double xV, double yV, int p);
 	// update method to move it
 	void advance();
 	//set values when firing from tower
