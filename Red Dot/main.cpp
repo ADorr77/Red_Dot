@@ -33,6 +33,79 @@ int main()
 		td.mapSet(6, 5, 'T');
 		t1.cool();
 		for (int j = 0; j < e.size(); ++j) {
+			int f = (int)td.mapValue((int)e[j].get_xPos() + 1, (int)(e[j].get_yPos()));
+			int b = (int)td.mapValue((int)e[j].get_xPos() - 1, (int)(e[j].get_yPos()));
+			int u = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) - 1);
+			int d = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) + 1);
+
+			if (e[j].get_xVel() > 0) {
+				if (f == -37) {
+					if (u == ' ') {
+						e[j].set_xVel(0);
+						e[j].set_yVel(-1);
+					}
+					if (d == ' ') {
+						e[j].set_xVel(0);
+						e[j].set_yVel(1);
+					}
+				}
+				if (f == ' ') {
+					e[j].set_xVel(1);
+					e[j].set_yVel(0);
+				}
+			}
+			if (e[j].get_xVel() < 0) {
+				if (b == -37) {
+					if (u == ' ') {
+						e[j].set_xVel(0);
+						e[j].set_yVel(-1);
+					}
+					if (d == ' ') {
+						e[j].set_xVel(0);
+						e[j].set_yVel(1);
+					}
+				}
+				if (b == ' ') {
+					e[j].set_xVel(-1);
+					e[j].set_yVel(0);
+				}
+			}
+			if (e[j].get_yVel() < 0) {
+				if (u == -37) {
+					if (f == ' ') {
+						e[j].set_xVel(1);
+						e[j].set_yVel(0);
+					}
+					if (b == ' ') {
+						e[j].set_xVel(-1);
+						e[j].set_yVel(0);
+					}
+				}
+				if (u == ' ') {
+					e[j].set_xVel(0);
+					e[j].set_yVel(-1);
+				}
+			}
+			if (e[j].get_yVel() > 0) {
+				if (d == -37) {
+					e[j].set_xVel(-1);
+					e[j].set_yVel(0);
+				}
+				if (d == ' ') {
+					e[j].set_xVel(0);
+					e[j].set_yVel(-1);
+				}
+			}
+			if (e[j].get_yVel() < 0) {
+				if (u == -37) {
+					e[j].set_xVel(-1);
+					e[j].set_yVel(0);
+				}
+				if (u == ' ') {
+					e[j].set_xVel(0);
+					e[j].set_yVel(-1);
+				}
+			}
 			e[j].advance();
 			t1.detect(e[j].get_xPos(), e[j].get_yPos());
 
