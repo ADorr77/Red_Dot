@@ -15,6 +15,7 @@ private:
 	int level;
 	int money;
 	char map[25][15];
+	char mapconst[25][15]; // map that holds path that does not get changed or printed out
 	std::vector<Enemy> enemies;
 	std::vector<Tower> towers;
 	std::vector<Projectile> projectiles;
@@ -26,6 +27,9 @@ public:
 	void mapinit();
 	//change a value of the map
 	void mapSet(int x, int y, char c);
+	// sets mapconst to original map state
+	void mapconstSet();
+	
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)

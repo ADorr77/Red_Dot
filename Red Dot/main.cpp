@@ -23,6 +23,7 @@ int main()
 	std::cout << td.mapValue(3, 4) << std::endl;
 	td.renderAscii();
 	std::vector<Enemy> e(10, 1);
+	Tower t1(6, 5, 1);
 	for (int j = 0; j < 10; ++j) {
 		e[j].setTimer(10 * j);
 	}

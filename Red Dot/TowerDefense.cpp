@@ -96,3 +96,12 @@ void TowerDefense::mapSet(int x, int y, char c)
 {
 	map[x][y] = c;
 }
+
+void TowerDefense::mapconstSet()
+{
+	for (int i = 0; i < 15; ++i) {
+		for (int j = 0; j < 25; ++j) {
+			mapconst[j][i] = map[j][i];
+		}
+	}
+}
