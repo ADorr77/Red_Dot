@@ -24,7 +24,7 @@ int main()
 	td.renderAscii();
 	std::vector<Enemy> e(20, 1);
 	Tower t1(6, 5, 1);
-	for (int j = 0; j < 10; ++j) {
+	for (int j = 0; j < 20; ++j) {
 		e[j].setTimer(10 * j);
 	}
 	while (true) {
