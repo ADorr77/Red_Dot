@@ -38,6 +38,8 @@ public:
 	double get_xPos() const;
 	double get_yPos() const;
 	int get_reward() const;
+	double get_xVel() const;
+	double get_yVel() const;
 	void set_xVel(int);
 	void set_yVel(int);
 	// Write additional behavior

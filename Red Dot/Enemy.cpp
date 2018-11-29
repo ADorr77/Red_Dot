@@ -23,6 +23,7 @@ void Enemy::advance() {
 	//decrease timer till it hits zero
 	if (timer > 0) { --timer; }
 
+	/*
 	if ((int)xPos == 4 && (int)yPos == 11) {
 		xVel = 0;
 		yVel = -speed;
@@ -86,6 +87,16 @@ double Enemy::get_xPos() const
 double Enemy::get_yPos() const
 {
 	return yPos;
+}
+
+double Enemy::get_xVel() const
+{
+	return xVel;
+}
+
+double Enemy::get_yVel() const
+{
+	return yVel;
 }
 
 int Enemy::get_reward() const
