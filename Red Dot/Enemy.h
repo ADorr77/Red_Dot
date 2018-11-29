@@ -2,6 +2,7 @@
 
 #ifndef ENEMY_H
 #define ENEMY_H
+#include<cmath>
 
 // Generic Tower Defense Enemy
 class Enemy
@@ -28,12 +29,15 @@ public:
 	//set up timing of enemies entering
 	void setTimer(int t);
 	//take damage
+	//detect projectiles
+	int detect(double x, double y);
 	void takeDamage();
 	// get Functions
 	double get_strength() const;
 	double get_health() const;
 	double get_xPos() const;
 	double get_yPos() const;
+	int get_reward() const;
 	void set_xVel(int);
 	void set_yVel(int);
 	// Write additional behavior

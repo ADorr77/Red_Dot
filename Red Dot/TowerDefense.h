@@ -47,6 +47,8 @@ public:
 	std::vector<Projectile> get_projectiles() const;
 
 	// add other functionality as needed
+	void add_money(int m);
+	int get_money() const;
 	// const std::vector<int>& get() const {return v;}
 };
 

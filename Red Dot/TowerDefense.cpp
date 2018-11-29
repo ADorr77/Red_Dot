@@ -32,6 +32,16 @@ std::vector<Tower> TowerDefense::get_towers() const
 	return towers;
 }
 
+void TowerDefense::add_money(int m)
+{
+	money += m;
+}
+
+int TowerDefense::get_money() const
+{
+	return money;
+}
+
 /*std::vector<Projectile> TowerDefense::get_projectiles() const
 {
 	return projectiles;

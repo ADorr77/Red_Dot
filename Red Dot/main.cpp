@@ -28,7 +28,7 @@ int main()
 		e[j].setTimer(10 * j);
 	}
 	while (true) {
-		Sleep(200);
+		Sleep(100);
 		td.mapinit();
 		td.mapSet(6, 5, 'T');
 		t1.cool();
@@ -36,16 +36,26 @@ int main()
 			e[j].advance();
 			t1.detect(e[j].get_xPos(), e[j].get_yPos());
 
-			int c = t1.get_pnumber();
-			while (c > 0) {
-				t1.advanceProjectiles(c-1);
-				int x = t1.get_projectile_x(c-1);
-				int y = t1.get_projectile_y(c-1);
-				td.mapSet(x, y, '.');
-				--c;
-			}
+			
 			td.mapSet((int)e[j].get_xPos(), (int)e[j].get_yPos(), 'e');
 		}
+		int c = t1.get_pnumber();
+		while (c > 0) {
+			t1.advanceProjectiles(c - 1);
+			double x = t1.get_projectile_x(c - 1);
+			double y = t1.get_projectile_y(c - 1);
+			td.mapSet((int) x, (int) y, '.');
+			for (int j = 0; j < e.size(); ++j) {
+				if (e[j].detect(x, y)) {
+					td.add_money(e[j].get_reward());
+					e.erase(e.begin()+j);
+					t1.eraseProjectile(c - 1);
+				}
+				
+			}
+			--c;
+		}
+		std::cout << "Money: " << td.get_money() << std::endl;
 		td.renderAscii();
 		//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
 	}

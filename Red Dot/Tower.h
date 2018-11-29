@@ -24,7 +24,7 @@ public:
 	void detect(double x, double y);
 	void advanceProjectiles(int pnum);
 	void cool();
-
+	void eraseProjectile(int pnum);
 	double get_pnumber();
 	double get_projectile_x(int pnum);
 	double get_projectile_y(int pnum);

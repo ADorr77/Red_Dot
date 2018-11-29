@@ -10,6 +10,7 @@ Enemy::Enemy(int level) {
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
+		reward = 100;
 	}
 }
 
@@ -26,12 +27,55 @@ void Enemy::advance() {
 		xVel = 0;
 		yVel = -speed;
 	}
+	if ((int)xPos == 4 && (int)yPos == 7) {
+		xVel = -speed;
+		yVel = 0;
+	}
+	if ((int)xPos == 2 && (int)yPos == 7) {
+		xVel = 0;
+		yVel = -speed;
+	}
+	if ((int)xPos == 2 && (int)yPos == 2) {
+		xVel = speed;
+		yVel = 0;
+	}
+	if ((int)xPos == 17 && (int)yPos == 2) {
+		xVel = 0;
+		yVel = speed;
+	}
+	if ((int)xPos == 17 && (int)yPos == 13) {
+		xVel = -speed;
+		yVel = 0;
+	}
+	if ((int)xPos == 13 && (int)yPos == 13) {
+		xVel = 0;
+		yVel = -speed;
+	}
+	if ((int)xPos == 13 && (int)yPos == 6) {
+		xVel = -speed;
+		yVel = 0;
+	}
+	if ((int)xPos == 9 && (int)yPos == 6) {
+		xVel = 0;
+		yVel = speed;
+	}
 	xPos += xVel;
 	yPos += yVel;
 }
 
 void Enemy::setTimer(int t) {
 	timer = t;
+}
+
+int Enemy::detect(double x, double y)
+{
+	double xdist = xPos - x;
+	double ydist = yPos - y;
+	double dist = sqrt(xdist*xdist + ydist * ydist);
+	if (dist < 1) {
+		return 1;
+	}
+	return 0;
 }
 
 double Enemy::get_xPos() const
@@ -42,6 +86,11 @@ double Enemy::get_xPos() const
 double Enemy::get_yPos() const
 {
 	return yPos;
+}
+
+int Enemy::get_reward() const
+{
+	return reward;
 }
 
 void Enemy::set_xVel(int i)
