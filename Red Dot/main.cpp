@@ -28,7 +28,7 @@ int main()
 		e[j].setTimer(10 * j);
 	}
 	while (true) {
-		Sleep(100);
+		Sleep(30);
 		td.mapinit();
 		td.mapSet(6, 5, 'T');
 		t1.cool();
@@ -49,12 +49,8 @@ int main()
 						e[j].set_yVel(1);
 					}
 				}
-				if (f == ' ') {
-					e[j].set_xVel(1);
-					e[j].set_yVel(0);
-				}
 			}
-			if (e[j].get_xVel() < 0) {
+			else if (e[j].get_xVel() < 0) {
 				if (b == -37) {
 					if (u == ' ') {
 						e[j].set_xVel(0);
@@ -65,12 +61,8 @@ int main()
 						e[j].set_yVel(1);
 					}
 				}
-				if (b == ' ') {
-					e[j].set_xVel(-1);
-					e[j].set_yVel(0);
-				}
 			}
-			if (e[j].get_yVel() < 0) {
+			else if (e[j].get_yVel() < 0) {
 				if (u == -37) {
 					if (f == ' ') {
 						e[j].set_xVel(1);
@@ -81,33 +73,33 @@ int main()
 						e[j].set_yVel(0);
 					}
 				}
-				if (u == ' ') {
-					e[j].set_xVel(0);
-					e[j].set_yVel(-1);
-				}
 			}
-			if (e[j].get_yVel() > 0) {
+			else if (e[j].get_yVel() > 0) {
 				if (d == -37) {
-					e[j].set_xVel(-1);
-					e[j].set_yVel(0);
-				}
-				if (d == ' ') {
-					e[j].set_xVel(0);
-					e[j].set_yVel(-1);
-				}
-			}
-			if (e[j].get_yVel() < 0) {
-				if (u == -37) {
-					e[j].set_xVel(-1);
-					e[j].set_yVel(0);
-				}
-				if (u == ' ') {
-					e[j].set_xVel(0);
-					e[j].set_yVel(-1);
+					if (f == ' ') {
+						e[j].set_xVel(1);
+						e[j].set_yVel(0);
+					}
+					if (b == ' ') {
+						e[j].set_xVel(-1);
+						e[j].set_yVel(0);
+					}
 				}
 			}
-			
-			e[j].advance();
+			if (int gt = e[j].advance() > 0) {
+				if (e.size() != 1) {
+					e.erase(e.begin() + j);
+				}
+				else {
+					td.gotThru(gt);
+					std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << td.get_money() <<
+						"\n\t " << td.thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+					while (true) {
+						Sleep(100);
+					}
+				}
+				td.gotThru(gt);
+			}
 			t1.detect(e[j].get_xPos(), e[j].get_yPos());
 
 			
@@ -124,12 +116,13 @@ int main()
 					td.add_money(e[j].get_reward());
 					e.erase(e.begin()+j);
 					t1.eraseProjectile(c - 1);
+					j = e.size();
 				}
 				
 			}
 			--c;
 		}
-		std::cout << "Money: " << td.get_money() << std::endl;
+		std::cout << "Money: " << td.get_money() << "\t\t got thru: " << td.thru() << std::endl;
 		td.renderAscii();
 		//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
 	}

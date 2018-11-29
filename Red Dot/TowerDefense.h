@@ -12,6 +12,7 @@
 class TowerDefense
 {
 private:
+	int through;
 	int level;
 	int money;
 	char map[25][15];
@@ -29,6 +30,8 @@ public:
 	void mapSet(int x, int y, char c);
 	// sets mapconst to original map state
 	void mapconstSet();
+	//keeps track of how many get through
+	void gotThru(int i);
 	
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
@@ -49,6 +52,7 @@ public:
 	// add other functionality as needed
 	void add_money(int m);
 	int get_money() const;
+	int thru() const;
 	// const std::vector<int>& get() const {return v;}
 };
 

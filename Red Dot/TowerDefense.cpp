@@ -10,6 +10,7 @@
 TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
+	through = 0;
 
 }
 
@@ -40,6 +41,11 @@ void TowerDefense::add_money(int m)
 int TowerDefense::get_money() const
 {
 	return money;
+}
+
+int TowerDefense::thru() const
+{
+	return through;
 }
 
 /*std::vector<Projectile> TowerDefense::get_projectiles() const
@@ -119,3 +125,10 @@ void TowerDefense::mapconstSet()
 		}
 	}
 }
+
+void TowerDefense::gotThru(int i)
+{
+	through += i;
+}
+
+

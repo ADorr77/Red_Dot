@@ -25,7 +25,7 @@ public:
 	// update method to move it
 	void update();
 	// advance position
-	void advance();
+	int advance();
 	//set up timing of enemies entering
 	void setTimer(int t);
 	//take damage

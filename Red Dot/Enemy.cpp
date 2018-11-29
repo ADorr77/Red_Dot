@@ -14,7 +14,7 @@ Enemy::Enemy(int level) {
 	}
 }
 
-void Enemy::advance() {
+int Enemy::advance() {
 	//when timer hits zero, start sending enemy through path
 	if (timer == 0){
 		timer = -1;
@@ -62,6 +62,10 @@ void Enemy::advance() {
 	}*/
 	xPos += xVel;
 	yPos += yVel;
+	if (yPos > 15) {
+		return 1;
+	}
+	else { return 0; }
 }
 
 void Enemy::setTimer(int t) {
@@ -73,7 +77,7 @@ int Enemy::detect(double x, double y)
 	double xdist = xPos - x;
 	double ydist = yPos - y;
 	double dist = sqrt(xdist*xdist + ydist * ydist);
-	if (dist < 1) {
+	if (dist < .6) {
 		return 1;
 	}
 	return 0;
