@@ -43,3 +43,13 @@ double Enemy::get_yPos() const
 {
 	return yPos;
 }
+
+void Enemy::set_xVel(int i)
+{
+	xVel = i * speed;
+}
+
+void Enemy::set_yVel(int i)
+{
+	yVel = i * speed;
+}
