@@ -59,7 +59,7 @@ void Enemy::advance() {
 	if ((int)xPos == 9 && (int)yPos == 6) {
 		xVel = 0;
 		yVel = speed;
-	}
+	}*/
 	xPos += xVel;
 	yPos += yVel;
 }

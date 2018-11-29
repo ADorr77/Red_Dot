@@ -106,6 +106,7 @@ int main()
 					e[j].set_yVel(-1);
 				}
 			}
+			
 			e[j].advance();
 			t1.detect(e[j].get_xPos(), e[j].get_yPos());
 
