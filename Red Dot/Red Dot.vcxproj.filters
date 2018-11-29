@@ -59,5 +59,8 @@
     <ClInclude Include="Dungeon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Maps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
