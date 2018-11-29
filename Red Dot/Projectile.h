@@ -16,8 +16,9 @@ public:
 	// Tower constructor (pass in whatever you decide)
 	Projectile(int power, double xVel, double yVel, double xPos, double yPos);
 	// update method to move it
-	void update();
-
+	void advance();
+	//set values when firing from tower
+	void setVals(double x, double y, double xV, double yV, int p);
 	//getters
 	double get_xPos() const;
 	double get_yPos() const;

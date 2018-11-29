@@ -18,7 +18,7 @@ private:
 	char mapconst[25][15]; // map that holds path that does not get changed or printed out
 	std::vector<Enemy> enemies;
 	std::vector<Tower> towers;
-	std::vector<Projectile> projectiles;
+	
 
 public:
 	// Constructs the class the first time (only called once)

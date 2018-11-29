@@ -2,6 +2,8 @@
 
 #ifndef TOWER_H
 #define TOWER_H
+#include "Projectile.h"
+#include<vector>
 
 class Tower
 {
@@ -12,6 +14,8 @@ private:
 	double strength;
 	int xPos, yPos;
 	double range;
+	double speed;
+	std::vector<Projectile> projectiles;
 	// int type; Possible way to implement multiple types of towers with enum
 public:
 	// Tower constructor (pass in whatever you decide)

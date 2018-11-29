@@ -32,10 +32,11 @@ std::vector<Tower> TowerDefense::get_towers() const
 	return towers;
 }
 
-std::vector<Projectile> TowerDefense::get_projectiles() const
+/*std::vector<Projectile> TowerDefense::get_projectiles() const
 {
 	return projectiles;
 }
+*/
 
 int TowerDefense::mapValue(int x, int y) {
 	if (x > -1 && x<25 && y>-1 && y < 15) {

@@ -1,4 +1,6 @@
 #include "Tower.h"
+#include<cmath>
+#include<iostream>
 
 Tower::Tower(int x, int y, int s)
 {
@@ -10,13 +12,21 @@ Tower::Tower(int x, int y, int s)
 	if (strength == 1) {
 		cooldown = 10;
 		range = 5;
+		speed = 1;
 	}
 }
 
 void Tower::detect(double x, double y)
 {
-	double dist = sqrt()
-	if (((xPos - x)*(xPos - x) + (yPos - y)*(yPos - y)) < (range*range) && timer = 0) {
-
+	if (timer == 0) {
+		double xdist = xPos - x;
+		double ydist = yPos - y;
+		double dist = sqrt(xdist*xdist + ydist * ydist);
+		if (dist < range) {
+			double xV = xdist * speed / dist;
+			double yV = ydist * speed / dist;
+			projectiles[pnumber].setVals(xPos, yPos, xV, yV, strength);
+		}
+		std::cout << "SHOT";
 	}
 }
