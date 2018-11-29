@@ -8,13 +8,13 @@ class Projectile
 private:
 	double xPos, yPos;
 	double xVel, yVel;
-	double power;
+	int power;
 	// double radius; for different sized projectiles?
 	// int type; Possible way to implement multiple types of towers with enum
 
 public:
 	// Tower constructor (pass in whatever you decide)
-	Projectile();
+	Projectile(int power, double xVel, double yVel, double xPos, double yPos);
 	// update method to move it
 	void update();
 

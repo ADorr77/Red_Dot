@@ -6,11 +6,15 @@
 #include "Enemy.h"
 #include "Tower.h"
 #include "Projectile.h"
+#include<iostream>
+
 
 class TowerDefense
 {
 private:
-	int ** map;
+	int level;
+	int money;
+	char map[25][15];
 	std::vector<Enemy> enemies;
 	std::vector<Tower> towers;
 	std::vector<Projectile> projectiles;
@@ -18,20 +22,28 @@ private:
 public:
 	// Constructs the class the first time (only called once)
 	TowerDefense();
+	// Initializes the map, sets up path and side bar menu
+	void mapinit();
+	//change a value of the map
+	void mapSet(int x, int y, char c);
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)
 	int processInput();
 	// Updates the Game each tick, returns the game state 
 	int update();
+	//function for testing out game functionality
+	void renderAscii();
 
 	// get functions
-	int ** get_map() const;
+	//int ** get_map() const;
+	int mapValue(int x, int y);
 	std::vector<Enemy> get_enemies() const;
 	std::vector<Tower> get_towers() const;
 	std::vector<Projectile> get_projectiles() const;
 
 	// add other functionality as needed
+	// const std::vector<int>& get() const {return v;}
 };
 
 #endif

@@ -8,13 +8,43 @@
 #include<glad.h>
 #include<glfw3.h>
 #include<iostream>
+#include<vector>
+#include"TowerDefense.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void processInput(GLFWwindow * window);
 
 int main()
+
 {
+	TowerDefense td;
+	td.mapinit();
+	std::cout << td.mapValue(3, 4) << std::endl;
+	td.renderAscii();
+	std::vector<Enemy> e(10, 1);
+	for (int j = 0; j < 10; ++j) {
+		e[j].setTimer(10 * j);
+	}
+	while (true) {
+		Sleep(200);
+		td.mapinit();
+		for (int j = 0; j < e.size(); ++j) {
+			e[j].advance();
+			td.mapSet((int)e[j].get_xPos(), (int)e[j].get_yPos(), 'e');
+		}
+		td.renderAscii();
+		//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
+	}
+
+
+
+
+
+
+
+
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

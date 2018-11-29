@@ -7,11 +7,11 @@ class Tower
 {
 private:
 	double strenght;
-	double xPos, yPos;
+	int xPos, yPos;
 	// int type; Possible way to implement multiple types of towers with enum
 public:
 	// Tower constructor (pass in whatever you decide)
-	Tower();
+	Tower(int strength);
 	// update method to fire from it
 	void update();
 
