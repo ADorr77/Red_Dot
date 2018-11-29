@@ -34,7 +34,8 @@ public:
 	double get_health() const;
 	double get_xPos() const;
 	double get_yPos() const;
-
+	void set_xVel(int);
+	void set_yVel(int);
 	// Write additional behavior
 };
 
