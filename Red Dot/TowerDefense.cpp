@@ -32,6 +32,9 @@ int TowerDefense::update()
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
 			"\n\t " << thru() << " enemies got through";
+		int q;
+		std::cin >> q;
+		state = 0;
 		break;
 	}
 	return 0;
@@ -41,11 +44,11 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		for (int i = 0; i < 20; ++i) {
-			Enemy *e = new Enemy(1);
-			enemies.push_back(*e);
-			enemies[i].setTimer(10 * i);
-		}
+		make_wave(0, 10, 1, 20);
+		break;
+	case 1:
+		make_wave(0, 10, 1, 5);
+		make_wave(60, 20, 4, 5);
 	}
 }
 
@@ -147,6 +150,15 @@ int TowerDefense::get_money() const
 int TowerDefense::thru() const
 {
 	return through;
+}
+
+void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
+{
+	for (int i = 0; i < quantity; ++i) {
+		Enemy *e = new Enemy(type);
+		enemies.push_back(*e);
+		enemies[i].setTimer((spacing * i));
+	}
 }
 
 

@@ -68,7 +68,7 @@ public:
 	void add_money(int m);
 	int get_money() const;
 	int thru() const;
-
+	void make_wave(int offset, int spacing, int type, int quantity);
 
 	const int height = 15;
 	const int width = 25;
