@@ -17,16 +17,17 @@ void Hero::update() {
 
 double Hero::move() {
 	if (xDir && yDir) {
-		xPos += (Vel) / (sqrt(2, 2));
-		yPos += (Vel) / (sqrt(2, 2));
+		xPos += (Vel) / (sqrt(2));
+		yPos += (Vel) / (sqrt(2));
 	}
 	else {
 		xPos += Vel * xDir;
 		yPos += Vel * yDir;
 	}
+	return 0;
 }
 
-double take_Damage(double attack)
+double take_Damage(double attack) { return 0; }
 
 
 double Hero::get_health() const {

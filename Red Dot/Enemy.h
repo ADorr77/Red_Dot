@@ -3,6 +3,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 #include<cmath>
+#include "Maps.h"
 
 // Generic Tower Defense Enemy
 class Enemy
@@ -42,6 +43,7 @@ public:
 	double get_yVel() const;
 	void set_xVel(int);
 	void set_yVel(int);
+	void update_velocities(Maps m);
 	// Write additional behavior
 };
 

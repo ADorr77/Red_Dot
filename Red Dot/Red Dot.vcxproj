@@ -126,6 +126,7 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Maps.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Render.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Maplib.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Projectile.h" />
