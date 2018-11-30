@@ -29,7 +29,7 @@ int main()
 		e[j].setTimer(10 * j);
 	}
 	while (true) {
-		Sleep(30);
+		Sleep(100);
 		td.mapinit();
 		td.mapSet(6, 5, 'T');
 		t1.cool();
