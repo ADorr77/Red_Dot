@@ -11,7 +11,7 @@ private:
 	double level;
 	double exp;
 	double xPos, yPos;
-private:
+public:
 	// Hero constructor (pass in whatever you decide)
 	Hero();
 	// update method
@@ -22,8 +22,8 @@ private:
 	double get_maxHealth() const;
 	double get_level() const;
 	double get_exp() const;
-	double get_xPos() const;
-	double get_yPos() const;
+	double get_xPos() const { return xPos; }
+	double get_yPos() const { return yPos; }
 
 	// Write additional behavior
 };
