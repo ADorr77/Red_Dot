@@ -1,16 +1,40 @@
 #include"Enemy.h"
 
-
+enum {regen, normal, strong, fast, tank};
 Enemy::Enemy(int level) {
 	yPos = 11;
 	xPos = 0;
-	if (level = 1) {
+	if (level == normal) {
 		speed = .25;
 		hp = 1;
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
 		reward = 100;
+	}
+	if (level == strong) {
+		speed = .25;
+		hp = 2;
+		strength = 1;
+		xVel = 0;
+		yVel = 0;
+		reward = 150;
+	}
+	if (level == fast) {
+		speed = .50;
+		hp = 1;
+		strength = 1;
+		xVel = 0;
+		yVel = 0;
+		reward = 150;
+	}
+	if (level == tank) {
+		speed = .125;
+		hp = 1;
+		strength = 4;
+		xVel = 0;
+		yVel = 0;
+		reward = 200;
 	}
 }
 
