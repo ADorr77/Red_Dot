@@ -31,10 +31,10 @@ public:
 	//take damage
 	//detect projectiles
 	int detect(double x, double y);
-	void takeDamage();
+	void take_damage(double, double);
 	// get Functions
 	double get_strength() const;
-	double get_health() const;
+	double get_hp() const;
 	double get_xPos() const;
 	double get_yPos() const;
 	int get_reward() const;

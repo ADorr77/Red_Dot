@@ -23,15 +23,6 @@ void TowerDefense::renderAscii() {
 		std::cout << std::endl;
 	}
 }
-std::vector<Enemy> TowerDefense::get_enemies() const
-{
-	return enemies;
-}
-
-std::vector<Tower> TowerDefense::get_towers() const
-{
-	return towers;
-}
 
 void TowerDefense::add_money(int m)
 {

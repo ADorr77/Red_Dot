@@ -17,14 +17,13 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow * window);
 
 int main()
-
 {
 	TowerDefense td;
 	td.mapinit();
 	std::cout << td.mapValue(3, 4) << std::endl;
 	td.renderAscii();
 	std::vector<Enemy> e(20, 1);
-	Tower t1(6, 5, 1);
+	Tower t1(6, 5, 0);
 	for (int j = 0; j < 20; ++j) {
 		e[j].setTimer(10 * j);
 	}
@@ -114,9 +113,12 @@ int main()
 			td.mapSet((int) x, (int) y, '.');
 			for (int j = 0; j < e.size(); ++j) {
 				if (e[j].detect(x, y)) {
+					t1.eraseProjectile(c - 1);
+				}
+				e[j].take_damage(x, y);
+				if (e[j].get_hp() <= 0) {
 					td.add_money(e[j].get_reward());
 					e.erase(e.begin()+j);
-					t1.eraseProjectile(c - 1);
 					j = e.size();
 				}
 				
