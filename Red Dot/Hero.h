@@ -2,6 +2,7 @@
 
 #ifndef HERO_H
 #define HERO_H
+#include<vector>
 
 class Hero
 {
@@ -11,9 +12,11 @@ private:
 	double level;
 	double exp;
 	double xPos, yPos;
+	double Vel;
+	double xDir, yDir;
 private:
 	// Hero constructor (pass in whatever you decide)
-	Hero();
+	Hero(double level);
 	// update method
 	void update();
 
@@ -25,7 +28,17 @@ private:
 	double get_xPos() const;
 	double get_yPos() const;
 
-	// Write additional behavior
+	// Movement 
+	double move();
+
+	// Attacks
+	double ranged_attack();
+	double melee_attack();
+
+	// Hero Damage
+	double take_damage(double damage);
+
+
 };
 
 #endif

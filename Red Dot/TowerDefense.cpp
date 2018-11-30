@@ -1,12 +1,6 @@
 #include "TowerDefense.h"
 #include "Maps.h"
 
-/*int TowerDefense::get_map() const
-{
-	return map;
-}
-*/
-
 TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
@@ -38,12 +32,6 @@ int TowerDefense::thru() const
 {
 	return through;
 }
-
-/*std::vector<Projectile> TowerDefense::get_projectiles() const
-{
-	return projectiles;
-}
-*/
 
 int TowerDefense::mapValue(int x, int y) {
 	if (x > -1 && x<25 && y>-1 && y < 15) {
