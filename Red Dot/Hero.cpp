@@ -15,7 +15,7 @@ void Hero::update() {
 
 }
 
-double Hero::move() {
+void Hero::move() {
 	if (xDir && yDir) {
 		xPos += (Vel) / (sqrt(2));
 		yPos += (Vel) / (sqrt(2));
@@ -50,6 +50,4 @@ double Hero::get_xPos() const {
 	return this->xPos;
 }
 
-double Hero::get_yPos() const {
-	return this->yPos;
 }

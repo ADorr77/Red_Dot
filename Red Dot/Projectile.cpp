@@ -29,12 +29,3 @@ void Projectile::setVals(double x, double y, double xV, double yV, int p)
 	power = p;
 }
 
-double Projectile::get_xPos() const
-{
-	return xPos;
-}
-
-double Projectile::get_yPos() const
-{
-	return yPos;
-}

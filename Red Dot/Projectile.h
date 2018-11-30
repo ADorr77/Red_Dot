@@ -21,11 +21,11 @@ public:
 	//set values when firing from tower
 	void setVals(double x, double y, double xV, double yV, int p);
 	//getters
-	double get_xPos() const;
-	double get_yPos() const;
-	double get_xVel() const;
-	double get_yVel() const;
-	double get_power() const;
+	double get_xPos() const { return xPos; }
+	double get_yPos() const { return yPos; }
+	double get_xVel() const { return xVel; }
+	double get_yVel() const { return yVel; }
+	double get_power() const { return power; }
 
 	// Write additional behavior
 };
