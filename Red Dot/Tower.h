@@ -33,6 +33,7 @@ public:
 	double get_strength() const;
 	double get_xPos() const;
 	double get_yPos() const;
+	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
 
 	// Write additional behavior
 };

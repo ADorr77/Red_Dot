@@ -45,15 +45,16 @@ public:
 	// get functions
 	//int ** get_map() const;
 	int mapValue(int x, int y);
-	std::vector<Enemy> get_enemies() const;
-	std::vector<Tower> get_towers() const;
-	std::vector<Projectile> get_projectiles() const;
+	const std::vector<Enemy>& get_enemies() const { return enemies; }
+	const std::vector<Tower>& get_towers() const { return towers; }
 
 	// add other functionality as needed
 	void add_money(int m);
 	int get_money() const;
 	int thru() const;
-	// const std::vector<int>& get() const {return v;}
+
+	const int height = 15;
+	const int width = 25;
 };
 
 #endif
