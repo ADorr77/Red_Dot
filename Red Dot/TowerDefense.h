@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Tower.h"
 #include "Projectile.h"
+#include "Maps.h"
 #include<iostream>
 
 
@@ -16,12 +17,15 @@ private:
 	int level;
 	int money;
 	char map[25][15];
-	char mapconst[25][15]; // map that holds path that does not get changed or printed out
+	char mapconst[25][15];
+	 // map that holds path that does not get changed or printed out
+	Maps m;
 	std::vector<Enemy> enemies;
 	std::vector<Tower> towers;
 	
 
 public:
+	
 	// Constructs the class the first time (only called once)
 	TowerDefense();
 	// Initializes the map, sets up path and side bar menu
@@ -45,6 +49,7 @@ public:
 	// get functions
 	//int ** get_map() const;
 	int mapValue(int x, int y);
+	int get_map_value(int x, int y);
 	const std::vector<Enemy>& get_enemies() const { return enemies; }
 	const std::vector<Tower>& get_towers() const { return towers; }
 
@@ -52,6 +57,7 @@ public:
 	void add_money(int m);
 	int get_money() const;
 	int thru() const;
+	
 
 	const int height = 15;
 	const int width = 25;

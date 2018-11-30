@@ -1,5 +1,5 @@
 #include "TowerDefense.h"
-#include "Maps.h"
+
 
 /*int TowerDefense::get_map() const
 {
@@ -11,6 +11,7 @@ TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
 	through = 0;
+	m.init_map(2);
 
 }
 
@@ -39,6 +40,8 @@ int TowerDefense::thru() const
 	return through;
 }
 
+
+
 /*std::vector<Projectile> TowerDefense::get_projectiles() const
 {
 	return projectiles;
@@ -52,12 +55,22 @@ int TowerDefense::mapValue(int x, int y) {
 	return -1;
 }
 
+int TowerDefense::get_map_value(int x, int y)
+{
+	if (x > -1 && x<25 && y>-1 && y < 15) {
+		return m.get_map_value(x,y);
+	}
+	return -1;
+}
+
 void TowerDefense::mapinit() {
 	for (int i = 0; i < 15; i++) {
 		//set up blank map
-		for (int j = 0; j < 20; j++) {
-			map[j][i] = 219;
+		for (int j = 0; j < 25; j++) {
+			map[j][i] = get_map_value(j, i);
 		}
+	}
+	/*
 		//set up blank sidebar for menu
 		for (int j = 20; j < 25; j++) {
 			map[j][i] = '-';
@@ -95,6 +108,7 @@ void TowerDefense::mapinit() {
 	for (int i = 6; i < 15; ++i) {
 		map[9][i] = ' ';
 	}
+	*/
 	
 
 
