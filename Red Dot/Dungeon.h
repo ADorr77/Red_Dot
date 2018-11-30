@@ -6,11 +6,13 @@
 #include "Projectile.h"
 #include "Monster.h"
 #include "Hero.h"
+#include <array>
 
 class Dungeon
 {
 private:
-	int ** map;
+	// first number is height, second is width so access is map[x][y]
+	std::array<std::array<int, 100>, 100> map;
 	std::vector<Monster> monsters;
 	Hero hero;
 	std::vector<Projectile> projectiles;
@@ -26,10 +28,10 @@ public:
 	int update();
 
 	// get functions
-	int ** get_map() const;
-	Hero& get_hero() const;
-	std::vector<Monster> get_monsters() const;
-	std::vector<Projectile> get_projectiles() const;
+	const auto& get_map() const { return map; }
+	const Hero& get_hero() const { return hero; }
+	const std::vector<Monster>& get_monsters() const { return monsters; }
+	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
 
 	// add other functionality as needed
 };

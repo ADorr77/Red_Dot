@@ -7,6 +7,7 @@
 #include "Tower.h"
 #include "Projectile.h"
 #include<iostream>
+#include <glfw3.h>
 
 
 class TowerDefense
@@ -36,7 +37,7 @@ public:
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)
-	int processInput();
+	int processInput(GLFWwindow window);
 	// Updates the Game each tick, returns the game state 
 	int update();
 	//function for testing out game functionality
