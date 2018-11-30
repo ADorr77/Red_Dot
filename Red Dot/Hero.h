@@ -14,7 +14,7 @@ private:
 	double xPos, yPos;
 	double Vel;
 	double xDir, yDir;
-private:
+
 public:
 	// Hero constructor (pass in whatever you decide)
 	Hero(double level);
@@ -22,22 +22,22 @@ public:
 	void update();
 
 	// getters
-	double get_health() const;
-	double get_maxHealth() const;
-	double get_level() const;
-	double get_exp() const;
+	double get_health() const { return health; }
+	double get_maxHealth() const { return health; }
+	double get_level() const { return level; }
+	double get_exp() const { return exp; }
 	double get_xPos() const { return xPos; }
 	double get_yPos() const { return yPos; }
 
 	// Movement 
-	double move();
+	void move();
 
 	// Attacks
 	double ranged_attack();
 	double melee_attack();
 
 	// Hero Damage
-	double take_damage(double damage);
+	void take_damage(double damage);
 
 
 };
