@@ -107,6 +107,18 @@ int Enemy::detect(double x, double y)
 	return 0;
 }
 
+void Enemy::take_damage(double x, double y)
+{
+	if (detect(x, y)) {
+		hp -= 1;
+	}
+}
+
+double Enemy::get_hp() const
+{
+	return hp;
+}
+
 double Enemy::get_xPos() const
 {
 	return xPos;

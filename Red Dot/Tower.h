@@ -15,6 +15,7 @@ private:
 	int xPos, yPos;
 	double range;
 	double speed;
+	int price;
 	std::vector<Projectile> projectiles;
 	// int type; Possible way to implement multiple types of towers with enum
 public:
@@ -34,8 +35,6 @@ public:
 	double get_xPos() const;
 	double get_yPos() const;
 	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
-
-	// Write additional behavior
 };
 
 #endif

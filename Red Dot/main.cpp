@@ -113,9 +113,12 @@ int main()
 			td.mapSet((int) x, (int) y, '.');
 			for (int j = 0; j < e.size(); ++j) {
 				if (e[j].detect(x, y)) {
+					t1.eraseProjectile(c - 1);
+				}
+				e[j].take_damage(x, y);
+				if (e[j].get_hp() <= 0) {
 					td.add_money(e[j].get_reward());
 					e.erase(e.begin()+j);
-					t1.eraseProjectile(c - 1);
 					j = e.size();
 				}
 				
