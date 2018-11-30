@@ -30,7 +30,7 @@ int main()
 	while (true) {
 		Sleep(100);
 		td.mapinit();
-		td.mapSet(8, 5, 'T');
+		td.mapSet(6, 5, 'T');
 		t1.cool();
 		for (int j = 0; j < e.size(); ++j) {
 			int f = (int)td.mapValue((int)e[j].get_xPos() + 1, (int)(e[j].get_yPos()));
