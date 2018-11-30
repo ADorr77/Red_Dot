@@ -10,6 +10,7 @@
 #include<iostream>
 #include<vector>
 #include"TowerDefense.h"
+#include<stdlib.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -122,6 +123,7 @@ int main()
 			}
 			--c;
 		}
+		system("cls");
 		std::cout << "Money: " << td.get_money() << "\t\t got thru: " << td.thru() << std::endl;
 		td.renderAscii();
 		//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;

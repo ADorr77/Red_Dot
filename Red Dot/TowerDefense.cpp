@@ -15,7 +15,7 @@ TowerDefense::TowerDefense() {
 }
 
 void TowerDefense::renderAscii() {
-	std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << std::endl;
+	std::cout << std::endl;
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 25; j++) {
 			std::cout << map[j][i] << map[j][i];
