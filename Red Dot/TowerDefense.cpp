@@ -26,8 +26,12 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << std::endl;
+		renderAscii();
 		break;
 	case 2:
+		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
+			"\n\t " << thru() << " enemies got through";
 		break;
 	}
 	return 0;
@@ -75,7 +79,6 @@ void TowerDefense::advance_enemies()
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
 		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), 'e');
-		std::cout << "enemy at " << enemies[j].get_xPos() << "\t";
 
 	}
 }
@@ -113,6 +116,7 @@ void TowerDefense::advance_projectiles()
 			double x = towers[t].get_projectile_x(c - 1);
 			double y = towers[t].get_projectile_y(c - 1);
 			m.set_map_value((int)x, (int)y, '.');
+			if (!enemies.size()) { state = 2; }
 			for (int j = 0; j < enemies.size(); ++j) {
 				if (enemies[j].detect(x, y)) {
 					towers[t].eraseProjectile(c - 1);

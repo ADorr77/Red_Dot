@@ -24,30 +24,9 @@ void Hero::move() {
 		xPos += Vel * xDir;
 		yPos += Vel * yDir;
 	}
-	return 0;
 }
 
 double take_Damage(double attack) { return 0; }
 
 
-double Hero::get_health() const {
-	return this->health;
-}
 
-double Hero::get_maxHealth() const {
-	return this->maxHealth;
-}
-
-double Hero::get_level() const {
-	return this->level;
-}
-
-double Hero::get_exp() const {
-	return this->exp;
-}
-
-double Hero::get_xPos() const {
-	return this->xPos;
-}
-
-}

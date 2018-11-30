@@ -26,11 +26,8 @@ int main()
 		{
 		case 0:
 			Sleep(30);
-			td.update();
 			system("cls");
-			std::cout << "Money: " << td.get_money() << "\t\t got thru: " << td.thru() << std::endl;
-			td.renderAscii();
-			//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
+			td.update();
 			break;
 		case 1:
 			;
