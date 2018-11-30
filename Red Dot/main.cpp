@@ -18,6 +18,7 @@ void processInput(GLFWwindow * window);
 
 int main()
 {
+	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
 	td.mapinit();
 	std::cout << td.mapValue(3, 4) << std::endl;
@@ -27,108 +28,117 @@ int main()
 	for (int j = 0; j < 20; ++j) {
 		e[j].setTimer(10 * j);
 	}
+	int c;
 	while (true) {
-		Sleep(30);
-		td.mapinit();
-		td.mapSet(6, 5, 'T');
-		t1.cool();
-		for (int j = 0; j < e.size(); ++j) {
-			int f = (int)td.mapValue((int)e[j].get_xPos() + 1, (int)(e[j].get_yPos()));
-			int b = (int)td.mapValue((int)e[j].get_xPos() - 1, (int)(e[j].get_yPos()));
-			int u = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) - 1);
-			int d = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) + 1);
-
-			if (e[j].get_xVel() > 0) {
-				if (f == -37) {
-					if (u == ' ') {
-						e[j].set_xVel(0);
-						e[j].set_yVel(-1);
-					}
-					if (d == ' ') {
-						e[j].set_xVel(0);
-						e[j].set_yVel(1);
-					}
-				}
-			}
-			else if (e[j].get_xVel() < 0) {
-				if (b == -37) {
-					if (u == ' ') {
-						e[j].set_xVel(0);
-						e[j].set_yVel(-1);
-					}
-					if (d == ' ') {
-						e[j].set_xVel(0);
-						e[j].set_yVel(1);
-					}
-				}
-			}
-			else if (e[j].get_yVel() < 0) {
-				if (u == -37) {
-					if (f == ' ') {
-						e[j].set_xVel(1);
-						e[j].set_yVel(0);
-					}
-					if (b == ' ') {
-						e[j].set_xVel(-1);
-						e[j].set_yVel(0);
-					}
-				}
-			}
-			else if (e[j].get_yVel() > 0) {
-				if (d == -37) {
-					if (f == ' ') {
-						e[j].set_xVel(1);
-						e[j].set_yVel(0);
-					}
-					if (b == ' ') {
-						e[j].set_xVel(-1);
-						e[j].set_yVel(0);
-					}
-				}
-			}
-			if (int gt = e[j].advance() > 0) {
-				if (e.size() != 1) {
-					e.erase(e.begin() + j);
-				}
-				else {
-					td.gotThru(gt);
-					std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << td.get_money() <<
-						"\n\t " << td.thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-					while (true) {
-						Sleep(100);
-					}
-				}
-				td.gotThru(gt);
-			}
-			t1.detect(e[j].get_xPos(), e[j].get_yPos());
-
-			
-			td.mapSet((int)e[j].get_xPos(), (int)e[j].get_yPos(), 'e');
-		}
-		int c = t1.get_pnumber();
-		while (c > 0) {
-			t1.advanceProjectiles(c - 1);
-			double x = t1.get_projectile_x(c - 1);
-			double y = t1.get_projectile_y(c - 1);
-			td.mapSet((int) x, (int) y, '.');
+		switch (state)
+		{
+		case 0:
+			Sleep(30);
+			td.mapinit();
+			td.mapSet(6, 5, 'T');
+			t1.cool();
 			for (int j = 0; j < e.size(); ++j) {
-				if (e[j].detect(x, y)) {
-					t1.eraseProjectile(c - 1);
+				int f = (int)td.mapValue((int)e[j].get_xPos() + 1, (int)(e[j].get_yPos()));
+				int b = (int)td.mapValue((int)e[j].get_xPos() - 1, (int)(e[j].get_yPos()));
+				int u = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) - 1);
+				int d = (int)td.mapValue((int)e[j].get_xPos(), (int)(e[j].get_yPos()) + 1);
+
+				if (e[j].get_xVel() > 0) {
+					if (f == -37) {
+						if (u == ' ') {
+							e[j].set_xVel(0);
+							e[j].set_yVel(-1);
+						}
+						if (d == ' ') {
+							e[j].set_xVel(0);
+							e[j].set_yVel(1);
+						}
+					}
 				}
-				e[j].take_damage(x, y);
-				if (e[j].get_hp() <= 0) {
-					td.add_money(e[j].get_reward());
-					e.erase(e.begin()+j);
-					j = e.size();
+				else if (e[j].get_xVel() < 0) {
+					if (b == -37) {
+						if (u == ' ') {
+							e[j].set_xVel(0);
+							e[j].set_yVel(-1);
+						}
+						if (d == ' ') {
+							e[j].set_xVel(0);
+							e[j].set_yVel(1);
+						}
+					}
 				}
-				
+				else if (e[j].get_yVel() < 0) {
+					if (u == -37) {
+						if (f == ' ') {
+							e[j].set_xVel(1);
+							e[j].set_yVel(0);
+						}
+						if (b == ' ') {
+							e[j].set_xVel(-1);
+							e[j].set_yVel(0);
+						}
+					}
+				}
+				else if (e[j].get_yVel() > 0) {
+					if (d == -37) {
+						if (f == ' ') {
+							e[j].set_xVel(1);
+							e[j].set_yVel(0);
+						}
+						if (b == ' ') {
+							e[j].set_xVel(-1);
+							e[j].set_yVel(0);
+						}
+					}
+				}
+				if (int gt = e[j].advance() > 0) {
+					if (e.size() != 1) {
+						e.erase(e.begin() + j);
+					}
+					else {
+						td.gotThru(gt);
+						std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << td.get_money() <<
+							"\n\t " << td.thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+						while (true) {
+							Sleep(100);
+						}
+					}
+					td.gotThru(gt);
+				}
+				t1.detect(e[j].get_xPos(), e[j].get_yPos());
+
+
+				td.mapSet((int)e[j].get_xPos(), (int)e[j].get_yPos(), 'e');
 			}
-			--c;
+			c = t1.get_pnumber();
+			while (c > 0) {
+				t1.advanceProjectiles(c - 1);
+				double x = t1.get_projectile_x(c - 1);
+				double y = t1.get_projectile_y(c - 1);
+				td.mapSet((int)x, (int)y, '.');
+				for (int j = 0; j < e.size(); ++j) {
+					if (e[j].detect(x, y)) {
+						t1.eraseProjectile(c - 1);
+					}
+					e[j].take_damage(x, y);
+					if (e[j].get_hp() <= 0) {
+						td.add_money(e[j].get_reward());
+						e.erase(e.begin() + j);
+						j = e.size();
+					}
+
+				}
+				--c;
+			}
+			system("cls");
+			std::cout << "Money: " << td.get_money() << "\t\t got thru: " << td.thru() << std::endl;
+			td.renderAscii();
+			//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
+			break;
+		case 1:
+			;
+
 		}
-		system("cls");
-		std::cout << "Money: " << td.get_money() << "\t\t got thru: " << td.thru() << std::endl;
-		td.renderAscii();
-		//std::cout << e[0].get_xPos() << ", \t" << e[0].get_yPos() << "\t \t" << e[1].get_xPos() << ", \t" << e[1].get_yPos() << std::endl;
 	}
 
 
