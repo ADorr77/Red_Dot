@@ -26,7 +26,17 @@ double Hero::move() {
 	}
 }
 
-double take_Damage(double attack)
+double Hero::melee_attack() {
+
+}
+
+double Hero::ranged_attack() {
+
+}
+
+double Hero::take_damage(double attack) {
+
+}
 
 
 double Hero::get_health() const {
