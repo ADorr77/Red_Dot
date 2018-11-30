@@ -2,7 +2,7 @@
 #include<cmath>
 #include<iostream>
 
-
+enum {basic, ranged, machine};
 Tower::Tower(int x, int y, int s)
 {
 	xPos = x;
@@ -10,10 +10,20 @@ Tower::Tower(int x, int y, int s)
 	strength = s;
 	timer = 0;
 	pnumber = 0;
-	if (strength == 1) {
+	if (strength == basic) {
 		cooldown = 20;
 		range = 5;
 		speed = 1;
+	}
+	if (strength == ranged) {
+		cooldown = 30;
+		range = 10;
+		speed = 1;
+	}
+	if (strength == machine) {
+		cooldown = 10;
+		range = 3;
+		speed = 2;
 	}
 }
 
