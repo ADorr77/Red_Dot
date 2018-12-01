@@ -18,11 +18,11 @@ int Projectile::advance()
 {
 	xPos += xVel;
 	yPos += yVel;
-	//if (xPos > 25 || yPos > 15 || xPos < 0 || yPos > 0) {
-	//	return 1;
-	//}
-	//else { return 0; }
-	return 0;
+	if (xPos > 25 || yPos > 15 || xPos < 0 || yPos < 0) {
+		return 1;
+	}
+	else { return 0; }
+	//return 0;
 	
 }
 

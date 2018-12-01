@@ -115,25 +115,27 @@ void TowerDefense::advance_projectiles()
 
 		int c = towers[t].get_pnumber();
 		while (c > 0) {
-			towers[t].advanceProjectiles(c - 1);
+			if (!towers[t].advanceProjectiles(c - 1)) {
+
 				//towers[t].eraseProjectile(c - 1);
 				//--c;
 				//if (towers[t].get_pnumber()) { --c; }
-			double x = towers[t].get_projectile_x(c - 1);
-			double y = towers[t].get_projectile_y(c - 1);
-			m.set_map_value((int)x, (int)y, '.');
-			if (!enemies.size()) { state = 2; }
-			for (int j = 0; j < enemies.size(); ++j) {
-				if (enemies[j].detect(x, y)) {
-					towers[t].eraseProjectile(c - 1);
-				}
-				enemies[j].take_damage(x, y);
-				if (enemies[j].get_hp() <= 0) {
-					add_money(enemies[j].get_reward());
-					enemies.erase(enemies.begin() + j);
-					j = enemies.size();
-				}
+				double x = towers[t].get_projectile_x(c - 1);
+				double y = towers[t].get_projectile_y(c - 1);
+				m.set_map_value((int)x, (int)y, '.');
+				if (!enemies.size()) { state = 2; }
+				for (int j = 0; j < enemies.size(); ++j) {
+					if (enemies[j].detect(x, y)) {
+						towers[t].eraseProjectile(c - 1);
+					}
+					enemies[j].take_damage(x, y);
+					if (enemies[j].get_hp() <= 0) {
+						add_money(enemies[j].get_reward());
+						enemies.erase(enemies.begin() + j);
+						j = enemies.size();
+					}
 
+				}
 			}
 			--c;
 		}
