@@ -7,7 +7,7 @@
 class Monster
 {
 private:
-	double strength;
+	double attack;
 	double health;
 	double xPos, yPos;
 	double Vel;
@@ -19,13 +19,16 @@ public:
 	void update();
 
 	// get Functions
-	double get_strength() const { return strength; }
+	double get_attack() const { return attack; }
 	double get_health() const { return health; }
 	double get_xPos() const { return xPos; }
 	double get_yPos() const { return yPos; }
 
 	// Write additional behavior
 	void move(double HeroX, double HeroZ);
+
+	void take_damage(double attack);
+
 };
 
 #endif
