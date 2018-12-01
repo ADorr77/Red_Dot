@@ -4,6 +4,7 @@ TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
 	through = 0;
+	lives = 100;
 	m.init_map(2);
 	state = 0;
 	create_tower(8, 5, 0);
@@ -26,12 +27,12 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << std::endl;
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through";
+			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" <<get_lives();
 		int q;
 		std::cin >> q;
 		state = 0;
@@ -44,11 +45,12 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 10, 4, 20);
 		break;
 	case 1:
-		make_wave(0, 10, 1, 5);
-		make_wave(60, 20, 4, 5);
+		make_wave(0, 15, 1, 5);
+		make_wave(100, 20, 4, 5);
+		break;
 	}
 }
 
@@ -115,22 +117,27 @@ void TowerDefense::advance_projectiles()
 
 		int c = towers[t].get_pnumber();
 		while (c > 0) {
-			towers[t].advanceProjectiles(c - 1);
-			double x = towers[t].get_projectile_x(c - 1);
-			double y = towers[t].get_projectile_y(c - 1);
-			m.set_map_value((int)x, (int)y, '.');
-			if (!enemies.size()) { state = 2; }
-			for (int j = 0; j < enemies.size(); ++j) {
-				if (enemies[j].detect(x, y)) {
-					towers[t].eraseProjectile(c - 1);
-				}
-				enemies[j].take_damage(x, y);
-				if (enemies[j].get_hp() <= 0) {
-					add_money(enemies[j].get_reward());
-					enemies.erase(enemies.begin() + j);
-					j = enemies.size();
-				}
+			if (!towers[t].advanceProjectiles(c - 1)) {
 
+				//towers[t].eraseProjectile(c - 1);
+				//--c;
+				//if (towers[t].get_pnumber()) { --c; }
+				double x = towers[t].get_projectile_x(c - 1);
+				double y = towers[t].get_projectile_y(c - 1);
+				m.set_map_value((int)x, (int)y, '.');
+				if (!enemies.size()) { state = 2; }
+				for (int j = 0; j < enemies.size(); ++j) {
+					if (enemies[j].detect(x, y)) {
+						towers[t].eraseProjectile(c - 1);
+					}
+					enemies[j].take_damage(x, y);
+					if (enemies[j].get_hp() <= 0) {
+						add_money(enemies[j].get_reward());
+						enemies.erase(enemies.begin() + j);
+						j = enemies.size();
+					}
+
+				}
 			}
 			--c;
 		}
@@ -154,11 +161,19 @@ int TowerDefense::thru() const
 
 void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 {
+	int prevSize = enemies.size();
 	for (int i = 0; i < quantity; ++i) {
 		Enemy *e = new Enemy(type);
 		enemies.push_back(*e);
-		enemies[i].setTimer((spacing * i));
 	}
+	for (int i = 0; i < quantity; ++i) {
+		enemies[(prevSize + i)].setTimer(offset + (i*spacing));
+	}
+}
+
+int TowerDefense::get_lives() const
+{
+	return lives;
 }
 
 
@@ -169,12 +184,7 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 }
 */
 
-int TowerDefense::mapValue(int x, int y) {
-	if (x > -1 && x<25 && y>-1 && y < 15) {
-		return map[x][y];
-	}
-	return -1;
-}
+
 
 int TowerDefense::get_map_value(int x, int y)
 {
@@ -217,6 +227,7 @@ void TowerDefense::mapconstSet()
 void TowerDefense::gotThru(int i)
 {
 	through += i;
+	lives -= i;
 }
 
 
