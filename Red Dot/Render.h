@@ -10,8 +10,14 @@ class Render
 {
 private:
 	GLFWwindow * window;
+	
 public:
+	// creates the map and sets up the array of polygon VAOs
 	Render();
+
+	// initialize for the different game types to send the map to the GPU
+	void init(Dungeon& game);
+	void init(TowerDefense& game);
 
 	// render methods
 	void render(const TowerDefense& game);

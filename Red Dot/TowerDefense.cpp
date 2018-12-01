@@ -4,10 +4,12 @@ TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
 	through = 0;
+	lives = 100;
 	m.init_map(2);
 	state = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
+	create_tower(18, 7, 2);
 }
 
 
@@ -26,12 +28,12 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << std::endl;
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through";
+			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" <<get_lives();
 		int q;
 		std::cin >> q;
 		state = 0;
@@ -44,11 +46,11 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 4, 20);
+		make_wave(0, 10, 1, 20);
 		break;
 	case 1:
-		make_wave(0, 15, 1, 5);
-		make_wave(100, 20, 4, 5);
+		make_wave(0, 15, 5, 1);
+		//make_wave(100, 20, 2, 5);
 		break;
 	}
 }
@@ -128,8 +130,9 @@ void TowerDefense::advance_projectiles()
 				for (int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						towers[t].eraseProjectile(c - 1);
+						enemies[j].hit_response(towers[t].get_strength());
 					}
-					enemies[j].take_damage(x, y);
+					// enemies[j].take_damage(x, y);
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
@@ -138,6 +141,7 @@ void TowerDefense::advance_projectiles()
 
 				}
 			}
+			else { towers[t].eraseProjectile(c - 1); }
 			--c;
 		}
 	}
@@ -168,6 +172,11 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 	for (int i = 0; i < quantity; ++i) {
 		enemies[(prevSize + i)].setTimer(offset + (i*spacing));
 	}
+}
+
+int TowerDefense::get_lives() const
+{
+	return lives;
 }
 
 
@@ -221,6 +230,7 @@ void TowerDefense::mapconstSet()
 void TowerDefense::gotThru(int i)
 {
 	through += i;
+	lives -= i;
 }
 
 

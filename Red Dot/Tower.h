@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include<vector>
 
+enum { basic, ranged, machine };
 class Tower
 {
 private:
