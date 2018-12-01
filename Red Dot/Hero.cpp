@@ -1,10 +1,22 @@
 #include"Hero.h"
 #include<cmath>
 
+Hero::Hero()
+{
+	maxHealth = 100;
+	health = maxHealth;
+	level = 1;
+	exp = 0;
+	xPos = 10;
+	yPos = 10;
+	Vel = 5;
+}
+
+
 Hero::Hero(double level) {
 	maxHealth = 100 + (10 * level);
 	health = maxHealth;
-	level = level;
+	this->level = level;
 	exp = 0;
 	xPos = 50;
 	yPos = 10;
