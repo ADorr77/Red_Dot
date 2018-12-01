@@ -86,7 +86,7 @@ int Enemy::advance() {
 	}*/
 	xPos += xVel;
 	yPos += yVel;
-	if (yPos > 15) {
+	if (yPos > 15 || xPos >20) {
 		return 1;
 	}
 	else { return 0; }
@@ -152,4 +152,61 @@ void Enemy::set_xVel(int i)
 void Enemy::set_yVel(int i)
 {
 	yVel = i * speed;
+}
+
+void Enemy::update_velocities(Maps m)
+{
+	int f = m.get_map_value(xPos + 1, yPos);
+	int b = m.get_map_value(xPos - 1, yPos);
+	int u = m.get_map_value(xPos, yPos - 1);
+	int d = m.get_map_value(xPos, yPos + 1);
+
+	if (xVel > 0) {
+		if (f == -37) {
+			if (u == ' ') {
+				set_xVel(0);
+				set_yVel(-1);
+			}
+			if (d == ' ') {
+				set_xVel(0);
+				set_yVel(1);
+			}
+		}
+	}
+	else if (xVel < 0) {
+		if (b == -37) {
+			if (u == ' ') {
+				set_xVel(0);
+				set_yVel(-1);
+			}
+			if (d == ' ') {
+				set_xVel(0);
+				set_yVel(1);
+			}
+		}
+	}
+	else if (yVel < 0) {
+		if (u == -37) {
+			if (f == ' ') {
+				set_xVel(1);
+				set_yVel(0);
+			}
+			if (b == ' ') {
+				set_xVel(-1);
+				set_yVel(0);
+			}
+		}
+	}
+	else if (yVel > 0) {
+		if (d == -37) {
+			if (f == ' ') {
+				set_xVel(1);
+				set_yVel(0);
+			}
+			if (b == ' ') {
+				set_xVel(-1);
+				set_yVel(0);
+			}
+		}
+	}
 }

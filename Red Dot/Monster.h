@@ -18,10 +18,10 @@ public:
 	void update();
 
 	// get Functions
-	double get_strength() const;
-	double get_health() const;
-	double get_xPos() const;
-	double get_yPos() const;
+	double get_strength() const { return strength; }
+	double get_health() const { return health; }
+	double get_xPos() const { return xPos; }
+	double get_yPos() const { return yPos; }
 
 	// Write additional behavior
 };
