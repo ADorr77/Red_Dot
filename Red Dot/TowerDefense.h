@@ -18,6 +18,7 @@ private:
 	int level;
 	int money;
 	int state;
+	int lives;
 	char map[25][15];
 	char mapconst[25][15];
 	// map that holds path that does not get changed or printed out
@@ -70,6 +71,7 @@ public:
 	int get_money() const;
 	int thru() const;
 	void make_wave(int offset, int spacing, int type, int quantity);
+	int get_lives() const;
 
 	const int height = 15;
 	const int width = 25;

@@ -86,7 +86,7 @@ int Enemy::advance() {
 	}*/
 	xPos += xVel;
 	yPos += yVel;
-	if (yPos > 15 || xPos >20) {
+	if (yPos > 15 || xPos >24.5) {
 		return 1;
 	}
 	else { return 0; }
