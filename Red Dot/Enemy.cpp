@@ -30,7 +30,7 @@ Enemy::Enemy(int level) {
 	}
 	if (level == tank) {
 		speed = .125;
-		hp = 1;
+		hp = 4;
 		strength = 4;
 		xVel = 0;
 		yVel = 0;

@@ -17,7 +17,7 @@ public:
 	Projectile(int p);
 	Projectile(double x, double y, double xV, double yV, int p);
 	// update method to move it
-	void advance();
+	int advance();
 	//set values when firing from tower
 	void setVals(double x, double y, double xV, double yV, int p);
 	//getters
