@@ -11,6 +11,7 @@
 #include<stdlib.h>
 #include "Dungeon.h"
 #include <chrono>
+#include <thread>
 
 
 void processInput(GLFWwindow * window);
@@ -29,9 +30,18 @@ int main()
 
 	renderer.renderASCII(dungeon);
 
+	// initialize timer variables
+	auto start = Clock::now();
+	auto end = start;
+	int fps = 20; // change the render speed here (frames per second)
+	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
+	
 
 	while (!glfwWindowShouldClose(window)) 
 	{
+		// start timer
+		start = Clock::now();
+
 		// input
 		glfwPollEvents();
 		processInput(window);
@@ -52,6 +62,11 @@ int main()
 
 		// swap buffer to show screen
 		glfwSwapBuffers(window);
+
+		// stop timer and sleep
+		end = Clock::now();
+		duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+		std::this_thread::sleep_for(std::chrono::nanoseconds(period - duration));
 	}
 
 	glfwTerminate();
