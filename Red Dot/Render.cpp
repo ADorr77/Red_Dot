@@ -13,7 +13,7 @@ Render::Render()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-	window = glfwCreateWindow(800, 600, "Learn OpenGL", NULL, NULL);
+	window = glfwCreateWindow(800, 800, "Learn OpenGL", NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -27,11 +27,47 @@ Render::Render()
 		window = NULL;
 	}
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, 800, 800);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 }
 
+void init(Dungeon& game)
+{
+	
+}
+
+void init(TowerDefense& game)
+{
+	float squarePoints[] = {
+		0.0f, 0.0f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f
+	};
+
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
+	};
+
+	std::vector<float> vertices;
+	std::vector<unsigned int> indicies;
+
+	for(int x = 0; x < game.width; x++)
+	{
+		for(int y = 0; y < game.height; y++)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				;
+			}
+		}
+	}
+}
+
+
+// mess with this later
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);

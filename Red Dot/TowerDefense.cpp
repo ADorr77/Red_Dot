@@ -4,6 +4,7 @@ TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
 	through = 0;
+	lives = 100;
 	m.init_map(2);
 	state = 0;
 	create_tower(8, 5, 0);
@@ -26,12 +27,12 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << std::endl;
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through";
+			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" <<get_lives();
 		int q;
 		std::cin >> q;
 		state = 0;
@@ -171,6 +172,11 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 	}
 }
 
+int TowerDefense::get_lives() const
+{
+	return lives;
+}
+
 
 
 /*std::vector<Projectile> TowerDefense::get_projectiles() const
@@ -179,12 +185,7 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 }
 */
 
-int TowerDefense::mapValue(int x, int y) {
-	if (x > -1 && x<25 && y>-1 && y < 15) {
-		return map[x][y];
-	}
-	return -1;
-}
+
 
 int TowerDefense::get_map_value(int x, int y)
 {
@@ -227,6 +228,7 @@ void TowerDefense::mapconstSet()
 void TowerDefense::gotThru(int i)
 {
 	through += i;
+	lives -= i;
 }
 
 

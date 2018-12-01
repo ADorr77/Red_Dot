@@ -30,7 +30,7 @@ Enemy::Enemy(int level) {
 	}
 	if (level == tank) {
 		speed = .125;
-		hp = 1;
+		hp = 4;
 		strength = 4;
 		xVel = 0;
 		yVel = 0;
@@ -86,7 +86,7 @@ int Enemy::advance() {
 	}*/
 	xPos += xVel;
 	yPos += yVel;
-	if (yPos > 15 || xPos >20) {
+	if (yPos > 15 || xPos >24.5) {
 		return 1;
 	}
 	else { return 0; }
