@@ -80,3 +80,13 @@ double Tower::get_projectile_y(int pnum)
 {
 	return projectiles[pnum].get_yPos();
 }
+
+double Tower::get_xPos() const
+{
+	return xPos;
+}
+
+double Tower::get_yPos() const
+{
+	return yPos;
+}

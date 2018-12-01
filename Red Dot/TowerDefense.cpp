@@ -1,20 +1,139 @@
 #include "TowerDefense.h"
-#include "Maps.h"
 
 TowerDefense::TowerDefense() {
 	money = 0;
 	level = 0;
 	through = 0;
+	m.init_map(2);
+	state = 0;
+	create_tower(8, 5, 0);
+	create_tower(15, 10, 1);
+}
 
+
+int TowerDefense::update()
+{
+	switch (state) {
+	case 0:
+		init_level();
+		++level;
+		++state;
+		m.init_map(2);
+		renderAscii();
+		break;
+	case 1:
+		m.init_map(2);
+		map_towers();
+		advance_enemies();
+		advance_projectiles();
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << std::endl;
+		renderAscii();
+		break;
+	case 2:
+		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
+			"\n\t " << thru() << " enemies got through";
+		int q;
+		std::cin >> q;
+		state = 0;
+		break;
+	}
+	return 0;
+}
+
+void TowerDefense::init_level()
+{
+	switch (level) {
+	case 0:
+		make_wave(0, 10, 1, 20);
+		break;
+	case 1:
+		make_wave(0, 10, 1, 5);
+		make_wave(60, 20, 4, 5);
+	}
 }
 
 void TowerDefense::renderAscii() {
 	std::cout << std::endl;
 	for (int i = 0; i < 15; i++) {
 		for (int j = 0; j < 25; j++) {
-			std::cout << map[j][i] << map[j][i];
+			std::cout << m.get_map_value(j,i) << m.get_map_value(j,i);
 		}
 		std::cout << std::endl;
+	}
+}
+
+void TowerDefense::advance_enemies()
+{
+	for (int j = 0; j < enemies.size(); ++j) {
+		enemies[j].update_velocities(m);
+		if (int gt = enemies[j].advance() > 0) {
+			if (enemies.size() != 1) {
+				enemies.erase(enemies.begin() + j);
+			}
+			else {
+				gotThru(gt);
+				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
+					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+				state = 2;
+			}
+			gotThru(gt);
+		}
+		for (int t = 0; t < towers.size(); ++t) {
+			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
+		}
+		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), 'e');
+
+	}
+}
+
+void TowerDefense::map_towers()
+{
+	for (int i = 0; i < towers.size(); ++i) {
+		m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
+		towers[i].cool();
+	}
+	
+}
+
+void TowerDefense::create_tower(int x, int y, int type)
+{
+	Tower *t1 = new Tower(x, y, type);
+	towers.push_back(*t1);
+}
+
+void TowerDefense::towers_detect()
+{
+	for (int j = 0; j < towers.size(); ++j) {
+
+	}
+}
+
+void TowerDefense::advance_projectiles()
+{
+	for (int t = 0; t < towers.size(); t++) {
+
+
+		int c = towers[t].get_pnumber();
+		while (c > 0) {
+			towers[t].advanceProjectiles(c - 1);
+			double x = towers[t].get_projectile_x(c - 1);
+			double y = towers[t].get_projectile_y(c - 1);
+			m.set_map_value((int)x, (int)y, '.');
+			if (!enemies.size()) { state = 2; }
+			for (int j = 0; j < enemies.size(); ++j) {
+				if (enemies[j].detect(x, y)) {
+					towers[t].eraseProjectile(c - 1);
+				}
+				enemies[j].take_damage(x, y);
+				if (enemies[j].get_hp() <= 0) {
+					add_money(enemies[j].get_reward());
+					enemies.erase(enemies.begin() + j);
+					j = enemies.size();
+				}
+
+			}
+			--c;
+		}
 	}
 }
 
@@ -33,6 +152,23 @@ int TowerDefense::thru() const
 	return through;
 }
 
+void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
+{
+	for (int i = 0; i < quantity; ++i) {
+		Enemy *e = new Enemy(type);
+		enemies.push_back(*e);
+		enemies[i].setTimer((spacing * i));
+	}
+}
+
+
+
+/*std::vector<Projectile> TowerDefense::get_projectiles() const
+{
+	return projectiles;
+}
+*/
+
 int TowerDefense::mapValue(int x, int y) {
 	if (x > -1 && x<25 && y>-1 && y < 15) {
 		return map[x][y];
@@ -40,50 +176,23 @@ int TowerDefense::mapValue(int x, int y) {
 	return -1;
 }
 
+int TowerDefense::get_map_value(int x, int y)
+{
+	if (x > -1 && x<25 && y>-1 && y < 15) {
+		return m.get_map_value(x, y);
+	}
+	return -1;
+}
+
 void TowerDefense::mapinit() {
 	for (int i = 0; i < 15; i++) {
 		//set up blank map
-		for (int j = 0; j < 20; j++) {
-			map[j][i] = 219;
+		for (int j = 0; j < 25; j++) {
+			map[j][i] = m.get_map_value(j, i);
 		}
-		//set up blank sidebar for menu
-		for (int j = 20; j < 25; j++) {
-			map[j][i] = '-';
-		}		
 	}
-	//set up paths and buttons on menu
-	//path
-	for (int i=0; i < 5; ++i) {
-		map[i][11] = ' ';
-	}
-	for (int i = 11; i > 6; --i) {
-		map[4][i] = ' ';
-	}
-	for (int i = 4; i > 1; --i) {
-		map[i][7] = ' ';
-	}
-	for (int i = 7; i > 1; --i) {
-		map[2][i] = ' ';
-	}
-	for (int i = 2; i < 18; ++i) {
-		map[i][2] = ' ';
-	}
-	for (int i = 2; i < 14; ++i) {
-		map[17][i] = ' ';
-	}
-	for (int i = 17; i > 12; --i) {
-		map[i][13] = ' ';
-	}
-	for (int i = 13; i > 5; --i) {
-		map[13][i] = ' ';
-	}
-	for (int i = 13; i > 9; --i) {
-		map[i][6] = ' ';
-	}
-	for (int i = 6; i < 15; ++i) {
-		map[9][i] = ' ';
-	}
-	
+
+
 
 
 

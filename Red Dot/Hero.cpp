@@ -38,7 +38,7 @@ void Hero::move() {
 	}
 }
 
-void take_Damage(double attack)
-{
+double take_Damage(double attack) { return 0; }
 
-}
+
+
