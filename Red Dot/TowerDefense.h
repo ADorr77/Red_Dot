@@ -60,7 +60,7 @@ public:
 	void advance_projectiles();
 	// get functions
 
-	//int ** get_map() const;
+	// getters
 	int mapValue(int x, int y);
 	int get_map_value(int x, int y);
 	const std::vector<Enemy>& get_enemies() const { return enemies; }

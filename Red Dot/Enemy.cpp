@@ -1,5 +1,5 @@
 #include"Enemy.h"
-
+#include"Tower.h"
 enum {regen, normal, strong, fast, tank};
 Enemy::Enemy(int level) {
 	yPos = 11;
@@ -107,11 +107,16 @@ int Enemy::detect(double x, double y)
 	return 0;
 }
 
-void Enemy::take_damage(double x, double y)
+void Enemy::take_damage()
 {
-	if (detect(x, y)) {
 		hp -= 1;
-	}
+}
+
+void Enemy::hit_response(int type)
+{
+	switch (type)
+		case (basic):
+			take_damage();
 }
 
 double Enemy::get_hp() const
