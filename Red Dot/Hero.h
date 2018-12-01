@@ -17,6 +17,7 @@ private:
 
 public:
 	// Hero constructor (pass in whatever you decide)
+	Hero();
 	Hero(double level);
 	// update method
 	void update();

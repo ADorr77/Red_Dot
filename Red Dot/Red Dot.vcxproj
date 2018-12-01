@@ -137,6 +137,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Includes.h" />
     <ClInclude Include="Maplib.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Monster.h" />
