@@ -44,11 +44,12 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 10, 4, 20);
 		break;
 	case 1:
-		make_wave(0, 10, 1, 5);
-		make_wave(60, 20, 4, 5);
+		make_wave(0, 15, 1, 5);
+		make_wave(100, 20, 4, 5);
+		break;
 	}
 }
 
@@ -115,22 +116,27 @@ void TowerDefense::advance_projectiles()
 
 		int c = towers[t].get_pnumber();
 		while (c > 0) {
-			towers[t].advanceProjectiles(c - 1);
-			double x = towers[t].get_projectile_x(c - 1);
-			double y = towers[t].get_projectile_y(c - 1);
-			m.set_map_value((int)x, (int)y, '.');
-			if (!enemies.size()) { state = 2; }
-			for (int j = 0; j < enemies.size(); ++j) {
-				if (enemies[j].detect(x, y)) {
-					towers[t].eraseProjectile(c - 1);
-				}
-				enemies[j].take_damage(x, y);
-				if (enemies[j].get_hp() <= 0) {
-					add_money(enemies[j].get_reward());
-					enemies.erase(enemies.begin() + j);
-					j = enemies.size();
-				}
+			if (!towers[t].advanceProjectiles(c - 1)) {
 
+				//towers[t].eraseProjectile(c - 1);
+				//--c;
+				//if (towers[t].get_pnumber()) { --c; }
+				double x = towers[t].get_projectile_x(c - 1);
+				double y = towers[t].get_projectile_y(c - 1);
+				m.set_map_value((int)x, (int)y, '.');
+				if (!enemies.size()) { state = 2; }
+				for (int j = 0; j < enemies.size(); ++j) {
+					if (enemies[j].detect(x, y)) {
+						towers[t].eraseProjectile(c - 1);
+					}
+					enemies[j].take_damage(x, y);
+					if (enemies[j].get_hp() <= 0) {
+						add_money(enemies[j].get_reward());
+						enemies.erase(enemies.begin() + j);
+						j = enemies.size();
+					}
+
+				}
 			}
 			--c;
 		}
@@ -154,10 +160,13 @@ int TowerDefense::thru() const
 
 void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 {
+	int prevSize = enemies.size();
 	for (int i = 0; i < quantity; ++i) {
 		Enemy *e = new Enemy(type);
 		enemies.push_back(*e);
-		enemies[i].setTimer((spacing * i));
+	}
+	for (int i = 0; i < quantity; ++i) {
+		enemies[(prevSize + i)].setTimer(offset + (i*spacing));
 	}
 }
 
