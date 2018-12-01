@@ -1,6 +1,6 @@
 #include"Enemy.h"
 
-enum {regen, normal, strong, fast, tank};
+enum {regen, normal, strong, fast, tank, boss};
 Enemy::Enemy(int level) {
 	yPos = 11;
 	xPos = 0;
@@ -31,7 +31,15 @@ Enemy::Enemy(int level) {
 	if (level == tank) {
 		speed = .125;
 		hp = 4;
-		strength = 4;
+		strength = 2;
+		xVel = 0;
+		yVel = 0;
+		reward = 200;
+	}
+	if (level == boss) {
+		speed = .125;
+		hp = 50;
+		strength = 50;
 		xVel = 0;
 		yVel = 0;
 		reward = 200;
