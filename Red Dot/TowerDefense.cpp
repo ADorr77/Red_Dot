@@ -45,7 +45,7 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 4, 20);
+		make_wave(0, 10, 1, 20);
 		break;
 	case 1:
 		make_wave(0, 15, 1, 5);

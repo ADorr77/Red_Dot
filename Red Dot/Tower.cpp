@@ -51,6 +51,7 @@ int Tower::advanceProjectiles(int pnum)
 {
 	int p = projectiles[pnum].advance(); 
 	if (p) { --pnumber; }
+	
 	return p;
 }
 
@@ -58,6 +59,9 @@ void Tower::cool()
 {
 	if (timer > 0) {
 		--timer;
+	}
+	if (pnumber < 0) {
+		pnumber = 0;
 	}
 }
 
