@@ -21,8 +21,8 @@ Tower::Tower(int x, int y, int s)
 		speed = 1;
 	}
 	if (strength == machine) {
-		cooldown = 10;
-		range = 3;
+		cooldown = 2;
+		range = 5;
 		speed = 2;
 	}
 }

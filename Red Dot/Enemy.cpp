@@ -46,44 +46,6 @@ int Enemy::advance() {
 	}
 	//decrease timer till it hits zero
 	if (timer > 0) { --timer; }
-
-	/*
-	if ((int)xPos == 4 && (int)yPos == 11) {
-		xVel = 0;
-		yVel = -speed;
-	}
-	if ((int)xPos == 4 && (int)yPos == 7) {
-		xVel = -speed;
-		yVel = 0;
-	}
-	if ((int)xPos == 2 && (int)yPos == 7) {
-		xVel = 0;
-		yVel = -speed;
-	}
-	if ((int)xPos == 2 && (int)yPos == 2) {
-		xVel = speed;
-		yVel = 0;
-	}
-	if ((int)xPos == 17 && (int)yPos == 2) {
-		xVel = 0;
-		yVel = speed;
-	}
-	if ((int)xPos == 17 && (int)yPos == 13) {
-		xVel = -speed;
-		yVel = 0;
-	}
-	if ((int)xPos == 13 && (int)yPos == 13) {
-		xVel = 0;
-		yVel = -speed;
-	}
-	if ((int)xPos == 13 && (int)yPos == 6) {
-		xVel = -speed;
-		yVel = 0;
-	}
-	if ((int)xPos == 9 && (int)yPos == 6) {
-		xVel = 0;
-		yVel = speed;
-	}*/
 	xPos += xVel;
 	yPos += yVel;
 	if (yPos > 15 || xPos >24.5) {
@@ -101,7 +63,7 @@ int Enemy::detect(double x, double y)
 	double xdist = xPos - x;
 	double ydist = yPos - y;
 	double dist = sqrt(xdist*xdist + ydist * ydist);
-	if (dist < .6) {
+	if (dist < 1) {
 		return 1;
 	}
 	return 0;
@@ -114,9 +76,17 @@ void Enemy::take_damage()
 
 void Enemy::hit_response(int type)
 {
-	switch (type)
-		case (basic):
-			take_damage();
+	switch (type) {
+	case (basic):
+		take_damage();
+		break;
+	case (ranged):
+		take_damage();
+		break;
+	case (machine):
+		take_damage();
+		break;
+	}
 }
 
 double Enemy::get_hp() const

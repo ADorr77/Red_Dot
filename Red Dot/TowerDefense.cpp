@@ -9,6 +9,7 @@ TowerDefense::TowerDefense() {
 	state = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
+	create_tower(18, 7, 2);
 }
 
 
@@ -48,8 +49,8 @@ void TowerDefense::init_level()
 		make_wave(0, 10, 1, 20);
 		break;
 	case 1:
-		make_wave(0, 15, 1, 5);
-		make_wave(100, 20, 4, 5);
+		make_wave(0, 15, 5, 1);
+		make_wave(100, 20, 2, 5);
 		break;
 	}
 }
@@ -140,6 +141,7 @@ void TowerDefense::advance_projectiles()
 
 				}
 			}
+			else { towers[t].eraseProjectile(c - 1); }
 			--c;
 		}
 	}
