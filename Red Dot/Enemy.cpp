@@ -163,11 +163,11 @@ void Enemy::update_velocities(Maps m)
 
 	if (xVel > 0) {
 		if (f == -37) {
-			if (u == ' ') {
+			if (u != -37) {
 				set_xVel(0);
 				set_yVel(-1);
 			}
-			if (d == ' ') {
+			if (d != -37) {
 				set_xVel(0);
 				set_yVel(1);
 			}
@@ -175,11 +175,11 @@ void Enemy::update_velocities(Maps m)
 	}
 	else if (xVel < 0) {
 		if (b == -37) {
-			if (u == ' ') {
+			if (u != -37) {
 				set_xVel(0);
 				set_yVel(-1);
 			}
-			if (d == ' ') {
+			if (d != -37) {
 				set_xVel(0);
 				set_yVel(1);
 			}
@@ -187,11 +187,11 @@ void Enemy::update_velocities(Maps m)
 	}
 	else if (yVel < 0) {
 		if (u == -37) {
-			if (f == ' ') {
+			if (f != -37) {
 				set_xVel(1);
 				set_yVel(0);
 			}
-			if (b == ' ') {
+			if (b != -37) {
 				set_xVel(-1);
 				set_yVel(0);
 			}
@@ -199,11 +199,11 @@ void Enemy::update_velocities(Maps m)
 	}
 	else if (yVel > 0) {
 		if (d == -37) {
-			if (f == ' ') {
+			if (f != -37) {
 				set_xVel(1);
 				set_yVel(0);
 			}
-			if (b == ' ') {
+			if (b != -37) {
 				set_xVel(-1);
 				set_yVel(0);
 			}
