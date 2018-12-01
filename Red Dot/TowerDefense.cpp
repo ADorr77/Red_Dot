@@ -44,11 +44,12 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 10, 4, 20);
 		break;
 	case 1:
-		make_wave(0, 10, 1, 5);
-		make_wave(60, 20, 4, 5);
+		make_wave(0, 15, 1, 5);
+		make_wave(100, 20, 4, 5);
+		break;
 	}
 }
 
@@ -159,10 +160,13 @@ int TowerDefense::thru() const
 
 void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 {
+	int prevSize = enemies.size();
 	for (int i = 0; i < quantity; ++i) {
 		Enemy *e = new Enemy(type);
 		enemies.push_back(*e);
-		enemies[i].setTimer((spacing * i));
+	}
+	for (int i = 0; i < quantity; ++i) {
+		enemies[(prevSize + i)].setTimer(offset + (i*spacing));
 	}
 }
 
