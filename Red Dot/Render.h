@@ -10,7 +10,7 @@ class Render
 public:
 	Render();
 	void render(const TowerDefense& game);
-	void render(const Dungeon& dungeon);
+	void renderASCII(const Dungeon& dungeon);
 };
 
 #endif

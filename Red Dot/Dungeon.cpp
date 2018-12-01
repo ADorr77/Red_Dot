@@ -19,6 +19,6 @@ Dungeon::Dungeon()
 		}
 	}
 
-
+	monsters.emplace_back(Monster());
 }
 

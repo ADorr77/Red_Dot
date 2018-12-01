@@ -1,11 +1,15 @@
 #include "Render.h"
+#include <string>
+
+Render::Render() = default;
+
 
 void Render::render(const TowerDefense & game)
 {
 	
 }
 
-void Render::render(const Dungeon& dungeon)
+void Render::renderASCII(const Dungeon& dungeon)
 {
 	auto map = dungeon.get_map();
 
@@ -26,11 +30,20 @@ void Render::render(const Dungeon& dungeon)
 
 	for (int i = 0; i < monsters.size(); i++)
 	{
-		print[monsters[i].get_xPos()][monsters[i].get_yPos()] = 'M';
+		print[monsters[i].get_yPos()][monsters[i].get_xPos()] = 'M';
 	}
 
 	Hero hero = dungeon.get_hero();
-	print[hero.get_xPos()][hero.get_yPos()] = 'H';
+	print[hero.get_yPos()][hero.get_xPos()] = 'H';
+
+	for (int y = print.size() - 1; y >= 0; y--)
+	{
+		for (int x = 0; x < print[y].size(); x++)
+		{
+			std::cout << print[y][x] << print[y][x];
+		}
+		std::cout << std::endl;
+	}
 }
 
 

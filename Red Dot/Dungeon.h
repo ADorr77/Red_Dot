@@ -12,7 +12,7 @@ class Dungeon
 {
 private:
 	// first number is height, second is width so access is map[x][y]
-	std::array<std::array<int, 100>, 100> map;
+	std::array<std::array<int, 20>, 20> map;
 	std::vector<Monster> monsters;
 	Hero hero;
 	std::vector<Projectile> projectiles;

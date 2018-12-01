@@ -11,6 +11,8 @@
 #include<vector>
 #include"TowerDefense.h"
 #include<stdlib.h>
+#include "Dungeon.h"
+#include "Render.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -20,7 +22,12 @@ int main()
 {
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	
+	Dungeon dungeon = Dungeon();
+	Render renderer = Render();
+
+	renderer.renderASCII(dungeon);
+
+
 	while (true) {
 		switch (state)
 		{
@@ -30,8 +37,7 @@ int main()
 			td.update();
 			break;
 		case 1:
-			;
-
+			break;
 		}
 	}
 
