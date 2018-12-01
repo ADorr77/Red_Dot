@@ -18,8 +18,8 @@ Hero::Hero(double level) {
 	health = maxHealth;
 	this->level = level;
 	exp = 0;
-	xPos = 50;
-	yPos = 10;
+	xPos = 0;
+	yPos = 0;
 	Vel = 5;
 }
 
