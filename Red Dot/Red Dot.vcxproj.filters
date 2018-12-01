@@ -48,6 +48,9 @@
     <ClCompile Include="Maps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -86,5 +89,13 @@
     <ClInclude Include="Includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="mapVertShader.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="fragShader.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
