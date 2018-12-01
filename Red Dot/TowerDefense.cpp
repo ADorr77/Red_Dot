@@ -116,6 +116,9 @@ void TowerDefense::advance_projectiles()
 		int c = towers[t].get_pnumber();
 		while (c > 0) {
 			towers[t].advanceProjectiles(c - 1);
+				//towers[t].eraseProjectile(c - 1);
+				//--c;
+				//if (towers[t].get_pnumber()) { --c; }
 			double x = towers[t].get_projectile_x(c - 1);
 			double y = towers[t].get_projectile_y(c - 1);
 			m.set_map_value((int)x, (int)y, '.');

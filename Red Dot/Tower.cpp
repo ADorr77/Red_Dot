@@ -47,9 +47,11 @@ void Tower::detect(double x, double y)
 	}
 }
 
-void Tower::advanceProjectiles(int pnum)
+int Tower::advanceProjectiles(int pnum)
 {
-	projectiles[pnum].advance();
+	int p = projectiles[pnum].advance(); 
+	if (p) { --pnumber; }
+	return p;
 }
 
 void Tower::cool()

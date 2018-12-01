@@ -23,7 +23,7 @@ public:
 	Tower(int x, int y, int s);
 	// update method to fire from it
 	void detect(double x, double y);
-	void advanceProjectiles(int pnum);
+	int advanceProjectiles(int pnum);
 	void cool();
 	void eraseProjectile(int pnum);
 	double get_pnumber();

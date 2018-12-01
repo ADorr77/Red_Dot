@@ -14,10 +14,16 @@ Projectile::Projectile(double x, double y, double xV, double yV, int p)
 	power = p;
 }
 
-void Projectile::advance()
+int Projectile::advance()
 {
 	xPos += xVel;
 	yPos += yVel;
+	//if (xPos > 25 || yPos > 15 || xPos < 0 || yPos > 0) {
+	//	return 1;
+	//}
+	//else { return 0; }
+	return 0;
+	
 }
 
 void Projectile::setVals(double x, double y, double xV, double yV, int p)
