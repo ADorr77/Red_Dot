@@ -2,7 +2,7 @@
 #include<cmath>
 #include<iostream>
 
-enum {basic, ranged, machine};
+
 Tower::Tower(int x, int y, int s)
 {
 	xPos = x;
@@ -81,6 +81,11 @@ double Tower::get_projectile_x(int pnum)
 double Tower::get_projectile_y(int pnum)
 {
 	return projectiles[pnum].get_yPos();
+}
+
+double Tower::get_strength() const
+{
+	return strength;
 }
 
 double Tower::get_xPos() const
