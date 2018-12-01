@@ -9,6 +9,7 @@ TowerDefense::TowerDefense() {
 	state = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
+	create_tower(18, 7, 2);
 }
 
 
@@ -45,11 +46,11 @@ void TowerDefense::init_level()
 {
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 4, 20);
+		make_wave(0, 10, 1, 20);
 		break;
 	case 1:
-		make_wave(0, 15, 1, 5);
-		make_wave(100, 20, 4, 5);
+		make_wave(0, 15, 5, 1);
+		//make_wave(100, 20, 2, 5);
 		break;
 	}
 }
@@ -129,8 +130,9 @@ void TowerDefense::advance_projectiles()
 				for (int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						towers[t].eraseProjectile(c - 1);
+						enemies[j].hit_response(towers[t].get_strength());
 					}
-					enemies[j].take_damage(x, y);
+					// enemies[j].take_damage(x, y);
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
@@ -139,6 +141,7 @@ void TowerDefense::advance_projectiles()
 
 				}
 			}
+			else { towers[t].eraseProjectile(c - 1); }
 			--c;
 		}
 	}

@@ -4,6 +4,7 @@
 #define ENEMY_H
 #include<cmath>
 #include "Maps.h"
+#include "Tower.h"
 
 // Generic Tower Defense Enemy
 class Enemy
@@ -29,10 +30,13 @@ public:
 	int advance();
 	//set up timing of enemies entering
 	void setTimer(int t);
+
 	//take damage
 	//detect projectiles
 	int detect(double x, double y);
-	void take_damage(double, double);
+	void take_damage();
+	void hit_response(int);
+
 	// get Functions
 	double get_strength() const;
 	double get_hp() const;

@@ -2,7 +2,7 @@
 #include<cmath>
 #include<iostream>
 
-enum {basic, ranged, machine};
+
 Tower::Tower(int x, int y, int s)
 {
 	xPos = x;
@@ -21,8 +21,8 @@ Tower::Tower(int x, int y, int s)
 		speed = 1;
 	}
 	if (strength == machine) {
-		cooldown = 10;
-		range = 3;
+		cooldown = 2;
+		range = 5;
 		speed = 2;
 	}
 }
@@ -51,6 +51,7 @@ int Tower::advanceProjectiles(int pnum)
 {
 	int p = projectiles[pnum].advance(); 
 	if (p) { --pnumber; }
+	
 	return p;
 }
 
@@ -58,6 +59,9 @@ void Tower::cool()
 {
 	if (timer > 0) {
 		--timer;
+	}
+	if (pnumber < 0) {
+		pnumber = 0;
 	}
 }
 
@@ -81,6 +85,11 @@ double Tower::get_projectile_x(int pnum)
 double Tower::get_projectile_y(int pnum)
 {
 	return projectiles[pnum].get_yPos();
+}
+
+double Tower::get_strength() const
+{
+	return strength;
 }
 
 double Tower::get_xPos() const
