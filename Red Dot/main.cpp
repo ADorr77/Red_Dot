@@ -20,6 +20,7 @@ typedef std::chrono::high_resolution_clock Clock;
 
 int main()
 {
+	// initialize Game window and renderer
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
