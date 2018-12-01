@@ -7,6 +7,7 @@
 #include "Monster.h"
 #include "Hero.h"
 #include <array>
+#include "Includes.h"
 
 class Dungeon
 {
@@ -23,7 +24,7 @@ public:
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)
-	int processInput();
+	int processInput(GLFWwindow* window);
 	// Updates the Game each tick, returns the game state 
 	int update();
 

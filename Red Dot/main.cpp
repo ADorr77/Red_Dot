@@ -5,53 +5,27 @@
 // 11/26/18
 
 
-#include<glad.h>
-#include<glfw3.h>
-#include<iostream>
-#include<vector>
+#include "Render.h"
+#include "Includes.h" // works around issue including glad.h and glfw3.h
 #include"TowerDefense.h"
 #include<stdlib.h>
 #include "Dungeon.h"
-#include "Render.h"
+#include <chrono>
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void processInput(GLFWwindow * window);
 
+typedef std::chrono::high_resolution_clock Clock;
+
 int main()
 {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-	GLFWwindow * window = glfwCreateWindow(800, 600, "Learn OpenGL", NULL, NULL);
-	if (window == NULL)
-	{
-		std::cout << "Failed to create GLFW window" << std::endl;
-		glfwTerminate();
-		return -1;
-	}
-	glfwMakeContextCurrent(window);
-
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
-	glViewport(0, 0, 800, 600);
-
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	Render renderer = Render();
+	GLFWwindow * window = renderer.get_window();
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon();
-	Render renderer = Render();
+	
 
 	renderer.renderASCII(dungeon);
 
@@ -69,7 +43,6 @@ int main()
 		switch (state)
 		{
 		case 0:
-			Sleep(30);
 			system("cls");
 			td.update();
 			break;
@@ -84,11 +57,6 @@ int main()
 	glfwTerminate();
 
 	return 0;
-}
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	glViewport(0, 0, width, height);
 }
 
 void processInput(GLFWwindow * window)
