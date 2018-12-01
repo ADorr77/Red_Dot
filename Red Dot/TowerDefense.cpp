@@ -50,7 +50,7 @@ void TowerDefense::init_level()
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
-		make_wave(100, 20, 2, 5);
+		//make_wave(100, 20, 2, 5);
 		break;
 	}
 }
