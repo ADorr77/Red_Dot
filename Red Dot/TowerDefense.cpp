@@ -129,8 +129,9 @@ void TowerDefense::advance_projectiles()
 				for (int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						towers[t].eraseProjectile(c - 1);
+						enemies[j].hit_response(towers[t].get_strength());
 					}
-					enemies[j].take_damage(x, y);
+					// enemies[j].take_damage(x, y);
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
