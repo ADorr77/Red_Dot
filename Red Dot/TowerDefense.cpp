@@ -178,12 +178,7 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 }
 */
 
-int TowerDefense::mapValue(int x, int y) {
-	if (x > -1 && x<25 && y>-1 && y < 15) {
-		return map[x][y];
-	}
-	return -1;
-}
+
 
 int TowerDefense::get_map_value(int x, int y)
 {
