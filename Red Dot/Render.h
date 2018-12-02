@@ -7,13 +7,21 @@
 #include "Includes.h" // this gets around an glad.h issue
 #include "Shader.h"
 
+#define MAX_SIDES 25
+
 class Render
 {
 private:
 	GLFWwindow * window;
+
 	unsigned int mapVAO, mapVBO, mapEBO; // Vertex Array Object for the map
 	unsigned int numMapPoints; // number of verticies that make up map
 	Shader mapShader;
+
+	unsigned int shapesArray[MAX_SIDES - 2];
+	unsigned int shapesBuffer[MAX_SIDES - 2];
+	unsigned int shapesElements[MAX_SIDES - 2];
+
 public:
 	// creates the map and sets up the array of polygon VAOs
 	Render();
@@ -26,10 +34,10 @@ public:
 	void render(const TowerDefense& game);
 	void renderASCII(const Dungeon& dungeon);
 
+	void drawPolygon(int sides);
+
 	// getters
 	GLFWwindow * get_window() { return window; }
 };
-
-void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 #endif

@@ -1,5 +1,13 @@
 #include "Render.h"
 #include <string>
+#include <cmath>
+
+#define PI 3.14159265
+
+void getPolygon(int sides, float * vertices);
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
 
 Render::Render()
 {
@@ -31,6 +39,55 @@ Render::Render()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	numMapPoints = 0;
+
+	// create Vertex Array Objects for all regular Polygons with 25 or less sides
+	glGenVertexArrays(MAX_SIDES - 2, shapesArray);
+	glGenBuffers(MAX_SIDES - 2, shapesBuffer);
+	glGenBuffers(MAX_SIDES - 2, shapesElements);
+	float vertices[MAX_SIDES * 2];
+
+	// generate the order in which to render the points
+	unsigned int order[MAX_SIDES * 3];
+
+	for (int i = 0; i < MAX_SIDES * 3; i +=3)
+	{
+		order[i] = 0;
+		order[i + 1] = (i / 3) + 1;
+		order[i + 2] = (i / 3) + 2;
+	}
+
+	// create the vertex array objects
+	for (int i = 0; i < MAX_SIDES - 2; i++)
+	{
+		getPolygon(i + 3, vertices);
+
+		glBindVertexArray(shapesArray[i]);
+
+		glBindBuffer(GL_ARRAY_BUFFER, shapesBuffer[i]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shapesElements[i]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(order), order, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);	// Vertex attributes stay the same
+		glEnableVertexAttribArray(0);
+	}
+}
+
+void getPolygon(int sides, float * vertices)
+{
+	if (sides < 3)
+		sides = 3;
+	if (sides > MAX_SIDES)
+		sides = MAX_SIDES;
+
+	double period = (2 * PI) / sides;
+	
+	for (int i = 0; i < sides * 2; i+=2)
+	{
+		vertices[i] = .25 * float(cos(period * i / 2));
+		vertices[i+1] = .25 * float(sin(period * i / 2));
+	}
 }
 
 // mess with this later
@@ -86,8 +143,7 @@ void Render::init(TowerDefense& game)
 	}
 	
 	numMapPoints = indicies.size();
-	//numMapPoints = 6;
-
+	
 	float mapPoints[3000]; 
 	unsigned int mapIndicies[3000];
 
@@ -103,18 +159,6 @@ void Render::init(TowerDefense& game)
 		else
 			mapIndicies[i] = 0;
 	}
-
-
-	//float mapPoints[] = {
-	//	0.5f,  0.5f,   // top right
-	//	0.5f, -0.5f,   // bottom right
-	//	-0.5f, -0.5f,   // bottom left
-	//	-0.5f,  0.5f,    // top left 
-	//};
-	//unsigned int mapIndicies[] = {  // note that we start from 0!
-	//	0, 1, 3,  // first Triangle
-	//	1, 2, 3   // second Triangle
-	//};
 
 	glGenVertexArrays(1, &mapVAO);
 	glGenBuffers(1, &mapVBO);
@@ -147,7 +191,22 @@ void Render::render(const TowerDefense & game)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mapEBO);
 	glDrawElements(GL_TRIANGLES, numMapPoints, GL_UNSIGNED_INT, 0);
 
+	//drawPolygon(5);
+
 }
+
+void Render::drawPolygon(int sides)
+{
+	if (sides < 3)
+		sides = 3;
+	if (sides > MAX_SIDES)
+		sides = MAX_SIDES;
+
+	glBindVertexArray(shapesArray[sides - 3]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shapesElements[sides - 3]);
+	glDrawElements(GL_TRIANGLES, (sides - 2) * 3, GL_UNSIGNED_INT, 0);
+}
+
 
 void Render::renderASCII(const Dungeon& dungeon)
 {
