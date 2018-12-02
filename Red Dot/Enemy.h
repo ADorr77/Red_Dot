@@ -6,13 +6,10 @@
 #include "Maps.h"
 #include "Tower.h"
 
-enum { regen, normal, strong, fast, tank, boss };
 // Generic Tower Defense Enemy
 class Enemy
 {
 private:
-	char type_char;
-	int type;
 	int timer;
 	double speed;
 	double strength;
@@ -21,7 +18,7 @@ private:
 	int reward;
 	double xPos, yPos;
 	double xVel, yVel;
-	unsigned int slow_timer;
+	int slow_timer;
 	// int type; Possible way to implement multiple types of enemies with enum
 	// double speed; could have this too potentially
 public:
@@ -43,7 +40,6 @@ public:
 	void hit_response(int);
 
 	// get Functions
-	int get_type() const { return type; }
 	double get_strength() const;
 	double get_hp() const;
 	double get_xPos() const;
@@ -51,9 +47,6 @@ public:
 	int get_reward() const;
 	double get_xVel() const;
 	double get_yVel() const;
-	double get_slow_timer() const { return slow_timer; }
-	char get_type_char() const { return type_char; }
-	// set functions
 	void set_xVel(int);
 	void set_yVel(int);
 	void update_velocities(Maps m);
