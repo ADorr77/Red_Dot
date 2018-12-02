@@ -6,7 +6,7 @@ Enemy::Enemy(int level) {
 	slow_timer = 0;
 	type = level;
 	if (level == normal) {
-		speed = .25;
+		speed = 10;
 		hp = 1;
 		strength = 1;
 		xVel = 0;
@@ -15,7 +15,7 @@ Enemy::Enemy(int level) {
 		type_char = 'e';
 	}
 	if (level == strong) {
-		speed = .25;
+		speed = 5;
 		hp = 2;
 		strength = 1;
 		xVel = 0;
@@ -24,7 +24,7 @@ Enemy::Enemy(int level) {
 		type_char = 's';
 	}
 	if (level == fast) {
-		speed = .50;
+		speed = 20;
 		hp = 1;
 		strength = 1;
 		xVel = 0;
@@ -33,7 +33,7 @@ Enemy::Enemy(int level) {
 		type_char = 'f';
 	}
 	if (level == tank) {
-		speed = .125;
+		speed = 3;
 		hp = 4;
 		strength = 2;
 		xVel = 0;
@@ -42,7 +42,7 @@ Enemy::Enemy(int level) {
 		type_char = 'e';
 	}
 	if (level == boss) {
-		speed = .125;
+		speed = 3;
 		hp = 50;
 		strength = 50;
 		xVel = 0;
@@ -52,7 +52,7 @@ Enemy::Enemy(int level) {
 	}
 }
 
-int Enemy::advance() {
+int Enemy::advance(int fps) {
 	//when timer hits zero, start sending enemy through path
 	if (timer == 0){
 		timer = -1;
@@ -60,8 +60,8 @@ int Enemy::advance() {
 	}
 	//decrease timer till it hits zero
 	if (timer > 0) { --timer; }
-	xPos += xVel;
-	yPos += yVel;
+	xPos += xVel/fps;
+	yPos += yVel/fps;
 	if (yPos > 15 || xPos >24.5) {
 		return 1;
 	}
