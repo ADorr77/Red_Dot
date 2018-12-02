@@ -75,7 +75,7 @@ int TowerDefense::processEvents(GLFWwindow * window)
 	return 0;
 }
 
-int TowerDefense::update()
+int TowerDefense::update(int fps)
 {
 	switch (state) {
 	case 0:
@@ -88,8 +88,8 @@ int TowerDefense::update()
 	case 1:
 		m.init_map(2);
 		map_towers();
-		advance_enemies();
-		advance_projectiles();
+		advance_enemies(fps);
+		advance_projectiles(fps);
 		if (enemies.size() == 0) { state = 2; }
 		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		//renderAscii();
@@ -147,32 +147,43 @@ void TowerDefense::renderAscii() {
 	}
 }
 
-void TowerDefense::advance_enemies()
+void TowerDefense::clear_Projectiles()
+{
+	for (int j = 0; j < towers.size(); ++j) {
+		towers[j].clear_p();
+	}
+}
+
+void TowerDefense::advance_enemies(int fps)
 {
 	for (int j = 0; j < enemies.size(); ++j) {
 		enemies[j].update_velocities(m);
-		if (int gt = enemies[j].advance() > 0) {
-			if (enemies.size() != 1) {
+		if (int gt = enemies[j].advance(fps) > 0) {
+			gotThru(enemies[j].get_strength());
+			if (enemies.size() != 0) {
 				enemies.erase(enemies.begin() + j);
 			}
 			else {
-				gotThru(enemies[j].get_strength());
+				//gotThru(enemies[j].get_strength());
 				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+				clear_Projectiles();
 				state = 2;
 			}
-			gotThru(enemies[j].get_strength());
+			//gotThru(enemies[j].get_strength());
 		}
-		for (int t = 0; t < towers.size(); ++t) {
-			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
-		}
-		//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
-		
-		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
-		if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
-		if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
-		{
-			enemies[j].reset_speed();
+		else {
+			for (int t = 0; t < towers.size(); ++t) {
+				towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
+			}
+			//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
+
+			// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
+			if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
+			if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
+			{
+				enemies[j].reset_speed();
+			}
 		}
 	}
 }
@@ -199,14 +210,14 @@ void TowerDefense::towers_detect()
 	}
 }
 
-void TowerDefense::advance_projectiles()
+void TowerDefense::advance_projectiles(int fps)
 {
 	for (int t = 0; t < towers.size(); t++) {
 
 
 		int c = towers[t].get_pnumber();
 		while (c > 0) {
-			if (!towers[t].advanceProjectiles(c - 1)) {
+			if (!towers[t].advanceProjectiles((c - 1), fps)) {
 
 				//towers[t].eraseProjectile(c - 1);
 				//--c;

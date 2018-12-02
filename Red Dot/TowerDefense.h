@@ -47,19 +47,20 @@ public:
 	// Tell the game to process input, return return game state (and other info potentially)
 	int processEvents(GLFWwindow * window);
 	// Updates the Game each tick, returns the game state 
-	int update();
+	int update(int fps);
 	//function for testing out game functionality
 	void init_level();
 	void renderAscii();
+	void clear_Projectiles();
 	//advances enemies
-	void advance_enemies();
+	void advance_enemies(int fps);
 	//places towers on map
 	void map_towers();
 	//creates a new tower and adds to vector
 	void create_tower(int x, int y, int type);
 	//calls towers to detect and shoot if necessary
 	void towers_detect();
-	void advance_projectiles();
+	void advance_projectiles(int fps);
 	// get functions
 
 	// getters

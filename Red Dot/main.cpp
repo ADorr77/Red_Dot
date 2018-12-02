@@ -55,7 +55,7 @@ int main()
 		{
 		case 0:
 			system("cls");
-			state = td.update();
+			state = td.update(fps);
 			state = td.processEvents(window);
 			renderer.render(td);
 			break;
