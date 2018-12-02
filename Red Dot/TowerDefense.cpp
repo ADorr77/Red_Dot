@@ -11,7 +11,7 @@ TowerDefense::TowerDefense() {
 	button_state = 0;
 	create_tower(8, 5, machine);
 	create_tower(15, 10, machine);
-	create_tower(18, 7, 2);
+	create_tower(18, 7, slow_t);
 }
 
 
@@ -87,7 +87,8 @@ void TowerDefense::renderAscii() {
 	// delete this after test
 	for (int j = 0; j < enemies.size(); ++j)
 	{
-		std::cout << enemies[j].get_slow_timer();
+		//std::cout << enemies[j].get_slow_timer() << s;
+		std::cout << towers[j].get_cooldown() << std::endl;
 	}
 }
 

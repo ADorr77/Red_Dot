@@ -16,18 +16,22 @@ Tower::Tower(int x, int y, int s)
 			cooldown = 20;
 			range = 5;
 			speed = 1;
+			break;
 		case ranged:
 			cooldown = 30;
 			range = 10;
 			speed = 1;
+			break;
 		case machine:
 			cooldown = 2;
 			range = 5;
 			speed = 2;
+			break;
 		case slow_t:
-			cooldown = 30;
+			cooldown = 15;
 			range = 5;
 			speed = 2;
+			break;
 	}
 	/*if (strength == basic) {
 		cooldown = 20;

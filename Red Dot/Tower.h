@@ -36,6 +36,7 @@ public:
 	double get_xPos() const;
 	double get_yPos() const;
 	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
-};
 
+	int get_cooldown() { return cooldown; }
+};
 #endif
