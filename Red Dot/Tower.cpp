@@ -57,7 +57,7 @@ void Tower::detect(double x, double y)
 		double xdist = xPos - x;
 		double ydist = yPos - y;
 		double dist = sqrt(xdist*xdist + ydist * ydist);
-		if (dist < range) {
+		if (dist < range && x != 0) {
 			pnumber += 1;
 			double xV = -1 * xdist * speed / dist;
 			double yV = -1 * ydist * speed / dist;

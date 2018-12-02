@@ -303,7 +303,7 @@ void TowerDefense::mapconstSet()
 
 void TowerDefense::gotThru(int i)
 {
-	through += i;
+	through += 1;
 	lives -= i;
 }
 
