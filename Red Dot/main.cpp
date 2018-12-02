@@ -63,12 +63,13 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
-			system("cls");
+			//system("cls");
 			if (dungeon.processInput(window) == 0 || dungeon.update() == 0) {
 				std::cout << "You've completed the level!" << std::endl;
 				state = 0;
 			}
-			renderer.renderASCII(dungeon);
+			//renderer.renderASCII(dungeon);
+			renderer.render(dungeon);
 			break;
 		}
 
