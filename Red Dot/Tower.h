@@ -5,7 +5,7 @@
 #include "Projectile.h"
 #include<vector>
 
-enum { basic, ranged, machine, slow };
+enum { basic, ranged, machine, slow_t };
 class Tower
 {
 private:

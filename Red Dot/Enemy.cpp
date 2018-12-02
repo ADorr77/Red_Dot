@@ -1,10 +1,10 @@
 #include"Enemy.h"
 #include"Tower.h"
-enum {regen, normal, strong, fast, tank, boss};
 Enemy::Enemy(int level) {
 	yPos = 11;
 	xPos = 0;
 	slow_timer = 0;
+	type = level;
 	if (level == normal) {
 		speed = .25;
 		hp = 1;
@@ -12,6 +12,7 @@ Enemy::Enemy(int level) {
 		xVel = 0;
 		yVel = 0;
 		reward = 100;
+		type_char = 'e';
 	}
 	if (level == strong) {
 		speed = .25;
@@ -20,6 +21,7 @@ Enemy::Enemy(int level) {
 		xVel = 0;
 		yVel = 0;
 		reward = 150;
+		type_char = 's';
 	}
 	if (level == fast) {
 		speed = .50;
@@ -28,6 +30,7 @@ Enemy::Enemy(int level) {
 		xVel = 0;
 		yVel = 0;
 		reward = 150;
+		type_char = 'f';
 	}
 	if (level == tank) {
 		speed = .125;
@@ -36,6 +39,7 @@ Enemy::Enemy(int level) {
 		xVel = 0;
 		yVel = 0;
 		reward = 200;
+		type_char = 'e';
 	}
 	if (level == boss) {
 		speed = .125;
@@ -44,6 +48,7 @@ Enemy::Enemy(int level) {
 		xVel = 0;
 		yVel = 0;
 		reward = 200;
+		type_char = 'b';
 	}
 }
 
@@ -62,7 +67,7 @@ int Enemy::advance() {
 	}
 	else { return 0; }
 
-	if (slow_timer > 0) { slow_timer -= 1; } // count down the slow timer if enemy is being slowed.
+	if (slow_timer > 0) { --slow_timer; } // count down the slow timer if enemy is being slowed.
 	if (slow_timer = 1) // resets velocities once slow_timer is down.
 	{
 		xVel *= 2;
@@ -92,9 +97,9 @@ void Enemy::take_damage()
 
 void Enemy::slow()
 {
-	slow_timer = 15;
-	xVel *= 0.5;
-	yVel *= 0.5;
+	slow_timer = 1000; //temporary large timer to see effect 
+	xVel *= 0.25;
+	yVel *= 0.25;
 }
 
 void Enemy::hit_response(int type)
@@ -108,6 +113,9 @@ void Enemy::hit_response(int type)
 		break;
 	case (machine):
 		take_damage();
+		break;
+	case (slow_t):
+		slow();
 		break;
 	}
 }

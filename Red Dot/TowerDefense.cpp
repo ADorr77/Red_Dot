@@ -1,4 +1,5 @@
 #include "TowerDefense.h"
+#include "Enemy.h"
 
 TowerDefense::TowerDefense() {
 	money = 0;
@@ -8,9 +9,9 @@ TowerDefense::TowerDefense() {
 	m.init_map(2);
 	state = 0;
 	button_state = 0;
-	create_tower(8, 5, 0);
-	create_tower(15, 10, 1);
-	create_tower(18, 7, 2);
+	create_tower(8, 5, slow_t);
+	//create_tower(15, 10, 1);
+	//create_tower(18, 7, 2);
 }
 
 
@@ -61,9 +62,12 @@ int TowerDefense::update()
 
 void TowerDefense::init_level()
 {
+	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 30, normal, 1);
+		make_wave(10, 30, boss, 1);
+		make_wave(20, 30, fast, 1);
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
@@ -79,6 +83,11 @@ void TowerDefense::renderAscii() {
 			std::cout << m.get_map_value(j,i) << m.get_map_value(j,i);
 		}
 		std::cout << std::endl;
+	}
+	// delete this after test
+	for (int j = 0; j < enemies.size(); ++j)
+	{
+		std::cout << enemies[j].get_slow_timer();
 	}
 }
 
@@ -101,7 +110,16 @@ void TowerDefense::advance_enemies()
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
-		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), 'e');
+		/*char type_val;
+		switch (enemies[j].get_type())
+		{
+		case (normal): type_val = 'e';
+		case(strong): type_val = 's';
+		case(fast): type_val = 'f';
+		case(regen): type_val = 'r';
+		case (boss): type_val = 'b';
+		}*/
+		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
 
 	}
 }
