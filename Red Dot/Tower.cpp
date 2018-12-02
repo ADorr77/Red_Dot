@@ -15,22 +15,22 @@ Tower::Tower(int x, int y, int s)
 		case basic:
 			cooldown = 20;
 			range = 5;
-			speed = 1;
+			speed = 20;
 			break;
 		case ranged:
 			cooldown = 30;
-			range = 10;
-			speed = 1;
+			range = 15;
+			speed = 40;
 			break;
 		case machine:
-			cooldown = 2;
+			cooldown = 5;
 			range = 5;
-			speed = 2;
+			speed = 20;
 			break;
 		case slow_t:
 			cooldown = 15;
 			range = 5;
-			speed = 2;
+			speed = 20;
 			break;
 	}
 	/*if (strength == basic) {
@@ -71,9 +71,9 @@ void Tower::detect(double x, double y)
 	}
 }
 
-int Tower::advanceProjectiles(int pnum)
+int Tower::advanceProjectiles(int pnum, int fps)
 {
-	int p = projectiles[pnum].advance(); 
+	int p = projectiles[pnum].advance(fps); 
 	if (p) { --pnumber; }
 	
 	return p;
@@ -109,6 +109,11 @@ double Tower::get_projectile_x(int pnum)
 double Tower::get_projectile_y(int pnum)
 {
 	return projectiles[pnum].get_yPos();
+}
+
+void Tower::clear_p()
+{
+	projectiles.clear();
 }
 
 double Tower::get_strength() const

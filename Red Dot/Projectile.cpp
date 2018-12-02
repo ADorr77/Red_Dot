@@ -14,10 +14,10 @@ Projectile::Projectile(double x, double y, double xV, double yV, int p)
 	power = p;
 }
 
-int Projectile::advance()
+int Projectile::advance(int fps)
 {
-	xPos += xVel;
-	yPos += yVel;
+	xPos += xVel/fps;
+	yPos += yVel/fps;
 	if (xPos > 24 || yPos > 15 || xPos < 0 || yPos < 0) {
 		return 1;
 	}
