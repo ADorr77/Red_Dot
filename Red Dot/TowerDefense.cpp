@@ -67,7 +67,7 @@ void TowerDefense::init_level()
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
-		//make_wave(100, 20, 2, 5);
+		make_wave(100, 20, 2, 5);
 		break;
 	}
 }
@@ -91,12 +91,12 @@ void TowerDefense::advance_enemies()
 				enemies.erase(enemies.begin() + j);
 			}
 			else {
-				gotThru(gt);
+				gotThru(enemies[j].get_strength());
 				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 				state = 2;
 			}
-			gotThru(gt);
+//			gotThru(enemies[j].get_strength());
 		}
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
@@ -144,9 +144,9 @@ void TowerDefense::advance_projectiles()
 				double y = towers[t].get_projectile_y(c - 1);
 				m.set_map_value((int)x, (int)y, '.');
 				if (!enemies.size()) { state = 2; }
-				for (int j = 0; j < enemies.size(); ++j) {
+				for (int j = 0; j < enemies.size(); j++) {
 					if (enemies[j].detect(x, y)) {
-						towers[t].eraseProjectile(c - 1);
+							towers[t].eraseProjectile(c - 1);
 						enemies[j].hit_response(towers[t].get_strength());
 					}
 					// enemies[j].take_damage(x, y);
@@ -246,7 +246,7 @@ void TowerDefense::mapconstSet()
 
 void TowerDefense::gotThru(int i)
 {
-	through += i;
+	through += 1;
 	lives -= i;
 }
 
