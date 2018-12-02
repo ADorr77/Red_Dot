@@ -9,9 +9,9 @@ TowerDefense::TowerDefense() {
 	m.init_map(2);
 	state = 0;
 	button_state = 0;
-	create_tower(8, 5, slow_t);
-	//create_tower(15, 10, 1);
-	//create_tower(18, 7, 2);
+	create_tower(8, 5, machine);
+	create_tower(15, 10, machine);
+	create_tower(18, 7, 2);
 }
 
 
@@ -65,7 +65,7 @@ void TowerDefense::init_level()
 	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 30, normal, 1);
+		make_wave(0, 30, boss, 1);
 		make_wave(10, 30, boss, 1);
 		make_wave(20, 30, fast, 1);
 		break;
@@ -120,7 +120,13 @@ void TowerDefense::advance_enemies()
 		case (boss): type_val = 'b';
 		}*/
 		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
-
+		
+		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
+		if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
+		if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
+		{
+			enemies[j].reset_speed();
+		}
 	}
 }
 

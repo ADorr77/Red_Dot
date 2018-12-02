@@ -21,7 +21,7 @@ private:
 	int reward;
 	double xPos, yPos;
 	double xVel, yVel;
-	unsigned int slow_timer;
+    int slow_timer;
 	// int type; Possible way to implement multiple types of enemies with enum
 	// double speed; could have this too potentially
 public:
@@ -57,6 +57,8 @@ public:
 	void set_xVel(int);
 	void set_yVel(int);
 	void update_velocities(Maps m);
+	void decrement_slow() { --slow_timer; } // move thsi to cpp
+	void reset_speed() { speed *= 4; } // move this to cpp
 	// Write additional behavior
 };
 

@@ -25,7 +25,7 @@ Tower::Tower(int x, int y, int s)
 			range = 5;
 			speed = 2;
 		case slow_t:
-			cooldown = 1000;
+			cooldown = 30;
 			range = 5;
 			speed = 2;
 	}

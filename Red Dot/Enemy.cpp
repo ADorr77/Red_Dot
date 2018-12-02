@@ -67,12 +67,12 @@ int Enemy::advance() {
 	}
 	else { return 0; }
 
-	if (slow_timer > 0) { --slow_timer; } // count down the slow timer if enemy is being slowed.
-	if (slow_timer = 1) // resets velocities once slow_timer is down.
-	{
-		xVel *= 2;
-		yVel *= 2;
-	}
+	// delete this jawn
+	//if (slow_timer > 0) { --slow_timer; } // count down the slow timer if enemy is being slowed.
+	//if (slow_timer = 1) // resets velocities once slow_timer is down.
+	//{
+		//speed *= 4;
+	//}
 }
 
 void Enemy::setTimer(int t) {
@@ -97,9 +97,11 @@ void Enemy::take_damage()
 
 void Enemy::slow()
 {
-	slow_timer = 1000; //temporary large timer to see effect 
-	xVel *= 0.25;
-	yVel *= 0.25;
+	if (slow_timer == 0) // prevents slow effect from accumulating 
+	{
+		slow_timer = 30; //temporary large timer to see effect 
+		speed *= .25;
+	}
 }
 
 void Enemy::hit_response(int type)
