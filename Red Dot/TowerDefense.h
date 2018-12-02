@@ -20,6 +20,7 @@ private:
 	int state;
 	int button_state;
 	int lives;
+	int mouse_cooldown;
 	char map[25][15];
 	char mapconst[25][15];
 	// map that holds path that does not get changed or printed out

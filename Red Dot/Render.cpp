@@ -1,4 +1,5 @@
 #include "Render.h"
+#include <iostream>
 #include <string>
 #include <cmath>
 
@@ -56,7 +57,7 @@ Render::Render()
 		order[i + 2] = (i / 3) + 2;
 	}
 
-	// create the vertex array objects
+	// create the vertex array objects for regular Polygons
 	for (int i = 0; i < MAX_SIDES - 2; i++)
 	{
 		getPolygon(i + 3, vertices);
@@ -72,6 +73,9 @@ Render::Render()
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);	// Vertex attributes stay the same
 		glEnableVertexAttribArray(0);
 	}
+
+	// create shader for game
+	shader = Shader("vertShader.txt", "fragShader.txt");
 }
 
 void getPolygon(int sides, float * vertices)
@@ -105,10 +109,13 @@ void Render::init(TowerDefense& game)
 {
 
 	float squarePoints[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f
+		0.05f, 0.05f,
+		//1.0f, 0.0f,
+		//1.0f, 1.0f,
+		//0.0f, 1.0f
+		0.95f, 0.05f,
+		0.95f, 0.95f,
+		0.05f, 0.95f
 	};
 
 	unsigned int squareIndices[] = {  // note that we start from 0!
@@ -128,8 +135,8 @@ void Render::init(TowerDefense& game)
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					vertices.push_back((x + squarePoints[2 * i] - 12.5) / 12.5);
-					vertices.push_back((-1 * (y + squarePoints[(2 * i) + 1]) + 12.5) / 12.5);
+					vertices.push_back(x + squarePoints[2 * i]);
+					vertices.push_back(-1 * (y + squarePoints[(2 * i) + 1]));
 				}
 
 				for (int i = 0; i < 6; i++)
@@ -175,8 +182,60 @@ void Render::init(TowerDefense& game)
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// create the shader obj for the map
-	mapShader = Shader("mapVertShader.txt", "fragShader.txt");
+	vertices.clear();
+	indicies.clear();
+	count = 0;
+
+	//add buttons at bottom
+	for (int x = 0; x < 25; x += 5)
+	{
+		for (int y = 15; y < 25; y += 5)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				vertices.push_back(x + (squarePoints[2 * i] * 5));
+				vertices.push_back(-1 * (y + (squarePoints[(2 * i) + 1] * 5 )));
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				indicies.push_back(count + squareIndices[i]);
+			}
+			count += 4;
+		}
+	}
+
+	numButtonPoints = indicies.size();
+
+	float buttonPoints[80];
+	unsigned int buttonIndices[80];
+
+	for (int i = 0; i < 80; i++)
+	{
+		if (i < vertices.size())
+			buttonPoints[i] = vertices[i];
+		else
+			buttonPoints[i] = 0;
+
+		if (i < indicies.size())
+			buttonIndices[i] = indicies[i];
+		else
+			buttonIndices[i] = 0;
+	}
+
+	glGenVertexArrays(1, &buttonVAO);
+	glGenBuffers(1, &buttonVBO);
+	glGenBuffers(1, &buttonEBO);
+
+	glBindVertexArray(buttonVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buttonVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(buttonPoints), buttonPoints, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(buttonIndices), buttonIndices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 }
 
 
@@ -186,12 +245,25 @@ void Render::render(const TowerDefense & game)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	mapShader.use();
+	shader.use();
+
+	// set the uniforms for tower map
+	shader.setUniform("color", 0.0f, 0.0f, 1.0f, 1.0f);
+	shader.setUniform("radius", 1.0f);
+	shader.setUniform("shift", -12.5f, 12.5f);
+	shader.setUniform("scale", (1.0f / 12.5f));
+
 	glBindVertexArray(mapVAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mapEBO);
 	glDrawElements(GL_TRIANGLES, numMapPoints, GL_UNSIGNED_INT, 0);
 
-	//drawPolygon(5);
+	shader.setUniform("color", 0.4, 0.4, 0.4, 1.0);
+	glBindVertexArray(buttonVAO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
+	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
+
+
+
 
 }
 

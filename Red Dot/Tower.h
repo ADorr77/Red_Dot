@@ -5,7 +5,7 @@
 #include "Projectile.h"
 #include<vector>
 
-enum { basic, ranged, machine, spray};
+enum { basic, ranged, machine, spray , slow_t};
 class Tower
 {
 private:
@@ -36,6 +36,7 @@ public:
 	double get_xPos() const;
 	double get_yPos() const;
 	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
-};
 
+	int get_cooldown() { return cooldown; }
+};
 #endif

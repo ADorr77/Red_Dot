@@ -1,4 +1,5 @@
 #include "TowerDefense.h"
+#include "Enemy.h"
 
 TowerDefense::TowerDefense() {
 	money = 0;
@@ -8,23 +9,69 @@ TowerDefense::TowerDefense() {
 	m.init_map(2);
 	state = 0;
 	button_state = 0;
+	mouse_cooldown = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
-	create_tower(18, 7, 2);
+	//create_tower(18, 7, 2);
 }
 
 
 int TowerDefense::processEvents(GLFWwindow * window)
 {
+	if (mouse_cooldown) { --mouse_cooldown; }
 	double x_pos, y_pos;
 	glfwGetCursorPos(window, &x_pos, &y_pos);
 	int click = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-	if (click == GLFW_PRESS) {
-		if (button_state == 0 && money > 1000) {
-			int x = (int)x_pos / 32;
-			int y = (int)y_pos / 32;
-			money -= 1000;
+	if (click == GLFW_PRESS && mouse_cooldown == 0) {
+		mouse_cooldown = 5;
+		int x = (int)x_pos / 32;
+		int y = (int)y_pos / 32;
+		int isOccupied = -1;
+		for (int t = 0; t < towers.size(); ++t) {
+			if (x == towers[t].get_xPos() && y == towers[t].get_yPos()) { isOccupied = t; }
+		}
+		//placing / upgrading towers
+		if (button_state == 1 && money >= 500 && y<15 && isOccupied == -1) {
+			money -= 500;
 			create_tower(x, y, 0);
+		}
+		if (button_state == 2 && money >= 800 && y < 15 && isOccupied == -1) {
+			money -= 800;
+			create_tower(x, y, 1);
+		}
+		if (button_state == 3 && money >= 1500 && y < 15 && isOccupied == -1) {
+			money -= 1500;
+			create_tower(x, y, 2);
+		}
+		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
+			money -= 1000;
+			create_tower(x, y, 3);
+		}
+		//play pause
+		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
+			if (state == 1) {
+				state = 3;
+			}
+			else if (state == 2) {
+				state = 0;
+			}
+			else if (state == 3 ) { state = 1; }
+		}
+		if (x >= 0 && y >= 20 && x < 5 && y < 25) {
+			return 1;
+		}
+		// making towers buttons
+		if (x >= 5 && y >= 15 && x < 10 && y < 20) {
+			button_state = 1;
+		}
+		if (x >= 5 && y >= 20 && x < 10 && y < 25) {
+			button_state = 2;
+		}
+		if (x >= 10 && y >= 15 && x < 15 && y < 20) {
+			button_state = 3;
+		}
+		if (x >= 10 && y >= 20 && x < 15 && y < 25) {
+			button_state = 4;
 		}
 	}
 	return 0;
@@ -45,31 +92,38 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
+		if (enemies.size() == 0) { state = 2; }
 		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" <<get_lives();
-		int q;
-		std::cin >> q;
-		state = 0;
+			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+		break;
+
+		//pause state
+	case 3:
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+		renderAscii();
 		break;
 	}
+
 	return 0;
 }
 
 void TowerDefense::init_level()
 {
+	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 10, tank, 20);
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
-		//make_wave(100, 20, 2, 5);
+		make_wave(100, 20, 2, 5);
 		break;
 	}
+
 }
 
 void TowerDefense::renderAscii() {
@@ -91,18 +145,24 @@ void TowerDefense::advance_enemies()
 				enemies.erase(enemies.begin() + j);
 			}
 			else {
-				gotThru(gt);
+				gotThru(enemies[j].get_strength());
 				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 				state = 2;
 			}
-			gotThru(gt);
+			gotThru(enemies[j].get_strength());
 		}
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
-		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), 'e');
-
+		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
+		
+		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
+		if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
+		if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
+		{
+			enemies[j].reset_speed();
+		}
 	}
 }
 
@@ -144,16 +204,17 @@ void TowerDefense::advance_projectiles()
 				double y = towers[t].get_projectile_y(c - 1);
 				m.set_map_value((int)x, (int)y, '.');
 				if (!enemies.size()) { state = 2; }
-				for (int j = 0; j < enemies.size(); ++j) {
+				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
-						towers[t].eraseProjectile(c - 1);
 						enemies[j].hit_response(towers[t].get_strength());
+						if (towers[t].get_pnumber() >= 1) {
+							towers[t].eraseProjectile(c - 1);
+						}
 					}
-					// enemies[j].take_damage(x, y);
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
-						j = enemies.size();
+//						j = enemies.size();
 					}
 
 				}
@@ -222,10 +283,6 @@ void TowerDefense::mapinit() {
 		}
 	}
 
-
-
-
-
 }
 
 void TowerDefense::mapSet(int x, int y, char c)
@@ -246,7 +303,7 @@ void TowerDefense::mapconstSet()
 
 void TowerDefense::gotThru(int i)
 {
-	through += i;
+	through += 1;
 	lives -= i;
 }
 

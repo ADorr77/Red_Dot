@@ -1,4 +1,8 @@
 #include "Shader.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 unsigned int compileShader(const char * code, GLenum type)
 {
@@ -138,46 +142,23 @@ void Shader::use()
 	glUseProgram(id);
 }
 
-void Shader::setUniform(const std::string& name, int count, const int* values)
+void Shader::setUniform(const std::string& name, float one)
 {
-	switch (count)
-	{
-	case 2:
-		glUniform2i(glGetUniformLocation(id, name.c_str()), values[0], values[1]);
-		break;
-
-	case 3:
-		glUniform3i(glGetUniformLocation(id, name.c_str()), values[0], values[1], values[2]);
-		break;
-
-	case 4:
-		glUniform4i(glGetUniformLocation(id, name.c_str()), values[0], values[1], values[2], values[4]);
-		break;
-
-	default:
-		glUniform1i(glGetUniformLocation(id, name.c_str()), values[0]);
-		break;
-	}
+	glUniform1f(glGetUniformLocation(id, name.c_str()), one);
 }
 
-void Shader::setUniform(const std::string& name, int count, const float* values)
+void Shader::setUniform(const std::string& name, float one, float two)
 {
-	switch (count)
-	{
-	case 2:
-		glUniform2f(glGetUniformLocation(id, name.c_str()), values[0], values[1]);
-		break;
-
-	case 3:
-		glUniform3f(glGetUniformLocation(id, name.c_str()), values[0], values[1], values[2]);
-		break;
-
-	case 4:
-		glUniform4f(glGetUniformLocation(id, name.c_str()), values[0], values[1], values[2], values[4]);
-		break;
-
-	default:
-		glUniform1f(glGetUniformLocation(id, name.c_str()), values[0]);
-		break;
-	}
+	glUniform2f(glGetUniformLocation(id, name.c_str()), one, two);
 }
+
+void Shader::setUniform(const std::string& name, float one, float two, float three)
+{
+	glUniform3f(glGetUniformLocation(id, name.c_str()), one, two, three);
+}
+
+void Shader::setUniform(const std::string& name, float one, float two, float three, float four)
+{
+	glUniform4f(glGetUniformLocation(id, name.c_str()), one, two, three, four);
+}
+
