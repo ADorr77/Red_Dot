@@ -64,7 +64,7 @@ void Tower::detect(double x, double y)
 			Projectile *p1 = new Projectile(xPos, yPos, xV, yV, strength);
 			projectiles.push_back(*p1);
 			timer += cooldown;
-			std::cout << "SHOT";
+			//std::cout << "SHOT";
 
 		
 		}

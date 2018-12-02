@@ -2,17 +2,15 @@
 #include "Enemy.h"
 
 TowerDefense::TowerDefense() {
-	money = 0;
+	money = 1000;
 	level = 0;
 	through = 0;
 	lives = 100;
 	m.init_map(2);
-	state = 0;
+	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
-	create_tower(8, 5, 0);
-	create_tower(15, 10, 1);
-	//create_tower(18, 7, 2);
+	
 }
 
 
@@ -45,7 +43,7 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		}
 		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
 			money -= 1000;
-			create_tower(x, y, 3);
+			create_tower(x, y, slow_t);
 		}
 		//play pause
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
@@ -85,7 +83,7 @@ int TowerDefense::update()
 		++level;
 		++state;
 		m.init_map(2);
-		renderAscii();
+		//renderAscii();
 		break;
 	case 1:
 		m.init_map(2);
@@ -93,8 +91,8 @@ int TowerDefense::update()
 		advance_enemies();
 		advance_projectiles();
 		if (enemies.size() == 0) { state = 2; }
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		renderAscii();
+		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+		//renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
@@ -104,7 +102,7 @@ int TowerDefense::update()
 		//pause state
 	case 3:
 		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		renderAscii();
+		//renderAscii();
 		break;
 	}
 
@@ -168,7 +166,7 @@ void TowerDefense::advance_enemies()
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
-		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
+		//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
 		
 		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
 		if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
@@ -182,7 +180,7 @@ void TowerDefense::advance_enemies()
 void TowerDefense::map_towers()
 {
 	for (int i = 0; i < towers.size(); ++i) {
-		m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
+		//m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
 		towers[i].cool();
 	}
 	
@@ -215,7 +213,7 @@ void TowerDefense::advance_projectiles()
 				//if (towers[t].get_pnumber()) { --c; }
 				double x = towers[t].get_projectile_x(c - 1);
 				double y = towers[t].get_projectile_y(c - 1);
-				m.set_map_value((int)x, (int)y, '.');
+				//m.set_map_value((int)x, (int)y, '.');
 				if (!enemies.size()) { state = 2; }
 				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {

@@ -274,6 +274,27 @@ void Render::render(const TowerDefense & game)
 		drawPolygon(20);
 	}
 
+	const std::vector<Tower>& towers = game.get_towers();
+	for (int i = 0; i < towers.size(); i++)
+	{
+		shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+		shader.setUniform("radius", 1.0);
+		shift[0] = towers[i].get_xPos() + 0.5 - 12.5;
+		shift[1] = (-1 * towers[i].get_yPos()) - 0.5 + 12.5;
+		shader.setUniform("shift", shift[0], shift[1]);
+		drawPolygon(20);
+
+		const std::vector<Projectile>& bolts = towers[i].get_projectiles();
+		shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
+		shader.setUniform("radius", 0.5);
+		for (int i = 0; i < bolts.size(); i++)
+		{
+			shift[0] = bolts[i].get_xPos() + 0.5 - 12.5;
+			shift[1] = (-1 * bolts[i].get_yPos()) - 0.5 + 12.5;
+			shader.setUniform("shift", shift[0], shift[1]);
+			drawPolygon(20);
+		}
+	}
 }
 
 void Render::drawPolygon(int sides)
