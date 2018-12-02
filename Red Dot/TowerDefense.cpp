@@ -116,11 +116,24 @@ void TowerDefense::init_level()
 	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 10, tank, 20);
+		make_wave(0, 10, normal, 10);
 		break;
 	case 1:
-		make_wave(0, 15, 5, 1);
-		make_wave(100, 20, 2, 5);
+		make_wave(0, 15, normal, 10);
+		make_wave(150, 20, strong, 5);
+		break;
+	case 2:
+		make_wave(0, 15, normal, 20);
+		make_wave(250, 20, fast, 5);
+		break;
+	case 3:
+		make_wave(0, 15, normal, 20);
+		make_wave(250, 20, tank, 5);
+		break;
+	case 4:
+		make_wave(0, 15, normal, 10);
+		make_wave(150, 20, strong, 10);
+		make_wave(200, 20, fast, 10);
 		break;
 	}
 
