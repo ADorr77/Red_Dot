@@ -4,6 +4,7 @@ enum {regen, normal, strong, fast, tank, boss};
 Enemy::Enemy(int level) {
 	yPos = 11;
 	xPos = 0;
+	slow_timer = 0;
 	if (level == normal) {
 		speed = .25;
 		hp = 1;
@@ -60,6 +61,13 @@ int Enemy::advance() {
 		return 1;
 	}
 	else { return 0; }
+
+	if (slow_timer > 0) { slow_timer -= 1; } // count down the slow timer if enemy is being slowed.
+	if (slow_timer = 1) // resets velocities once slow_timer is down.
+	{
+		xVel *= 2;
+		yVel *= 2;
+	}
 }
 
 void Enemy::setTimer(int t) {
@@ -80,6 +88,13 @@ int Enemy::detect(double x, double y)
 void Enemy::take_damage()
 {
 		hp -= 1;
+}
+
+void Enemy::slow()
+{
+	slow_timer = 15;
+	xVel *= 0.5;
+	yVel *= 0.5;
 }
 
 void Enemy::hit_response(int type)
