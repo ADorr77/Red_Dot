@@ -27,6 +27,9 @@ public:
 	double get_yPos() const { return yPos; }
 	double get_hitbox_d() const { return hitbox_d; }
 
+	int get_xCoord() const { return (int)xPos; }
+	int get_yCoord() const { return (int)yPos; }
+
 	// Other behavior
 	int check_hit(double x, double y);
 };

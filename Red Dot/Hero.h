@@ -33,6 +33,9 @@ public:
 	double get_yPos() const { return yPos; }
 	int get_weapon() const { return weapon; }
 
+	int get_xCoord() const { return (int)xPos; }
+	int get_yCoord() const { return (int)yPos; }
+
 	// Movement and Direction
 	void move(int x, int y);
 	void set_direction(double xH, double yH);
@@ -48,6 +51,7 @@ public:
 	void switch_Weapon();
 	void add_exp(double xp);
 	void level_up();
+	int die();
 
 };
 

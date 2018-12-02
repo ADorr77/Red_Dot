@@ -51,7 +51,7 @@ void Hero::set_direction(double x, double y) {
 }
 
 double Hero::melee_attack(double x, double y) {
-		double range = 10;
+		double range = 2;
 		// Distance to monster
 		double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
 		if (distM <= range) {
@@ -69,7 +69,12 @@ Bolt Hero::ranged_attack() {
 }
 
 void Hero::switch_Weapon() {
-	weapon = (weapon == 1 ? 2 : 1);
+	if (weapon == 1) {
+		weapon = 2;
+	}
+	if (weapon == 2) {
+		weapon = 1;
+	}
 }
 
 void Hero::take_damage(double attack) {
@@ -88,4 +93,10 @@ void Hero::level_up() {
 	}
 }
 
+int Hero::die() {
+	if (health < 0) {
+		return 1;
+	}
+	return 0;
+}
 

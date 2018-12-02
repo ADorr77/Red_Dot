@@ -24,7 +24,7 @@ int main()
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
-	int state = 0; // change this for now to switch between modes
+	int state = 1; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1,3);
 
@@ -61,9 +61,14 @@ int main()
 			break;
 		case 1:
 			system("cls");
-			if (dungeon.processInput(window) == 0 || dungeon.update() == 0) {
+			int p = dungeon.processInput(window);
+			int u = dungeon.update();
+			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
 				state = 0;
+			}
+			if (u == 2) {
+				std::cout << "You died. Game Over." << std::endl;
 			}
 			renderer.renderASCII(dungeon);
 			break;

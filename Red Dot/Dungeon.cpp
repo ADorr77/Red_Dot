@@ -41,6 +41,9 @@ int Dungeon::processInput(GLFWwindow* window) {
 		xMove = 1;
 	}
 	hero.move(xMove, yMove);
+	if (map[hero.get_xCoord()][hero.get_yCoord()] == 0) {
+		hero.move(-xMove, -yMove);
+	}
 
 	// Switching Weapons
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
@@ -60,11 +63,11 @@ int Dungeon::processInput(GLFWwindow* window) {
 	// Processing Attacks
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
 		switch (hero.get_weapon()) {
-			case (1): 
+			case 1: 
 				for (int m = 0; m < monsters.size(); m++) {
 					monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
 				}
-			case (2):
+			case 2:
 				bolts.emplace_back(hero.ranged_attack());
 		}
 	}
@@ -88,51 +91,26 @@ int Dungeon::update() {
 	}
 	// Run through bolt functions (movement and check_hit monsters and walls)
 	for (int b = 0; b < bolts.size(); b++) {
-		bolts[b].move();
-		for (int m = 0; m < monsters.size(); m++) {
-			if (bolts[b].check_hit(monsters[m].get_xPos(), monsters[m].get_yPos())) {
-				monsters[m].take_damage(bolts[b].get_damage());
+		for (int x = 0; x < (monsters.size() -1); x++) {
+			if (bolts[b].check_hit(monsters[x].get_xPos(), monsters[x].get_yPos())) {
+				monsters[x].take_damage(bolts[b].get_damage());
 				bolts.erase(bolts.begin() + b);
 			}
 		}
-		/* 
-		if (map[(int)bolts[b].get_yPos()][(int)bolts[b].get_xPos] == 1) {
+		bolts[b].move();
+		if (map[bolts[b].get_xCoord()][bolts[b].get_yCoord()] == 0) {
 			bolts.erase(bolts.begin() + b);
 		}
-		*/
+		
 	}
 	hero.level_up();
 	// If monsters exist, keep dungeon running
+	if (hero.die()) {
+		return 2;
+	}
 	if (monsters.size()) {
 		return 1;
 	}
 
 	return 0;
 }
-
-void Dungeon::test() {
-	int x;
-	std::cin >> x;
-	if (x == 1) {
-		hero.move(1, -1);
-		hero.set_direction(monsters[1].get_xPos(), monsters[1].get_yPos());
-		bolts.emplace_back(hero.ranged_attack());
-		bolts[0].move();
-		monsters[1].take_damage(hero.melee_attack(monsters[1].get_xPos(), monsters[1].get_yPos()));
-		if (monsters[1].get_health() < 10) {
-			std::cout << "You got one" << std::endl;
-		}
-	}
-	//bolts[0].move();
-	/*if (bolts[0].check_hit(monsters[1].get_xPos(), monsters[1].get_yPos())) {
-		std::cout << "The Bolt hit one!!!!!!!" << std::endl;
-	}
-	*/
-	if (x = 2) {
-		for (int y = 0; y < monsters.size(); y++) {
-			monsters[y].move(hero.get_xPos(), hero.get_yPos());
-		}
-	}
-	
-}
-
