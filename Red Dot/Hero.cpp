@@ -57,7 +57,7 @@ double Hero::melee_attack(double x, double y) {
 		if (distM <= range) {
 			double angle_M = atan((y - yPos) / (x - xPos));	// Monster angle
 			double angle_C = atan(yDir / xDir);	// Cursor angle
-			if (angle_C - (3.14159265 / 4) < angle_M && angle_C + (3.1415926535 / 4) > angle_M) {
+			if (angle_C - (3.14159265 / 6) < angle_M && angle_C + (3.1415926535 / 6) > angle_M) {
 				return 5;
 			}
 		}
@@ -76,5 +76,16 @@ void Hero::take_damage(double attack) {
 	health -= attack;
 }
 
+void Hero::add_exp(double xp) {
+	exp += xp;
+}
+
+void Hero::level_up() {
+	if (exp > (100 * (level - 0.5))) {
+		maxHealth = 100 + (10 * level);
+		health = maxHealth;
+		level++;
+	}
+}
 
 

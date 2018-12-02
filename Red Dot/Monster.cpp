@@ -9,13 +9,14 @@ Monster::Monster()
 	health = 10;
 	hitbox = 1;
 	Vel = 1;
+	exp = 10;
 }
 
 void Monster::take_damage(double attack) {
 	health -= attack;
 }
 
-void Monster::move(const double X, const double Y) {
+void Monster::move(double X, double Y) {
 	// X and Y are the Hero's X and Y coordinates
 	double dist = sqrt((pow((xPos - X), 2)) + (pow((yPos - Y), 2)));
 

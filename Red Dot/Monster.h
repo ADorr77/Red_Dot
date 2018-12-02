@@ -12,6 +12,7 @@ private:
 	double xPos, yPos;
 	double Vel;
 	double hitbox;
+	double exp;
 	// int type; Possible way to implement multiple types of enemies with enum
 public:
 	// Monster constructor (pass in whatever you decide)
@@ -26,6 +27,7 @@ public:
 	double get_yPos() const { return yPos; }
 	double get_Vel() const { return Vel; }
 	double get_hitbox() const { return hitbox; }
+	double get_exp() const { return exp; }
 
 	// Write additional behavior
 	void move(double HeroX, double HeroY);

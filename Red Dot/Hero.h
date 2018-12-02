@@ -31,7 +31,7 @@ public:
 	double get_exp() const { return exp; }
 	double get_xPos() const { return xPos; }
 	double get_yPos() const { return yPos; }
-	double get_weapon() const { return weapon; }
+	int get_weapon() const { return weapon; }
 
 	// Movement and Direction
 	void move(int x, int y);
@@ -46,6 +46,8 @@ public:
 
 	// Technical
 	void switch_Weapon();
+	void add_exp(double xp);
+	void level_up();
 
 };
 
