@@ -9,32 +9,69 @@ TowerDefense::TowerDefense() {
 	m.init_map(2);
 	state = 0;
 	button_state = 0;
+	mouse_cooldown = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
-	create_tower(18, 7, 2);
+	//create_tower(18, 7, 2);
 }
 
 
 int TowerDefense::processEvents(GLFWwindow * window)
 {
+	if (mouse_cooldown) { --mouse_cooldown; }
 	double x_pos, y_pos;
 	glfwGetCursorPos(window, &x_pos, &y_pos);
 	int click = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
-	if (click == GLFW_PRESS) {
+	if (click == GLFW_PRESS && mouse_cooldown == 0) {
+		mouse_cooldown = 5;
 		int x = (int)x_pos / 32;
 		int y = (int)y_pos / 32;
-		if (button_state == 0 && money >= 1000 && y<15) {
-			money -= 1000;
+		int isOccupied = -1;
+		for (int t = 0; t < towers.size(); ++t) {
+			if (x == towers[t].get_xPos() && y == towers[t].get_yPos()) { isOccupied = t; }
+		}
+		//placing / upgrading towers
+		if (button_state == 1 && money >= 500 && y<15 && isOccupied == -1) {
+			money -= 500;
+			create_tower(x, y, 0);
+		}
+		if (button_state == 2 && money >= 800 && y < 15 && isOccupied == -1) {
+			money -= 800;
+			create_tower(x, y, 1);
+		}
+		if (button_state == 3 && money >= 1500 && y < 15 && isOccupied == -1) {
+			money -= 1500;
 			create_tower(x, y, 2);
 		}
+		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
+			money -= 1000;
+			create_tower(x, y, 3);
+		}
+		//play pause
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
 			if (state == 1) {
 				state = 3;
 			}
-			if (state == 2) {
+			else if (state == 2) {
 				state = 0;
 			}
-			else { state = 1; }
+			else if (state == 3 ) { state = 1; }
+		}
+		if (x >= 0 && y >= 20 && x < 5 && y < 25) {
+			return 1;
+		}
+		// making towers buttons
+		if (x >= 5 && y >= 15 && x < 10 && y < 20) {
+			button_state = 1;
+		}
+		if (x >= 5 && y >= 20 && x < 10 && y < 25) {
+			button_state = 2;
+		}
+		if (x >= 10 && y >= 15 && x < 15 && y < 20) {
+			button_state = 3;
+		}
+		if (x >= 10 && y >= 20 && x < 15 && y < 25) {
+			button_state = 4;
 		}
 	}
 	return 0;
@@ -83,7 +120,7 @@ void TowerDefense::init_level()
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
-		//make_wave(100, 20, 2, 5);
+		make_wave(100, 20, 2, 5);
 		break;
 	}
 
@@ -266,7 +303,7 @@ void TowerDefense::mapconstSet()
 
 void TowerDefense::gotThru(int i)
 {
-	through += i;
+	through += 1;
 	lives -= i;
 }
 

@@ -17,7 +17,7 @@ Enemy::Enemy(int level) {
 	if (level == strong) {
 		speed = .25;
 		hp = 2;
-		strength = 1;
+		strength = 3;
 		xVel = 0;
 		yVel = 0;
 		reward = 150;
@@ -122,6 +122,11 @@ void Enemy::hit_response(int type)
 	}
 }
 
+double Enemy::get_strength() const
+{
+	return strength;
+}
+
 double Enemy::get_hp() const
 {
 	return hp;
@@ -146,6 +151,7 @@ double Enemy::get_yVel() const
 {
 	return yVel;
 }
+
 
 int Enemy::get_reward() const
 {

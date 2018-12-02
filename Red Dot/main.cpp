@@ -57,11 +57,13 @@ int main()
 		{
 		case 0:
 			system("cls");
-			td.update();
-			td.processEvents(window);
+			state = td.update();
+			state = td.processEvents(window);
 			renderer.render(td);
 			break;
 		case 1:
+			system("cls");
+			std::cout << "main menu";
 			break;
 		}
 
