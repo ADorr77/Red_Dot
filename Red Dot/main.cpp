@@ -38,7 +38,7 @@ int main()
 	// initialize timer variables
 	auto start = Clock::now();
 	auto end = start;
-	int fps = 20; // change the render speed here (frames per second)
+	int fps = 60; // change the render speed here (frames per second)
 	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
 	
 

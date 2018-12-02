@@ -85,7 +85,7 @@ int TowerDefense::update()
 		++level;
 		++state;
 		m.init_map(2);
-		renderAscii();
+		//renderAscii();
 		break;
 	case 1:
 		m.init_map(2);
@@ -93,8 +93,8 @@ int TowerDefense::update()
 		advance_enemies();
 		advance_projectiles();
 		if (enemies.size() == 0) { state = 2; }
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		renderAscii();
+		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+		//renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
@@ -104,7 +104,7 @@ int TowerDefense::update()
 		//pause state
 	case 3:
 		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		renderAscii();
+		//renderAscii();
 		break;
 	}
 
