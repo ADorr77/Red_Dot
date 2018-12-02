@@ -45,7 +45,7 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		}
 		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
 			money -= 1000;
-			create_tower(x, y, 3);
+			create_tower(x, y, slow_t);
 		}
 		//play pause
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
