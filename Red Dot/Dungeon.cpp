@@ -46,7 +46,7 @@ int Dungeon::processInput(GLFWwindow* window) {
 	}
 
 	// Switching Weapons
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
 		hero.switch_Weapon();
 	}
 
@@ -62,13 +62,13 @@ int Dungeon::processInput(GLFWwindow* window) {
 
 	// Processing Attacks
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-		switch (hero.get_weapon()) {
-			case 1: 
-				for (int m = 0; m < monsters.size(); m++) {
-					monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
-				}
-			case 2:
-				bolts.emplace_back(hero.ranged_attack());
+		if (hero.get_weapon() == 1) {
+			for (int m = 0; m < monsters.size(); m++) {
+				monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
+			}
+		}
+		if (hero.get_weapon() == 2) {
+			bolts.emplace_back(hero.ranged_attack());
 		}
 	}
 
