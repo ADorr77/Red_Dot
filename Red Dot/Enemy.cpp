@@ -81,6 +81,7 @@ void Enemy::setTimer(int t) {
 
 int Enemy::detect(double x, double y)
 {
+	if (xPos == 0) { return 0; }
 	double xdist = xPos - x;
 	double ydist = yPos - y;
 	double dist = sqrt(xdist*xdist + ydist * ydist);

@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 TowerDefense::TowerDefense() {
-	money = 0;
+	money = 1000;
 	level = 0;
 	through = 0;
 	lives = 100;
@@ -10,9 +10,7 @@ TowerDefense::TowerDefense() {
 	state = 0;
 	button_state = 0;
 	mouse_cooldown = 0;
-	create_tower(8, 5, 0);
-	create_tower(15, 10, 1);
-	//create_tower(18, 7, 2);
+	
 }
 
 
