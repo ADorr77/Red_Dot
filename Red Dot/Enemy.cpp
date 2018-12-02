@@ -91,9 +91,23 @@ int Enemy::detect(double x, double y)
 	return 0;
 }
 
-void Enemy::take_damage()
+void Enemy::take_damage(int type)
 {
+	// damage settings
+	switch (type)
+	{
+
+	case (basic):
 		hp -= 1;
+		break;
+	case (ranged):
+		hp -= 2;
+		break;
+	case (machine):
+		hp -= .25;
+		break;
+	}
+
 }
 
 void Enemy::slow()
@@ -109,13 +123,13 @@ void Enemy::hit_response(int type)
 {
 	switch (type) {
 	case (basic):
-		take_damage();
+		take_damage(type);
 		break;
 	case (ranged):
-		take_damage();
+		take_damage(type);
 		break;
 	case (machine):
-		take_damage();
+		take_damage(type);
 		break;
 	case (slow_t):
 		slow();
