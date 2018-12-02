@@ -76,5 +76,16 @@ void Hero::take_damage(double attack) {
 	health -= attack;
 }
 
+void Hero::add_exp(double xp) {
+	exp += xp;
+}
+
+void Hero::level_up() {
+	if (exp > (100 * (level - 0.5))) {
+		maxHealth = 100 + (10 * level);
+		health = maxHealth;
+		level++;
+	}
+}
 
 
