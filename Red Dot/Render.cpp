@@ -89,8 +89,8 @@ void getPolygon(int sides, float * vertices)
 	
 	for (int i = 0; i < sides * 2; i+=2)
 	{
-		vertices[i] = .25 * float(cos(period * i / 2));
-		vertices[i+1] = .25 * float(sin(period * i / 2));
+		vertices[i] = 0.5 * float(cos(period * i / 2));
+		vertices[i+1] = 0.5 * float(sin(period * i / 2));
 	}
 }
 
@@ -102,7 +102,76 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void Render::init(Dungeon& game)
 {
-	
+	float squarePoints[] = {
+		0.05f, 0.05f,
+		1.0f, 0.0f,
+		1.0f, 1.0f,
+		0.0f, 1.0f
+	};
+
+	unsigned int squareIndices[] = {  // note that we start from 0!
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
+	};
+
+	std::vector<float> vertices;
+	std::vector<unsigned int> indicies;
+	const auto& map = game.get_map();
+	unsigned int count = 0;
+
+	for (int x = 0; x < map.size(); x++)
+	{
+		for(int y = 0; y < map[0].size(); y++)
+		{
+			if (map[x][y] == 0)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					vertices.push_back(x + squarePoints[2 * i]);
+					vertices.push_back(y + squarePoints[(2 * i) + 1]);
+				}
+
+				for (int i = 0; i < 6; i++)
+				{
+					indicies.push_back(count + squareIndices[i]);
+				}
+				count += 4;
+			}
+		}
+	}
+
+	numMapPoints = indicies.size();
+
+	float mapPoints[80000];
+	unsigned int mapIndicies[80000];
+
+	for (int i = 0; i < 80000; i++)
+	{
+		if (i < vertices.size())
+			mapPoints[i] = vertices[i];
+		else
+			mapPoints[i] = 0;
+
+		if (i < indicies.size())
+			mapIndicies[i] = indicies[i];
+		else
+			mapIndicies[i] = 0;
+	}
+
+	glGenVertexArrays(1, &mapVAO);
+	glGenBuffers(1, &mapVBO);
+	glGenBuffers(1, &mapEBO);
+
+	glBindVertexArray(mapVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, mapVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mapPoints), mapPoints, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mapEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mapIndicies), mapIndicies, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 }
 
 void Render::init(TowerDefense& game)
@@ -110,9 +179,6 @@ void Render::init(TowerDefense& game)
 
 	float squarePoints[] = {
 		0.05f, 0.05f,
-		//1.0f, 0.0f,
-		//1.0f, 1.0f,
-		//0.0f, 1.0f
 		0.95f, 0.05f,
 		0.95f, 0.95f,
 		0.05f, 0.95f
@@ -238,6 +304,61 @@ void Render::init(TowerDefense& game)
 	glEnableVertexAttribArray(0);
 }
 
+void Render::render(const Dungeon& dungeon)
+{
+	float mapSize = dungeon.get_map().size();
+
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	shader.use();
+
+	shader.setUniform("color", 0.0f, 0.0f, 1.0f, 1.0f);
+	shader.setUniform("radius", 1.0f);
+	shader.setUniform("shift", -0.5 * mapSize, -0.5 * mapSize);
+	shader.setUniform("scale", (2.0f / mapSize));
+
+	glBindVertexArray(mapVAO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mapEBO);
+	glDrawElements(GL_TRIANGLES, numMapPoints, GL_UNSIGNED_INT, 0);
+
+	float entityRadius = 0.6;
+
+	// render monsters
+	const std::vector<Monster>& monsters = dungeon.get_monsters();
+	float shift[2];
+	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+	shader.setUniform("radius", entityRadius);
+	for (int i = 0; i < monsters.size(); i++)
+	{
+		shift[0] = monsters[i].get_xPos() + 0.5 - (mapSize * 0.5);
+		shift[1] = monsters[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shader.setUniform("shift", shift[0], shift[1]);
+		drawPolygon(20);
+	}
+
+
+	const std::vector<Bolt>& bolts = dungeon.get_bolts();
+	for (int i = 0; i < bolts.size(); i++)
+	{
+		// render Bolts
+		shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
+		shader.setUniform("radius", entityRadius);
+		shift[0] = bolts[i].get_xPos() + 0.5 - (mapSize * 0.5);
+		shift[1] = bolts[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shader.setUniform("shift", shift[0], shift[1]);
+		drawPolygon(20);
+	}
+
+	// render hero
+	Hero hero = dungeon.get_hero();
+	shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+	shader.setUniform("radius", entityRadius);
+	shift[0] = hero.get_xPos() + 0.5 - (mapSize * 0.5);
+	shift[1] = hero.get_yPos() + 0.5 - (mapSize * 0.5);
+	shader.setUniform("shift", shift[0], shift[1]);
+	drawPolygon(20);
+}
 
 
 void Render::render(const TowerDefense & game)
@@ -262,10 +383,13 @@ void Render::render(const TowerDefense & game)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
 	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
 
+	float entityRadius = 0.6;
 
+	// render enemies
 	const std::vector<Enemy>& enemies = game.get_enemies();
 	float shift[2];
 	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+	shader.setUniform("radius", entityRadius);
 	for(int i = 0; i < enemies.size(); i++)
 	{
 		shift[0] = enemies[i].get_xPos() + 0.5 - 12.5;
@@ -274,19 +398,22 @@ void Render::render(const TowerDefense & game)
 		drawPolygon(20);
 	}
 
+	
 	const std::vector<Tower>& towers = game.get_towers();
 	for (int i = 0; i < towers.size(); i++)
 	{
+		// render towers
 		shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
-		shader.setUniform("radius", 1.0);
+		shader.setUniform("radius", entityRadius);
 		shift[0] = towers[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * towers[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
 		drawPolygon(20);
 
+		// render projectiles
 		const std::vector<Projectile>& bolts = towers[i].get_projectiles();
 		shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
-		shader.setUniform("radius", 0.5);
+		shader.setUniform("radius", 0.5 * entityRadius);
 		for (int i = 0; i < bolts.size(); i++)
 		{
 			shift[0] = bolts[i].get_xPos() + 0.5 - 12.5;

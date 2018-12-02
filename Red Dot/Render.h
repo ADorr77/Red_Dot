@@ -37,6 +37,7 @@ public:
 
 	// render methods
 	void render(const TowerDefense& game);
+	void render(const Dungeon& dungeon);
 	void renderASCII(const Dungeon& dungeon);
 
 	void drawPolygon(int sides);

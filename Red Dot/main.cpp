@@ -24,11 +24,14 @@ int main()
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
-	int state = 0; // change this for now to switch between modes
+	int state = 1; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1,3);
 
-	renderer.init(td);
+	if (state == 0)
+		renderer.init(td);
+	else
+		renderer.init(dungeon);
 	
 	
 	// initialize timer variables
@@ -60,10 +63,11 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
-			system("cls");
-			renderer.renderASCII(dungeon);
-			dungeon.test();
-			std::cout << "main menu";
+			//system("cls");
+			//dungeon.test();
+			//renderer.renderASCII(dungeon);
+			renderer.render(dungeon);
+			//std::cout << "main menu";
 			break;
 		}
 
