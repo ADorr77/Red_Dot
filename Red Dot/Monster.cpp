@@ -3,17 +3,19 @@
 
 Monster::Monster()
 {
-	xPos = 13;
-	yPos = 10;
-	attack = 5;
+	xPos = 13 + (rand()%5-3);
+	yPos = 10 + (rand() % 5 - 3);
+	damage = 5;
 	health = 10;
+	hitbox = 1;
+	Vel = 1;
 }
 
 void Monster::take_damage(double attack) {
 	health -= attack;
 }
 
-void Monster::move(double X, double Y) {
+void Monster::move(const double X, const double Y) {
 	// X and Y are the Hero's X and Y coordinates
 	double dist = sqrt((pow((xPos - X), 2)) + (pow((yPos - Y), 2)));
 
@@ -38,3 +40,11 @@ void Monster::move(double X, double Y) {
 	}
 }
 
+
+double Monster::attack(double x, double y) {
+	// If monster is within its hitbox range deal damage
+	if (abs(xPos - x) < hitbox && abs(yPos - y) < hitbox) {
+		return damage;
+	}
+	return 0;
+}
