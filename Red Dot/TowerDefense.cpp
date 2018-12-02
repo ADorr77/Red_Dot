@@ -65,15 +65,14 @@ void TowerDefense::init_level()
 	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 30, boss, 1);
-		make_wave(10, 30, boss, 1);
-		make_wave(20, 30, fast, 1);
+		make_wave(0, 10, 1, 20);
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
-		make_wave(100, 20, 2, 5);
+		//make_wave(100, 20, 2, 5);
 		break;
 	}
+
 }
 
 void TowerDefense::renderAscii() {
@@ -83,12 +82,6 @@ void TowerDefense::renderAscii() {
 			std::cout << m.get_map_value(j,i) << m.get_map_value(j,i);
 		}
 		std::cout << std::endl;
-	}
-	// delete this after test
-	for (int j = 0; j < enemies.size(); ++j)
-	{
-		//std::cout << enemies[j].get_slow_timer() << s;
-		std::cout << towers[j].get_cooldown() << std::endl;
 	}
 }
 
