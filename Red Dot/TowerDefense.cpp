@@ -9,9 +9,9 @@ TowerDefense::TowerDefense() {
 	m.init_map(2);
 	state = 0;
 	button_state = 0;
-	create_tower(8, 5, machine);
-	create_tower(15, 10, machine);
-	create_tower(18, 7, slow_t);
+	create_tower(8, 5, 0);
+	create_tower(15, 10, 1);
+	create_tower(18, 7, 2);
 }
 
 
