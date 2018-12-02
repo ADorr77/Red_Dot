@@ -148,25 +148,6 @@ void Render::init(TowerDefense& game)
 			
 		}
 	}
-	//add buttons at bottom
-	for (int x = 0; x < 5; x++)
-	{
-		for (int y = 3; y < 5; y++)
-		{
-			for (int i = 0; i < 4; i++)
-			{
-				vertices.push_back((x + squarePoints[2 * i] - 2.5) / 2.5);
-				vertices.push_back((-1 * (y + squarePoints[(2 * i) + 1]) + 2.5) / 2.5);
-			}
-			for (int i = 0; i < 6; i++)
-			{
-				indicies.push_back(count + squareIndices[i]);
-			}
-			count += 4;
-			
-
-		}
-	}
 	
 	numMapPoints = indicies.size();
 	
@@ -201,6 +182,60 @@ void Render::init(TowerDefense& game)
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	vertices.clear();
+	indicies.clear();
+	count = 0;
+
+	//add buttons at bottom
+	for (int x = 0; x < 25; x += 5)
+	{
+		for (int y = 15; y < 25; y += 5)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				vertices.push_back(x + (squarePoints[2 * i] * 5));
+				vertices.push_back(-1 * (y + (squarePoints[(2 * i) + 1] * 5 )));
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				indicies.push_back(count + squareIndices[i]);
+			}
+			count += 4;
+		}
+	}
+
+	numButtonPoints = indicies.size();
+
+	float buttonPoints[80];
+	unsigned int buttonIndices[80];
+
+	for (int i = 0; i < 80; i++)
+	{
+		if (i < vertices.size())
+			buttonPoints[i] = vertices[i];
+		else
+			buttonPoints[i] = 0;
+
+		if (i < indicies.size())
+			buttonIndices[i] = indicies[i];
+		else
+			buttonIndices[i] = 0;
+	}
+
+	glGenVertexArrays(1, &buttonVAO);
+	glGenBuffers(1, &buttonVBO);
+	glGenBuffers(1, &buttonEBO);
+
+	glBindVertexArray(buttonVAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buttonVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(buttonPoints), buttonPoints, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(buttonIndices), buttonIndices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 }
 
 
@@ -221,6 +256,13 @@ void Render::render(const TowerDefense & game)
 	glBindVertexArray(mapVAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mapEBO);
 	glDrawElements(GL_TRIANGLES, numMapPoints, GL_UNSIGNED_INT, 0);
+
+	shader.setUniform("color", 0.4, 0.4, 0.4, 1.0);
+	glBindVertexArray(buttonVAO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
+	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
+
+
 
 
 }

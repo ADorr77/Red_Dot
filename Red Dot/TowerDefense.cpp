@@ -116,7 +116,7 @@ void TowerDefense::init_level()
 	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
-		make_wave(0, 10, 1, 20);
+		make_wave(0, 10, tank, 20);
 		break;
 	case 1:
 		make_wave(0, 15, 5, 1);
@@ -145,12 +145,12 @@ void TowerDefense::advance_enemies()
 				enemies.erase(enemies.begin() + j);
 			}
 			else {
-				gotThru(gt);
+				gotThru(enemies[j].get_strength());
 				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 				state = 2;
 			}
-			gotThru(gt);
+			gotThru(enemies[j].get_strength());
 		}
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
@@ -303,7 +303,7 @@ void TowerDefense::mapconstSet()
 
 void TowerDefense::gotThru(int i)
 {
-	through += i;
+	through += 1;
 	lives -= i;
 }
 
