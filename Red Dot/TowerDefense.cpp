@@ -7,7 +7,7 @@ TowerDefense::TowerDefense() {
 	through = 0;
 	lives = 100;
 	m.init_map(2);
-	state = 0;
+	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
 	
@@ -166,7 +166,7 @@ void TowerDefense::advance_enemies()
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
-		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
+		//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
 		
 		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
 		if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
@@ -180,7 +180,7 @@ void TowerDefense::advance_enemies()
 void TowerDefense::map_towers()
 {
 	for (int i = 0; i < towers.size(); ++i) {
-		m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
+		//m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
 		towers[i].cool();
 	}
 	
@@ -213,7 +213,7 @@ void TowerDefense::advance_projectiles()
 				//if (towers[t].get_pnumber()) { --c; }
 				double x = towers[t].get_projectile_x(c - 1);
 				double y = towers[t].get_projectile_y(c - 1);
-				m.set_map_value((int)x, (int)y, '.');
+				//m.set_map_value((int)x, (int)y, '.');
 				if (!enemies.size()) { state = 2; }
 				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {

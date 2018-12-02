@@ -171,10 +171,12 @@ void Enemy::set_yVel(int i)
 
 void Enemy::update_velocities(Maps m)
 {
-	int f = m.get_map_value(xPos + 1, yPos);
-	int b = m.get_map_value(xPos - 1, yPos);
-	int u = m.get_map_value(xPos, yPos - 1);
-	int d = m.get_map_value(xPos, yPos + 1);
+	int f = m.get_map_value((xPos) + 1, (yPos));
+	int b = m.get_map_value((xPos) - 1, (yPos));
+	int u = m.get_map_value((xPos), (yPos) - 1);
+	int newu = m.get_map_value((xPos), (yPos-.2));
+	int newb = m.get_map_value((xPos - .2), (yPos));
+	int d = m.get_map_value((xPos), (yPos) + 1);
 
 	if (xVel > 0) {
 		if (f == -37) {
@@ -189,7 +191,7 @@ void Enemy::update_velocities(Maps m)
 		}
 	}
 	else if (xVel < 0) {
-		if (b == -37) {
+		if (newb == -37) {
 			if (u != -37) {
 				set_xVel(0);
 				set_yVel(-1);
@@ -201,7 +203,7 @@ void Enemy::update_velocities(Maps m)
 		}
 	}
 	else if (yVel < 0) {
-		if (u == -37) {
+		if (newu == -37) {
 			if (f != -37) {
 				set_xVel(1);
 				set_yVel(0);
