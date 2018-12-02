@@ -48,13 +48,17 @@ int main()
 		// input
 		glfwPollEvents();
 		processInput(window);
-
+		
+		// render
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 
 		switch (state)
 		{
 		case 0:
 			system("cls");
 			td.update();
+			td.processEvents(window);
 			renderer.render(td);
 			break;
 		case 1:
