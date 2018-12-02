@@ -26,13 +26,15 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	Dungeon dungeon = Dungeon();
+	Dungeon dungeon = Dungeon(3);
 
 	renderer.init(td);
-	
-
-	//renderer.renderASCII(dungeon);
-
+	/*
+	while (true) {
+		renderer.renderASCII(dungeon);
+		dungeon.test();
+	}
+	*/
 	// initialize timer variables
 	auto start = Clock::now();
 	auto end = start;

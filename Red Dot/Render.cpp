@@ -234,6 +234,12 @@ void Render::renderASCII(const Dungeon& dungeon)
 
 	Hero hero = dungeon.get_hero();
 	print[hero.get_yPos()][hero.get_xPos()] = 'H';
+	std::vector<Bolt> bolts = dungeon.get_bolts();
+
+	for (int i = 0; i < bolts.size(); i++)
+	{
+		print[bolts[i].get_yPos()][bolts[i].get_xPos()] = '-';
+	}
 
 	for (int y = print.size() - 1; y >= 0; y--)
 	{
