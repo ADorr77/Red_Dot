@@ -40,6 +40,9 @@ public:
 	// Hero Damage
 	void take_damage(double damage);
 
+	// Technical
+	void switch_Weapon();
+
 
 };
 

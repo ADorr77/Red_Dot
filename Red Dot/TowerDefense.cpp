@@ -7,11 +7,28 @@ TowerDefense::TowerDefense() {
 	lives = 100;
 	m.init_map(2);
 	state = 0;
+	button_state = 0;
 	create_tower(8, 5, 0);
 	create_tower(15, 10, 1);
 	create_tower(18, 7, 2);
 }
 
+
+int TowerDefense::processEvents(GLFWwindow * window)
+{
+	double x_pos, y_pos;
+	glfwGetCursorPos(window, &x_pos, &y_pos);
+	int click = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+	if (click == GLFW_PRESS) {
+		if (button_state == 0 && money > 1000) {
+			int x = (int)x_pos / 32;
+			int y = (int)y_pos / 32;
+			money -= 1000;
+			create_tower(x, y, 0);
+		}
+	}
+	return 0;
+}
 
 int TowerDefense::update()
 {

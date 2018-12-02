@@ -27,9 +27,11 @@ int main()
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon();
+
+	renderer.init(td);
 	
 
-	renderer.renderASCII(dungeon);
+	//renderer.renderASCII(dungeon);
 
 	// initialize timer variables
 	auto start = Clock::now();
@@ -46,7 +48,7 @@ int main()
 		// input
 		glfwPollEvents();
 		processInput(window);
-
+		
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -56,6 +58,8 @@ int main()
 		case 0:
 			system("cls");
 			td.update();
+			td.processEvents(window);
+			renderer.render(td);
 			break;
 		case 1:
 			break;

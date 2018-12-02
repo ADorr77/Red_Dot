@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bolt.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="glad.c" />
@@ -130,10 +131,12 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Render.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerDefense.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bolt.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hero.h" />
@@ -146,6 +149,10 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerDefense.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="fragShader.txt" />
+    <Text Include="mapVertShader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
