@@ -104,15 +104,6 @@ void TowerDefense::advance_enemies()
 		for (int t = 0; t < towers.size(); ++t) {
 			towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 		}
-		/*char type_val;
-		switch (enemies[j].get_type())
-		{
-		case (normal): type_val = 'e';
-		case(strong): type_val = 's';
-		case(fast): type_val = 'f';
-		case(regen): type_val = 'r';
-		case (boss): type_val = 'b';
-		}*/
 		m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
 		
 		// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
