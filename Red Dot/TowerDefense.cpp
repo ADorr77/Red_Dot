@@ -20,11 +20,20 @@ int TowerDefense::processEvents(GLFWwindow * window)
 	glfwGetCursorPos(window, &x_pos, &y_pos);
 	int click = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
 	if (click == GLFW_PRESS) {
-		if (button_state == 0 && money > 1000) {
-			int x = (int)x_pos / 32;
-			int y = (int)y_pos / 32;
+		int x = (int)x_pos / 32;
+		int y = (int)y_pos / 32;
+		if (button_state == 0 && money >= 1000 && y<15) {
 			money -= 1000;
-			create_tower(x, y, 0);
+			create_tower(x, y, 2);
+		}
+		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
+			if (state == 1) {
+				state = 3;
+			}
+			if (state == 2) {
+				state = 0;
+			}
+			else { state = 1; }
 		}
 	}
 	return 0;
@@ -45,17 +54,22 @@ int TowerDefense::update()
 		map_towers();
 		advance_enemies();
 		advance_projectiles();
+		if (enemies.size() == 0) { state = 2; }
 		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		renderAscii();
 		break;
 	case 2:
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" <<get_lives();
-		int q;
-		std::cin >> q;
-		state = 0;
+			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+		break;
+
+		//pause state
+	case 3:
+		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+		renderAscii();
 		break;
 	}
+
 	return 0;
 }
 

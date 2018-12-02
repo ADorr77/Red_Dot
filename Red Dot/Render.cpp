@@ -48,10 +48,13 @@ void Render::init(TowerDefense& game)
 {
 
 	float squarePoints[] = {
-		0.0f, 0.0f,
-		1.0f, 0.0f,
-		1.0f, 1.0f,
-		0.0f, 1.0f
+		0.05f, 0.05f,
+		//1.0f, 0.0f,
+		//1.0f, 1.0f,
+		//0.0f, 1.0f
+		0.95f, 0.05f,
+		0.95f, 0.95f,
+		0.05f, 0.95f
 	};
 
 	unsigned int squareIndices[] = {  // note that we start from 0!
@@ -82,6 +85,25 @@ void Render::init(TowerDefense& game)
 				count += 4;
 			}
 			
+		}
+	}
+	//add buttons at bottom
+	for (int x = 0; x < 5; x++)
+	{
+		for (int y = 3; y < 5; y++)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				vertices.push_back((x + squarePoints[2 * i] - 2.5) / 2.5);
+				vertices.push_back((-1 * (y + squarePoints[(2 * i) + 1]) + 2.5) / 2.5);
+			}
+			for (int i = 0; i < 6; i++)
+			{
+				indicies.push_back(count + squareIndices[i]);
+			}
+			count += 4;
+			
+
 		}
 	}
 	
