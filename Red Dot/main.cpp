@@ -58,16 +58,17 @@ int main()
 		{
 		case 0:
 			system("cls");
-			state = td.update();
+			state = td.update(fps);
 			state = td.processEvents(window);
 			renderer.render(td);
 			break;
 		case 1:
-			//system("cls");
-			//dungeon.test();
-			//renderer.renderASCII(dungeon);
-			renderer.render(dungeon);
-			//std::cout << "main menu";
+			system("cls");
+			if (dungeon.processInput(window) == 0 || dungeon.update() == 0) {
+				std::cout << "You've completed the level!" << std::endl;
+				state = 0;
+			}
+			renderer.renderASCII(dungeon);
 			break;
 		}
 

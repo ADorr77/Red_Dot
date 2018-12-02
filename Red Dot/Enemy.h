@@ -31,14 +31,14 @@ public:
 	// update method to move it
 	void update();
 	// advance position
-	int advance();
+	int advance(int fps);
 	//set up timing of enemies entering
 	void setTimer(int t);
 
 	//take damage
 	//detect projectiles
 	int detect(double x, double y);
-	void take_damage();
+	void take_damage(int);
 	void slow();
 	void hit_response(int);
 
