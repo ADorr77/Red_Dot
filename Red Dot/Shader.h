@@ -12,11 +12,8 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad.h>
+#include "Includes.h"
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 class Shader
 {
@@ -32,8 +29,10 @@ public:
 	// use/activate the shader
 	void use();
 	// utility uniform functions
-	void setUniform(const std::string &name, int count, const int * values);
-	void setUniform(const std::string &name, int count, const float * values);
+	void setUniform(const std::string &name, float one);
+	void setUniform(const std::string &name, float one, float two);
+	void setUniform(const std::string &name, float one, float two, float three);
+	void setUniform(const std::string &name, float one, float two, float three, float four);
 };
 
 #endif

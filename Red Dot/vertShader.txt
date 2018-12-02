@@ -1,0 +1,14 @@
+#version 330 core
+layout (location = 0) in vec2 Pos;
+
+uniform float radius;
+uniform vec2 shift;
+uniform float scale;
+
+void main()
+{
+	vec2 game = Pos * radius;
+	vec2 centered = game + shift;
+	vec2 norm = centered * scale;
+	gl_Position = vec4(norm.x, norm.y, 0.0, 1.0);
+}
