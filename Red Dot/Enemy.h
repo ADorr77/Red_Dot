@@ -18,7 +18,6 @@ private:
 	int reward;
 	double xPos, yPos;
 	double xVel, yVel;
-	int slow_timer;
 	// int type; Possible way to implement multiple types of enemies with enum
 	// double speed; could have this too potentially
 public:
@@ -36,7 +35,6 @@ public:
 	//detect projectiles
 	int detect(double x, double y);
 	void take_damage();
-	void slow();
 	void hit_response(int);
 
 	// get Functions

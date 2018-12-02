@@ -10,26 +10,7 @@ Tower::Tower(int x, int y, int s)
 	strength = s;
 	timer = 0;
 	pnumber = 0;
-	switch (s)
-	{
-		case basic:
-			cooldown = 20;
-			range = 5;
-			speed = 1;
-		case ranged:
-			cooldown = 30;
-			range = 10;
-			speed = 1;
-		case machine:
-			cooldown = 2;
-			range = 5;
-			speed = 2;
-		case slow:
-			cooldown = 2;
-			range = 5;
-			speed = 2;
-	}
-	/*if (strength == basic) {
+	if (strength == basic) {
 		cooldown = 20;
 		range = 5;
 		speed = 1;
@@ -44,7 +25,6 @@ Tower::Tower(int x, int y, int s)
 		range = 5;
 		speed = 2;
 	}
-	*/
 }
 
 void Tower::detect(double x, double y)
