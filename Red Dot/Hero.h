@@ -3,6 +3,7 @@
 #ifndef HERO_H
 #define HERO_H
 #include<vector>
+#include"Bolt.h"
 
 class Hero
 {
@@ -14,6 +15,7 @@ private:
 	double xPos, yPos;
 	double Vel;
 	double xDir, yDir;
+	int weapon;
 
 public:
 	// Hero constructor (pass in whatever you decide)
@@ -29,20 +31,21 @@ public:
 	double get_exp() const { return exp; }
 	double get_xPos() const { return xPos; }
 	double get_yPos() const { return yPos; }
+	double get_weapon() const { return weapon; }
 
-	// Movement 
-	void move();
+	// Movement and Direction
+	void move(int x, int y);
+	void set_direction(double xH, double yH);
 
 	// Attacks
-	double ranged_attack();
-	double melee_attack();
+	double melee_attack(double xM, double yM);
+	Bolt ranged_attack();
 
 	// Hero Damage
 	void take_damage(double damage);
 
 	// Technical
 	void switch_Weapon();
-
 
 };
 

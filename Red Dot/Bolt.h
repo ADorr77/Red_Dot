@@ -11,10 +11,11 @@ private:
 	double Vel;
 	double xVel, yVel;
 	double xPos, yPos;
+	double hitbox_d;
 
 public:
 	// Monster constructor (pass in whatever you decide)
-	Bolt();
+	Bolt(double d, double v, double xv, double yv, double xp, double yp);
 	// update method
 	void move();
 
@@ -24,7 +25,10 @@ public:
 	double get_yVel() const { return yVel; }
 	double get_xPos() const { return xPos; }
 	double get_yPos() const { return yPos; }
+	double get_hitbox_d() const { return hitbox_d; }
 
+	// Other behavior
+	int check_hit(double x, double y);
 };
 
 
