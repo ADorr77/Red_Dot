@@ -263,7 +263,16 @@ void Render::render(const TowerDefense & game)
 	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
 
 
-
+	const std::vector<Enemy>& enemies = game.get_enemies();
+	float shift[2];
+	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+	for(int i = 0; i < enemies.size(); i++)
+	{
+		shift[0] = enemies[i].get_xPos() + 0.5 - 12.5;
+		shift[1] = (-1 * enemies[i].get_yPos()) - 0.5 + 12.5;
+		shader.setUniform("shift", shift[0], shift[1]);
+		drawPolygon(20);
+	}
 
 }
 
