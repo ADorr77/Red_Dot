@@ -17,7 +17,7 @@ Enemy::Enemy(int level) {
 	if (level == strong) {
 		speed = .25;
 		hp = 2;
-		strength = 3;
+		strength = 1;
 		xVel = 0;
 		yVel = 0;
 		reward = 150;
