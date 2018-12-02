@@ -10,7 +10,30 @@ Tower::Tower(int x, int y, int s)
 	strength = s;
 	timer = 0;
 	pnumber = 0;
-	if (strength == basic) {
+	switch (s)
+	{
+		case basic:
+			cooldown = 20;
+			range = 5;
+			speed = 1;
+			break;
+		case ranged:
+			cooldown = 30;
+			range = 10;
+			speed = 1;
+			break;
+		case machine:
+			cooldown = 2;
+			range = 5;
+			speed = 2;
+			break;
+		case slow_t:
+			cooldown = 15;
+			range = 5;
+			speed = 2;
+			break;
+	}
+	/*if (strength == basic) {
 		cooldown = 20;
 		range = 5;
 		speed = 1;
@@ -25,6 +48,7 @@ Tower::Tower(int x, int y, int s)
 		range = 5;
 		speed = 2;
 	}
+	*/
 }
 
 void Tower::detect(double x, double y)
@@ -33,7 +57,7 @@ void Tower::detect(double x, double y)
 		double xdist = xPos - x;
 		double ydist = yPos - y;
 		double dist = sqrt(xdist*xdist + ydist * ydist);
-		if (dist < range && x != 0) {
+		if (dist < range) {
 			pnumber += 1;
 			double xV = -1 * xdist * speed / dist;
 			double yV = -1 * ydist * speed / dist;
