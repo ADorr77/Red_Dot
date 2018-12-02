@@ -28,7 +28,10 @@ int main()
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1,3);
 
-	renderer.init(td);
+	if (state == 0)
+		renderer.init(td);
+	else
+		renderer.init(dungeon);
 	
 	
 	// initialize timer variables
