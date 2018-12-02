@@ -23,7 +23,7 @@ Hero::Hero(double level) {
 	exp = 0;
 	xPos = 6;
 	yPos = 14;
-	Vel = 2;
+	Vel = 0.5;
 	weapon = 1;
 }
 

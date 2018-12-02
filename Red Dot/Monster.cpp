@@ -8,7 +8,7 @@ Monster::Monster()
 	damage = 5;
 	health = 10;
 	hitbox = 1;
-	Vel = 1;
+	Vel = 0.1;
 	exp = 10;
 }
 
@@ -21,7 +21,7 @@ void Monster::move(double X, double Y) {
 	double dist = sqrt((pow((xPos - X), 2)) + (pow((yPos - Y), 2)));
 
 	// First if checks if monster in range to detect hero
-	if (dist <= 30) {
+	if (dist <= 5) {
 		// If typecasts xPos to int then checks if theres a wall in the direction of the hero, if so all velocity is Y
 		if (int(xPos) + (X - xPos) / abs(X - xPos) == 1) {
 			yPos += (Y-yPos)/(abs(Y-yPos)) * Vel;

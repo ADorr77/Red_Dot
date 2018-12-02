@@ -61,9 +61,11 @@ int main()
 			break;
 		case 1:
 			system("cls");
+			if (dungeon.processInput(window) == 0 || dungeon.update() == 0) {
+				std::cout << "You've completed the level!" << std::endl;
+				state = 0;
+			}
 			renderer.renderASCII(dungeon);
-			dungeon.test();
-			std::cout << "main menu";
 			break;
 		}
 

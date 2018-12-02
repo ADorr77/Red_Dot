@@ -32,10 +32,10 @@ int Dungeon::processInput(GLFWwindow* window) {
 		yMove = 1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		yMove = -1;
+		xMove = -1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		xMove = -1;
+		yMove = -1;
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		xMove = 1;
@@ -65,7 +65,7 @@ int Dungeon::processInput(GLFWwindow* window) {
 					monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
 				}
 			case (2):
-				hero.ranged_attack();
+				bolts.emplace_back(hero.ranged_attack());
 		}
 	}
 
@@ -73,12 +73,16 @@ int Dungeon::processInput(GLFWwindow* window) {
 }
 
 int Dungeon::update() {
-	// Run through monster functions (death,movement, and attacks)
+	// Run through monster death
 	for (int m = 0; m < monsters.size(); m++) {
 		if (monsters[m].get_health() <= 0) {
-			monsters.erase(monsters.begin() + m);
 			hero.add_exp(monsters[m].get_exp());
+			monsters.erase(monsters.begin() + m);
 		}
+	}
+
+	// Run through monster functions (movement and attacks)
+	for (int m = 0; m < monsters.size(); m++) {
 		monsters[m].move(hero.get_xPos(), hero.get_yPos());
 		hero.take_damage(monsters[m].attack(hero.get_xPos(), hero.get_yPos()));
 	}
@@ -91,7 +95,7 @@ int Dungeon::update() {
 				bolts.erase(bolts.begin() + b);
 			}
 		}
-		/*
+		/* 
 		if (map[(int)bolts[b].get_yPos()][(int)bolts[b].get_xPos] == 1) {
 			bolts.erase(bolts.begin() + b);
 		}
