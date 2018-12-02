@@ -16,6 +16,9 @@ private:
 
 	unsigned int mapVAO, mapVBO, mapEBO; // Vertex Array Object for the map
 	unsigned int numMapPoints; // number of verticies that make up map
+
+	unsigned int buttonVAO, buttonVBO, buttonEBO; // Vertex Array Object for the map
+	unsigned int numButtonPoints; // number of verticies that make up map
 	
 
 	unsigned int shapesArray[MAX_SIDES - 2];
