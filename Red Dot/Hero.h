@@ -36,6 +36,8 @@ public:
 	int get_xCoord() const { return (int)xPos; }
 	int get_yCoord() const { return (int)yPos; }
 
+	void set_weapon(int w) { this->weapon = w; }
+
 	// Movement and Direction
 	void move(int x, int y);
 	void set_direction(double xH, double yH);

@@ -1,17 +1,27 @@
 #include "Monster.h"
 #include<cmath>
+#include<ctime>
 
 Monster::Monster()
 {
 	xPos = 13 + (rand()%5-3);
-	yPos = 10 + (rand() % 5 - 3);
-	damage = 5;
+	yPos = 10 + (rand() % 5- 3);
+	damage = 1;
 	health = 10;
 	hitbox = 1;
-	Vel = 0.1;
+	Vel = 0.05;
 	exp = 10;
 }
 
+Monster::Monster(double x, double y) {
+	xPos = x;
+	yPos = y;
+	damage = 1;
+	health = 10;
+	hitbox = 1;
+	Vel = 0.05;
+	exp = 10;
+}
 void Monster::take_damage(double attack) {
 	health -= attack;
 }
@@ -22,22 +32,8 @@ void Monster::move(double X, double Y) {
 
 	// First if checks if monster in range to detect hero
 	if (dist <= 5) {
-		// If typecasts xPos to int then checks if theres a wall in the direction of the hero, if so all velocity is Y
-		if (int(xPos) + (X - xPos) / abs(X - xPos) == 1) {
-			yPos += (Y-yPos)/(abs(Y-yPos)) * Vel;
-		}
-		// Same with Y here
-		if (int(yPos) + (Y - yPos) / abs(Y - yPos) == 1) {
-			xPos += (X - xPos) / (abs(X - xPos)) * Vel;
-		}
-		// Otherwise just moves towards Hero proportional to normal vector
-		else {
-			xPos += (1 / dist) * (X - xPos) * Vel;
-			yPos += (1 / dist) * (Y - yPos) * Vel;
-		}
-	}
-	else {
-
+		xPos += (1 / dist) * (X - xPos) * Vel;
+		yPos += (1 / dist) * (Y - yPos) * Vel;
 	}
 }
 

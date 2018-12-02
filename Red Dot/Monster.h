@@ -17,6 +17,7 @@ private:
 public:
 	// Monster constructor (pass in whatever you decide)
 	Monster();
+	Monster(double xPos, double yPos);
 	// update method
 	void update();
 
@@ -28,6 +29,9 @@ public:
 	double get_Vel() const { return Vel; }
 	double get_hitbox() const { return hitbox; }
 	double get_exp() const { return exp; }
+
+	int get_xCoord() const { return (int)xPos; }
+	int get_yCoord() const { return (int)yPos; }
 
 	// Write additional behavior
 	void move(double HeroX, double HeroY);
