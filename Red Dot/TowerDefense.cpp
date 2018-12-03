@@ -102,8 +102,11 @@ int TowerDefense::update(int fps)
 		m.init_map(2);
 		map_towers();
 		advance_enemies(fps);
-		advance_projectiles(fps);
-		if (enemies.size() == 0) { state = 2; }
+		if (state == 1){ advance_projectiles(fps); }
+		if (enemies.size() == 0) { 
+			clear_Projectiles();
+			state = 2;
+		}
 		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		//renderAscii();
 		break;

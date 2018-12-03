@@ -15,22 +15,22 @@ Tower::Tower(int x, int y, int s)
 	switch (s)
 	{
 		case basic:
-			cooldown = 20;
+			cooldown = 60;
 			range = 5;
 			speed = 20;
 			break;
 		case ranged:
-			cooldown = 30;
+			cooldown = 80;
 			range = 15;
 			speed = 40;
 			break;
 		case machine:
-			cooldown = 5;
+			cooldown = 15;
 			range = 5;
 			speed = 20;
 			break;
 		case slow_t:
-			cooldown = 15;
+			cooldown = 60;
 			range = 5;
 			speed = 20;
 			break;
@@ -117,7 +117,10 @@ double Tower::get_projectile_y(int pnum)
 
 void Tower::clear_p()
 {
-	projectiles.clear();
+	for (int j = 0; j < projectiles.size(); ++j) {
+		projectiles.erase(projectiles.begin() + j);
+	}
+	
 }
 
 double Tower::get_strength() const
