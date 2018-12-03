@@ -123,7 +123,7 @@ void Tower::clear_p()
 	
 }
 
-double Tower::get_strength() const
+int Tower::get_strength() const
 {
 	return strength;
 }
