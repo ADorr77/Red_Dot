@@ -30,6 +30,8 @@ int main()
 	int state = 1; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1);
+	bool dungeon_creator = true;
+	bool td_creator = true;
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -44,7 +46,6 @@ int main()
 	{
 		// start timer
 		start = Clock::now();
-		// SoundEngine->play2D("theme_music.mp3", true);
 		// input
 		glfwPollEvents();
 		processInput(window);
@@ -52,8 +53,6 @@ int main()
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		bool dungeon_creator = true;
-		bool td_creator = true;
 
 		switch (state)
 		{
@@ -63,7 +62,6 @@ int main()
 			}
 			if (counter == 0) {
 				system("cls");
-				
 				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();
 				counter = 30;
 			}
@@ -97,6 +95,7 @@ int main()
 				renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				glfwSetWindowShouldClose(window, true);
+				SoundEngine->play2D("Sounds/you_lose.mp3", false);
 			}
 			renderer.render(dungeon);
 			break;

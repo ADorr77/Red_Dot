@@ -448,6 +448,11 @@ void Render::render(const TowerDefense & game)
 			drawPolygon(4);
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
+		case (miniboss):
+			shader.setUniform("color", .5, 0.0, 0.5, 1.0);
+			drawPolygon(4);
+			shader.setUniform("radius", entityRadius * 1.2);
+			break;
 		}
 	}
 
