@@ -2,7 +2,7 @@
 #include<chrono>
 #include<thread>
 
-Dungeon::Dungeon(int level ,int num)
+Dungeon::Dungeon(int level)
 {
 	hero = Hero(level, map.size());
 	for (int x = 0; x < map.size(); x++)
@@ -13,22 +13,26 @@ Dungeon::Dungeon(int level ,int num)
 		}
 	}
 
-	for (int x = 2; x < 18; x++)
+	for (int x = 5; x < 15; x++)
 	{
-		for (int y = 2; y < 18; y++)
+		for (int y = 5; y < 15; y++)
 		{
 			map[x][y] = 1;
 		}
 	}
+	
+}
 
+void Dungeon::createMonsters(int num) {
+	double speed = 0.1;
 	for (int i = 0; i < num; i++) {
-		monsters.emplace_back(Monster(map.size()));
+		monsters.emplace_back(Monster(map.size(), speed));
 		while (map[monsters[i].get_xPos()][monsters[i].get_yPos()] == 0) {
 			monsters.erase(monsters.begin() + i);
-			monsters.emplace_back(Monster(map.size()));
+			monsters.emplace_back(Monster(map.size(), speed));
 		}
+		speed += 0.02;
 	}
-	
 }
 int Dungeon::processInput(GLFWwindow* window, int fps) {
 	static int count = 0;

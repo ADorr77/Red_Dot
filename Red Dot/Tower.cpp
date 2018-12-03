@@ -93,7 +93,9 @@ void Tower::detect(double x, double y)
 
 int Tower::advanceProjectiles(int pnum, int fps)
 {
-	int p = projectiles[pnum].advance(fps); 
+	int p = 0;
+	p = projectiles[pnum].advance(fps); 
+	
 	if (p) { --pnumber; }
 	
 	return p;
