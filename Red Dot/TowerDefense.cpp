@@ -6,7 +6,7 @@
 irrklang::ISoundEngine *SoundEngineTD = irrklang::createIrrKlangDevice();
 
 TowerDefense::TowerDefense() {
-	money = 1000;
+	money = 1500;
 	level = 0;
 	through = 0;
 	lives = 100;
@@ -102,8 +102,11 @@ int TowerDefense::update(int fps)
 		m.init_map(2);
 		map_towers();
 		advance_enemies(fps);
-		advance_projectiles(fps);
-		if (enemies.size() == 0) { state = 2; }
+		if (state == 1){ advance_projectiles(fps); }
+		if (enemies.size() == 0) { 
+			clear_Projectiles();
+			state = 2;
+		}
 		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		//renderAscii();
 		break;
@@ -130,24 +133,36 @@ void TowerDefense::init_level()
 		make_wave(0, 10, normal, 10);
 		break;
 	case 1:
-		make_wave(0, 15, normal, 10);
-		make_wave(150, 20, strong, 5);
+		make_wave(0, 10, normal, 10);
+		make_wave(100, 20, strong, 5);
 		break;
 	case 2:
-		make_wave(0, 15, normal, 20);
-		make_wave(250, 20, fast, 5);
+		make_wave(0, 10, normal, 10);
+		make_wave(100, 20, fast, 5);
 		break;
 	case 3:
-		make_wave(0, 15, normal, 20);
-		make_wave(250, 20, tank, 5);
+		make_wave(0, 10, normal, 10);
+		make_wave(100, 20, tank, 5);
 		break;
 	case 4:
+		make_wave(0, 10, normal, 10);
+		make_wave(110, 20, boss, 1);
+		break;
+	case 5:
+		make_wave(0, 15, strong, 10);
+		make_wave(150, 20, tank, 10);
+		make_wave(200, 20, fast, 10);
+		break;
+	case 6:
 		make_wave(0, 15, normal, 10);
 		make_wave(150, 20, strong, 10);
 		make_wave(200, 20, fast, 10);
 		break;
-
-	
+	case 7:
+		make_wave(0, 15, normal, 10);
+		make_wave(150, 20, strong, 10);
+		make_wave(200, 20, fast, 10);
+		break;
 	}
 
 }

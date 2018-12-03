@@ -13,9 +13,9 @@ Monster::Monster()
 	exp = 10;
 }
 
-Monster::Monster(double x, double y) {
-	xPos = x;
-	yPos = y;
+Monster::Monster(int mapSize) {
+	xPos = (mapSize/2) + (rand()%(mapSize/2) - mapSize/2);
+	yPos = (mapSize / 2) + (rand() % (mapSize / 2) - mapSize / 2);
 	damage = 1;
 	health = 10;
 	hitbox = 1;
@@ -31,7 +31,7 @@ void Monster::move(double X, double Y) {
 	double dist = sqrt((pow((xPos - X), 2)) + (pow((yPos - Y), 2)));
 
 	// First if checks if monster in range to detect hero
-	if (dist <= 5) {
+	if (dist <= 15) {
 		xPos += (1 / dist) * (X - xPos) * Vel;
 		yPos += (1 / dist) * (Y - yPos) * Vel;
 	}
