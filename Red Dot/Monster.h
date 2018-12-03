@@ -17,7 +17,7 @@ private:
 public:
 	// Monster constructor (pass in whatever you decide)
 	Monster();
-	Monster(double xPos, double yPos);
+	Monster(int mapSize);
 	// update method
 	void update();
 

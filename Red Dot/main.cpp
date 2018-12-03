@@ -28,11 +28,12 @@ int main()
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1,3);
 
+	/*
 	if (state == 0)
 		renderer.init(td);
 	else
 		renderer.init(dungeon);
-	
+	*/
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -57,21 +58,27 @@ int main()
 		switch (state)
 		{
 		case 0:
+			for (static bool first = true; first; first = false) {
+				renderer.init(td);
+			}
 			system("cls");
 			state = td.update(fps);
 			state = td.processEvents(window);
 			renderer.render(td);
 			break;
 		case 1:
-			std::cout << dungeon.get_hero().get_weapon() << std::endl;
+			for (static bool first = true; first; first = false) {
+				renderer.init(dungeon);
+			}
 			system("cls");
-			int p = dungeon.processInput(window);
-			int u = dungeon.update();
+			int p = dungeon.processInput(window, fps);
+			int u = dungeon.update(fps);
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
+				break;
 			}
 			renderer.render(dungeon);
 			break;

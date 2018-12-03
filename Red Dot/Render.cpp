@@ -331,8 +331,8 @@ void Render::render(const Dungeon& dungeon)
 	shader.setUniform("radius", entityRadius);
 	for (int i = 0; i < monsters.size(); i++)
 	{
-		shift[0] = monsters[i].get_xPos() + 0.5 - (mapSize * 0.5);
-		shift[1] = monsters[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shift[0] = monsters[i].get_xPos() - (mapSize * 0.5);
+		shift[1] = monsters[i].get_yPos() - (mapSize * 0.5);
 		shader.setUniform("shift", shift[0], shift[1]);
 		drawPolygon(20);
 	}
@@ -344,8 +344,8 @@ void Render::render(const Dungeon& dungeon)
 		// render Bolts
 		shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
 		shader.setUniform("radius", entityRadius);
-		shift[0] = bolts[i].get_xPos() + 0.5 - (mapSize * 0.5);
-		shift[1] = bolts[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shift[0] = bolts[i].get_xPos() - (mapSize * 0.5);
+		shift[1] = bolts[i].get_yPos() - (mapSize * 0.5);
 		shader.setUniform("shift", shift[0], shift[1]);
 		drawPolygon(20);
 	}
@@ -354,8 +354,8 @@ void Render::render(const Dungeon& dungeon)
 	Hero hero = dungeon.get_hero();
 	shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
 	shader.setUniform("radius", entityRadius);
-	shift[0] = hero.get_xPos() + 0.5 - (mapSize * 0.5);
-	shift[1] = hero.get_yPos() + 0.5 - (mapSize * 0.5);
+	shift[0] = hero.get_xPos() - (mapSize * 0.5);
+	shift[1] = hero.get_yPos() - (mapSize * 0.5);
 	shader.setUniform("shift", shift[0], shift[1]);
 	drawPolygon(20);
 }
