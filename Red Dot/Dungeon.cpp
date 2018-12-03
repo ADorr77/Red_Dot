@@ -77,7 +77,7 @@ int Dungeon::processInput(GLFWwindow* window, int fps) {
 
 	// Processing Attacks
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && count > reload) {
-		reload = count + fps/2;
+		reload = count + fps/4;
 		if (hero.get_weapon()) {
 			for (int m = 0; m < monsters.size(); m++) {
 				monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));

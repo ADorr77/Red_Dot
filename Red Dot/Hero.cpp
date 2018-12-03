@@ -13,7 +13,7 @@ Hero::Hero()
 	xPos = 6;
 	yPos = 14;
 	Vel = 5;
-	weapon = 1;
+	weapon = 0;
 	damage = 2;
 }
 
@@ -25,7 +25,7 @@ Hero::Hero(double level, int mapSize) {
 	xPos = mapSize/2;
 	yPos = mapSize/2;
 	Vel = 0.3;
-	weapon = 1;
+	weapon = 0;
 	damage = 2 + (level * 0.1);
 }
 
@@ -66,7 +66,7 @@ double Hero::melee_attack(double x, double y) {
 }
 
 Bolt Hero::ranged_attack() {
-	return Bolt::Bolt((damage-1), 0.01, (xDir), (yDir), xPos, yPos);
+	return Bolt::Bolt((damage-0.5), 0.01, (xDir), (yDir), xPos, yPos);
 }
 
 void Hero::switch_Weapon() {
