@@ -29,7 +29,7 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	Dungeon dungeon = Dungeon(1,4);
+	Dungeon dungeon = Dungeon(1);
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -53,12 +53,12 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		bool dungeon_creator = false;
-		
+		bool td_creator = false;
 
 		switch (state)
 		{
 		case 0:
-			for (static bool first = true; first; first = false) {
+			for (td_creator = true; td_creator; td_creator = false) {
 				renderer.init(td);
 			}
 			if (counter == 0) {
@@ -74,9 +74,7 @@ int main()
 			break;
 		case 1:
 			for (dungeon_creator = true; dungeon_creator; dungeon_creator = false) {
-				Dungeon dungeon = Dungeon(1, td.thru()); //Replace 4 with Got Through
-			}
-			for (static bool first = true; first; first = false) {
+				dungeon.createMonsters(td.thru());
 				renderer.init(dungeon);
 			}
 			system("cls");
@@ -91,6 +89,7 @@ int main()
 				std::cout << "You've completed the level!" << std::endl;
 				state = 0;
 				dungeon_creator = true;
+				td_creator = true;
 				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 				break;
 
