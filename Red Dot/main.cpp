@@ -27,7 +27,7 @@ int main()
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
-	int state = 1; // change this for now to switch between modes
+	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1);
 	bool dungeon_creator = true;
@@ -94,7 +94,7 @@ int main()
 				std::cout << "You died. Game Over." << std::endl;
 				SoundEngine->play2D("Sounds/you_lose.mp3", false);
 				renderer.render(dungeon);
-				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 				glfwSetWindowShouldClose(window, true);
 			}
 			renderer.render(dungeon);

@@ -24,7 +24,7 @@ Dungeon::Dungeon(int level)
 }
 
 void Dungeon::createMonsters(int num) {
-	double speed = 0.1;
+	double speed = 0.11;
 	for (int i = 0; i < num; i++) {
 		monsters.emplace_back(Monster(map.size(), speed));
 		while (map[monsters[i].get_xPos()][monsters[i].get_yPos()] == 0) {
