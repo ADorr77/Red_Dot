@@ -282,34 +282,39 @@ void TowerDefense::advance_projectiles(int fps)
 
 
 		int c = towers[t].get_pnumber();
-		while (c >= 1) {
+		while (c >= 1 && towers[t].get_projectiles_size()) {
 			if (!towers[t].advanceProjectiles((c - 1), fps)) {
 
 				//towers[t].eraseProjectile(c - 1);
 				//--c;
 				//if (towers[t].get_pnumber()) { --c; }
-				double x = towers[t].get_projectile_x(c - 1);
-				double y = towers[t].get_projectile_y(c - 1);
-				//m.set_map_value((int)x, (int)y, '.');
-				if (!enemies.size()) { 
-					state = 2; 
 				
-				}
-				for (unsigned int j = 0; j < enemies.size(); ++j) {
-					if (enemies[j].detect(x, y)) {
-						enemies[j].hit_response(towers[t].get_strength());
-						if (c >= 1) {
-							towers[t].eraseProjectile(c - 1);
-						}
-					}
-					if (enemies[j].get_hp() <= 0) {
-						add_money(enemies[j].get_reward());
-						enemies.erase(enemies.begin() + j);
-						SoundEngineTD->play2D("Sounds/die.mp3", false);
-//						j = enemies.size();
-					}
+				
+					double x = towers[t].get_projectile_x(c - 1);
+					double y = towers[t].get_projectile_y(c - 1);
+				
+				
+					//m.set_map_value((int)x, (int)y, '.');
+					if (!enemies.size()) {
+						state = 2;
 
-				}
+					}
+					for (unsigned int j = 0; j < enemies.size(); ++j) {
+						if (enemies[j].detect(x, y)) {
+							enemies[j].hit_response(towers[t].get_strength());
+							if (c >= 1) {
+								towers[t].eraseProjectile(c - 1);
+							}
+						}
+						if (enemies[j].get_hp() <= 0) {
+							add_money(enemies[j].get_reward());
+							enemies.erase(enemies.begin() + j);
+							SoundEngineTD->play2D("Sounds/die.mp3", false);
+							//						j = enemies.size();
+						}
+
+					}
+				
 			}
 			else { towers[t].eraseProjectile(c - 1); }
 			--c;

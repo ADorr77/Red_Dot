@@ -78,7 +78,7 @@ void Tower::detect(double x, double y)
 int Tower::advanceProjectiles(int pnum, int fps)
 {
 	int p = 0;
-	p = projectiles[pnum].advance(fps); 
+	if (projectiles.size()>pnum) { p = projectiles[pnum].advance(fps); }
 	
 	if (p) { --pnumber; }
 	
@@ -97,8 +97,13 @@ void Tower::cool()
 
 void Tower::eraseProjectile(int pnum)
 {
-	--pnumber;
-	projectiles.erase(projectiles.begin() + pnum);
+	
+	if (pnumber > 0) {
+		--pnumber;
+		projectiles.erase(projectiles.begin() + pnum);
+	}
+	
+	
 }
 
 double Tower::get_pnumber() {
@@ -108,6 +113,7 @@ double Tower::get_pnumber() {
 
 double Tower::get_projectile_x(int pnum)
 {
+
 	return projectiles[pnum].get_xPos();
 	
 }
@@ -119,6 +125,7 @@ double Tower::get_projectile_y(int pnum)
 
 void Tower::clear_p()
 {
+	pnumber = 0;
 	for (int j = 0; j < projectiles.size(); ++j) {
 		projectiles.erase(projectiles.begin() + j);
 	}
@@ -138,4 +145,9 @@ double Tower::get_xPos() const
 double Tower::get_yPos() const
 {
 	return yPos;
+}
+
+int Tower::get_projectiles_size()
+{
+	return projectiles.size();
 }
