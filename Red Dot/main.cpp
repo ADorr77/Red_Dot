@@ -69,6 +69,7 @@ int main()
 			}
 			else { --counter; }
 			state = td.update(fps);
+			if (state) { SoundEngine->play2D("Dungeon.mp3", true); }
 			if (!state) { state = td.processEvents(window); }
 			renderer.render(td);
 			break;
