@@ -82,7 +82,7 @@ void Hero::add_exp(double xp) {
 }
 
 void Hero::level_up() {
-	if (exp > (100 * (level - 0.5))) {
+	if (exp > (50 * (level - 0.5))) {
 		maxHealth = 100 + (10 * level);
 		health = maxHealth;
 		level++;
