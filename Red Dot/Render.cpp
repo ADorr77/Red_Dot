@@ -331,8 +331,8 @@ void Render::render(const Dungeon& dungeon)
 	shader.setUniform("radius", entityRadius);
 	for (int i = 0; i < monsters.size(); i++)
 	{
-		shift[0] = monsters[i].get_xPos() + 0.5 - (mapSize * 0.5);
-		shift[1] = monsters[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shift[0] = monsters[i].get_xPos() - (mapSize * 0.5);
+		shift[1] = monsters[i].get_yPos() - (mapSize * 0.5);
 		shader.setUniform("shift", shift[0], shift[1]);
 		drawPolygon(20);
 	}
@@ -344,8 +344,8 @@ void Render::render(const Dungeon& dungeon)
 		// render Bolts
 		shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
 		shader.setUniform("radius", entityRadius);
-		shift[0] = bolts[i].get_xPos() + 0.5 - (mapSize * 0.5);
-		shift[1] = bolts[i].get_yPos() + 0.5 - (mapSize * 0.5);
+		shift[0] = bolts[i].get_xPos() - (mapSize * 0.5);
+		shift[1] = bolts[i].get_yPos() - (mapSize * 0.5);
 		shader.setUniform("shift", shift[0], shift[1]);
 		drawPolygon(20);
 	}
@@ -354,8 +354,8 @@ void Render::render(const Dungeon& dungeon)
 	Hero hero = dungeon.get_hero();
 	shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
 	shader.setUniform("radius", entityRadius);
-	shift[0] = hero.get_xPos() + 0.5 - (mapSize * 0.5);
-	shift[1] = hero.get_yPos() + 0.5 - (mapSize * 0.5);
+	shift[0] = hero.get_xPos() - (mapSize * 0.5);
+	shift[1] = hero.get_yPos() - (mapSize * 0.5);
 	shader.setUniform("shift", shift[0], shift[1]);
 	drawPolygon(20);
 }
@@ -419,14 +419,40 @@ void Render::render(const TowerDefense & game)
 	// render enemies
 	const std::vector<Enemy>& enemies = game.get_enemies();
 	float shift[2];
-	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
 	shader.setUniform("radius", entityRadius);
 	for(int i = 0; i < enemies.size(); i++)
 	{
 		shift[0] = enemies[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * enemies[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
-		drawPolygon(20);
+		switch (enemies[i].get_type())
+		{
+		case (normal):
+			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+			drawPolygon(20);
+			break;
+		case (strong):
+			shader.setUniform("color", 1.0, 0.557, 0.91, 1.0);
+			drawPolygon(4);
+			break;
+		case (fast):
+			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+			drawPolygon(4);
+			break;
+		case (tank):
+			shader.setUniform("color", 1.0, 1.0, 1.0, 1.0);
+			drawPolygon(20);
+			break;
+		case (boss):
+			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+			drawPolygon(4);
+			shader.setUniform("radius", entityRadius * 1.2);
+			break;
+		case (regen):
+			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+			drawPolygon(20);
+			break;
+		}
 	}
 
 	
@@ -434,12 +460,30 @@ void Render::render(const TowerDefense & game)
 	for (int i = 0; i < towers.size(); i++)
 	{
 		// render towers
-		shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
 		shader.setUniform("radius", entityRadius);
 		shift[0] = towers[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * towers[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
-		drawPolygon(6);
+
+		switch (towers[i].get_strength())
+		{
+		case (basic):
+			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+			drawPolygon(20);
+			break;
+		case (ranged):
+			shader.setUniform("color", .15, 0.976, 0.8, 1.0);
+			drawPolygon(3);
+			break;
+		case (machine):
+			shader.setUniform("color", .619, .152, 0.976, 1.0);
+			drawPolygon(4);
+			break;
+		case (slow_t):
+			shader.setUniform("color", 1, 1, 0.0, 1.0);
+			drawPolygon(5);
+			break;
+		}
 
 		// render projectiles
 		const std::vector<Projectile>& bolts = towers[i].get_projectiles();

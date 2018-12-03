@@ -25,9 +25,9 @@ public:
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)
-	int processInput(GLFWwindow* window);
+	int processInput(GLFWwindow* window, int fps);
 	// Updates the Game each tick, returns the game state 
-	int update();
+	int update(int fps);
 
 	// get functions
 	const auto& get_map() const { return map; }

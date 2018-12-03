@@ -12,7 +12,7 @@ private:
 	int timer;
 	int cooldown;
 	int pnumber;
-	double strength;
+	int strength;
 	int xPos, yPos;
 	double range;
 	double speed;
@@ -32,7 +32,7 @@ public:
 	double get_projectile_y(int pnum);
 	// getters
 	void clear_p();
-	double get_strength() const;
+	int get_strength() const;
 	double get_xPos() const;
 	double get_yPos() const;
 	const std::vector<Projectile>& get_projectiles() const { return projectiles; }

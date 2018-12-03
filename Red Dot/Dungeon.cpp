@@ -4,7 +4,7 @@
 
 Dungeon::Dungeon(int level ,int num)
 {
-	hero = Hero(level);
+	hero = Hero(level, map.size());
 	for (int x = 0; x < map.size(); x++)
 	{
 		for (int y = 0; y < map[0].size(); y++)
@@ -13,20 +13,28 @@ Dungeon::Dungeon(int level ,int num)
 		}
 	}
 
-	for (int x = 5; x < 15; x++)
+	for (int x = 2; x < 18; x++)
 	{
-		for (int y = 5; y < 15; y++)
+		for (int y = 2; y < 18; y++)
 		{
 			map[x][y] = 1;
 		}
 	}
 
 	for (int i = 0; i < num; i++) {
-		monsters.emplace_back(Monster());
+		monsters.emplace_back(Monster(map.size()));
+		while (map[monsters[i].get_xPos()][monsters[i].get_yPos()] == 0) {
+			monsters.erase(monsters.begin() + i);
+			monsters.emplace_back(Monster(map.size()));
+		}
 	}
 	
 }
-int Dungeon::processInput(GLFWwindow* window) {
+int Dungeon::processInput(GLFWwindow* window, int fps) {
+	static int count = 0;
+	static int reload = 0;
+	static int swap = 0;
+
 	// Hero Movement
 	int xMove = 0;
 	int yMove = 0;
@@ -48,8 +56,8 @@ int Dungeon::processInput(GLFWwindow* window) {
 	}
 
 	// Switching Weapons
-	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(2));
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS && swap < count) {
+		swap = count + 20;
 		hero.switch_Weapon();
 	}
 
@@ -61,10 +69,11 @@ int Dungeon::processInput(GLFWwindow* window) {
 	// Orienting the Hero
 	double xpos, ypos;
 	glfwGetCursorPos(window, &xpos, &ypos);
-	hero.set_direction(xpos, ypos);
+	hero.set_direction((xpos * map.size() / 800), (20 - (ypos * map.size() / 800)));
 
 	// Processing Attacks
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS && count > reload) {
+		reload = count + fps/2;
 		if (hero.get_weapon()) {
 			for (int m = 0; m < monsters.size(); m++) {
 				monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
@@ -74,11 +83,11 @@ int Dungeon::processInput(GLFWwindow* window) {
 			bolts.emplace_back(hero.ranged_attack());
 		}
 	}
-
+	++count;
 	return 1;
 }
 
-int Dungeon::update() {
+int Dungeon::update(int fps) {
 	// Run through monster death
 	for (int m = 0; m < monsters.size(); m++) {
 		if (monsters[m].get_health() <= 0) {
@@ -104,20 +113,24 @@ int Dungeon::update() {
 		}
 		hero.take_damage(monsters[m].attack(hero.get_xPos(), hero.get_yPos()));
 	}
-	// Run through bolt functions (movement and check_hit monsters and walls)
+	// Run through bolt functions (check_hit monsters)
 	for (int b = 0; b < bolts.size(); b++) {
 		for (int x = 0; x < (monsters.size()); ++x) {
 			if (bolts[b].check_hit(monsters[x].get_xPos(), monsters[x].get_yPos())) {
 				monsters[x].take_damage(bolts[b].get_damage());
 				bolts.erase(bolts.begin() + b);
+				break;
 			}
 		}
+	}
+	// Run through bolt functions (movement then hitting walls)
+	for (int b = 0; b < bolts.size(); b++) {
 		bolts[b].move();
 		if (map[bolts[b].get_xCoord()][bolts[b].get_yCoord()] == 0) {
 			bolts.erase(bolts.begin() + b);
 		}
-		
 	}
+
 	hero.level_up();
 	// If monsters exist, keep dungeon running
 	if (hero.die()) {

@@ -16,11 +16,12 @@ private:
 	double Vel;
 	double xDir, yDir;
 	int weapon;
+	double damage;
 
 public:
 	// Hero constructor (pass in whatever you decide)
 	Hero();
-	Hero(double level);
+	Hero(double level, int mapSize);
 	// update method
 	void update();
 
