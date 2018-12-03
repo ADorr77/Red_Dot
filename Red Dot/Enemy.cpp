@@ -52,7 +52,7 @@ Enemy::Enemy(int level) {
 	}
 	if (level == boss) {
 		speed = 5;
-		hp = 100;
+		hp = 200;
 		strength = 50;
 		xVel = 0;
 		yVel = 0;
