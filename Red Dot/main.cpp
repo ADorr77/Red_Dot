@@ -29,7 +29,6 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	Dungeon dungeon = Dungeon(1,4);
 	
 	// initialize timer variables
 	auto start = Clock::now();
