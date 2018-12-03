@@ -117,7 +117,7 @@ void Tower::eraseProjectile(int pnum)
 	
 	if (pnumber > 0) {
 		--pnumber;
-		projectiles.erase(projectiles.begin() + pnum);
+		if (!((pnumber+1) == pnum && pnum == projectiles.size())) { projectiles.erase(projectiles.begin() + pnum); }
 	}
 	
 	

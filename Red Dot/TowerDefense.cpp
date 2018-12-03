@@ -10,7 +10,7 @@ TowerDefense::TowerDefense() {
 	level = 0;
 	through = 0;
 	lives = 100;
-	m.init_map(2);
+	m.init_map(1);
 	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
@@ -118,10 +118,10 @@ int TowerDefense::update(int fps)
 		init_level();
 		++level;
 		++state;
-		m.init_map(2);
+		//m.init_map(2);
 		break;
 	case 1:
-		m.init_map(2);
+		//m.init_map(2);
 		map_towers();
 		advance_enemies(fps);
 		if (state == 1){ advance_projectiles(fps); }
