@@ -92,10 +92,10 @@ int main()
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
+				SoundEngine->play2D("Sounds/you_lose.mp3", false);
 				renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				glfwSetWindowShouldClose(window, true);
-				SoundEngine->play2D("Sounds/you_lose.mp3", false);
 			}
 			renderer.render(dungeon);
 			break;
