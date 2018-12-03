@@ -39,7 +39,7 @@ int main()
 	
 	// play theme_music
 	SoundEngine->play2D("theme_music.mp3", true); 
-
+	int counter = 0;
 	while (!glfwWindowShouldClose(window)) 
 	{
 		// start timer
@@ -53,6 +53,7 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		bool dungeon_creator = false;
+		
 
 		switch (state)
 		{
@@ -60,7 +61,13 @@ int main()
 			for (static bool first = true; first; first = false) {
 				renderer.init(td);
 			}
-			system("cls");
+			if (counter == 0) {
+				system("cls");
+				
+				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();
+				counter = 30;
+			}
+			else { --counter; }
 			state = td.update(fps);
 			if (!state) { state = td.processEvents(window); }
 			renderer.render(td);

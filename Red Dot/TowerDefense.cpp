@@ -14,6 +14,7 @@ TowerDefense::TowerDefense() {
 	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
+	print = 0;
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 3; j < 5; ++j) {
 			int s;
@@ -135,13 +136,22 @@ int TowerDefense::update(int fps)
 		break;
 	case 2:
 		if (through) { return 1; }
-		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+		if (print == 0) {
+			std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
+				"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+			print = 30;
+		}
+		else { ++print;}
 		break;
 
 		//pause state
 	case 3:
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+		if (print == 0) {
+			std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+			print = 30;
+		}
+		else { ++print; }
+		
 		//renderAscii();
 		break;
 	}
@@ -323,6 +333,11 @@ int TowerDefense::thru()
 	through = 0;
 	//reset_through();
 	return t;
+}
+
+int TowerDefense::get_thru()
+{
+	return through;
 }
 
 void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
