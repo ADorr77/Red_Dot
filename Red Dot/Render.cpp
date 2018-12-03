@@ -425,6 +425,8 @@ void Render::render(const TowerDefense & game)
 		shift[0] = enemies[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * enemies[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
+
+		// set colors and shapes for enemies
 		switch (enemies[i].get_type())
 		{
 		case (normal):
@@ -449,7 +451,7 @@ void Render::render(const TowerDefense & game)
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
 		case (miniboss):
-			shader.setUniform("color", .5, 0.0, 0.5, 1.0);
+			shader.setUniform("color", .188, 0.863, 0.5, 1.0);
 			drawPolygon(4);
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
@@ -478,7 +480,7 @@ void Render::render(const TowerDefense & game)
 			drawPolygon(3);
 			break;
 		case (machine):
-			shader.setUniform("color", .619, .152, 0.976, 1.0);
+			shader.setUniform("color", .619, .35, 0.976, 1.0);
 			drawPolygon(4);
 			break;
 		case (slow_t):
