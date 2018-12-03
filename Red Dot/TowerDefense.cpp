@@ -187,16 +187,16 @@ void TowerDefense::init_level()
 		make_wave(100, 10, tank, 10);
 		break;
 	case 7:
-		make_wave(0, 7, tank, 5);
-		make_wave(0, 13, strong, 10);
-		make_wave(150, 15, fast, 10);
+		make_wave(0, 7, tank, 12);
+		make_wave(0, 13, strong, 12);
+		make_wave(150, 15, fast, 1);
 		break;
 	case 8:
-		make_wave(0, 5, strong, 20);
-		make_wave(100, 3, normal, 20);
+		make_wave(0, 5, strong, 25);
+		make_wave(125, 3, normal, 80);
 		break;
 	case 9:
-		make_wave(0, 10, fast, 10);
+		make_wave(0, 3, fast, 50);
 		make_wave(110, 10, boss, 1);
 		break;
 	}
