@@ -251,6 +251,7 @@ void TowerDefense::advance_projectiles(int fps)
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
+						SoundEngineTD->play2D("Sounds/die.mp3", false);
 //						j = enemies.size();
 					}
 
