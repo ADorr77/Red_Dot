@@ -38,7 +38,7 @@ public:
 	//take damage
 	//detect projectiles
 	int detect(double x, double y);
-	void take_damage();
+	void take_damage(int);
 	void slow();
 	void hit_response(int);
 

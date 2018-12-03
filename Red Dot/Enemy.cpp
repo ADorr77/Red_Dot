@@ -11,16 +11,16 @@ Enemy::Enemy(int level) {
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 100;
+		reward = 50;
 		type_char = 'e';
 	}
 	if (level == strong) {
-		speed = 5;
-		hp = 2;
+		speed = 10;
+		hp = 3;
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 150;
+		reward = 100;
 		type_char = 's';
 	}
 	if (level == fast) {
@@ -29,25 +29,25 @@ Enemy::Enemy(int level) {
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 150;
+		reward = 50;
 		type_char = 'f';
 	}
 	if (level == tank) {
-		speed = 3;
-		hp = 4;
+		speed = 6;
+		hp = 8;
 		strength = 2;
 		xVel = 0;
 		yVel = 0;
-		reward = 200;
+		reward = 150;
 		type_char = 'e';
 	}
 	if (level == boss) {
-		speed = 3;
-		hp = 50;
+		speed = 5;
+		hp = 100;
 		strength = 50;
 		xVel = 0;
 		yVel = 0;
-		reward = 200;
+		reward = 1000;
 		type_char = 'b';
 	}
 }
@@ -91,9 +91,23 @@ int Enemy::detect(double x, double y)
 	return 0;
 }
 
-void Enemy::take_damage()
+void Enemy::take_damage(int type)
 {
+	// damage settings
+	switch (type)
+	{
+
+	case (basic):
 		hp -= 1;
+		break;
+	case (ranged):
+		hp -= 2;
+		break;
+	case (machine):
+		hp -= .25;
+		break;
+	}
+
 }
 
 void Enemy::slow()
@@ -109,13 +123,13 @@ void Enemy::hit_response(int type)
 {
 	switch (type) {
 	case (basic):
-		take_damage();
+		take_damage(type);
 		break;
 	case (ranged):
-		take_damage();
+		take_damage(type);
 		break;
 	case (machine):
-		take_damage();
+		take_damage(type);
 		break;
 	case (slow_t):
 		slow();

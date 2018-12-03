@@ -1,5 +1,9 @@
 #include "TowerDefense.h"
 #include "Enemy.h"
+#include<Sound/irrKlang.h>
+#include<Windows.h>
+
+irrklang::ISoundEngine *SoundEngineTD = irrklang::createIrrKlangDevice();
 
 TowerDefense::TowerDefense() {
 	money = 1000;
@@ -32,18 +36,22 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		if (button_state == 1 && money >= 500 && y<15 && isOccupied == -1) {
 			money -= 500;
 			create_tower(x, y, 0);
+			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
 		if (button_state == 2 && money >= 800 && y < 15 && isOccupied == -1) {
 			money -= 800;
 			create_tower(x, y, 1);
+			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
 		if (button_state == 3 && money >= 1500 && y < 15 && isOccupied == -1) {
 			money -= 1500;
 			create_tower(x, y, 2);
+			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
 		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
 			money -= 1000;
 			create_tower(x, y, slow_t);
+			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
 		//play pause
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
@@ -54,6 +62,7 @@ int TowerDefense::processEvents(GLFWwindow * window)
 				state = 0;
 			}
 			else if (state == 3 ) { state = 1; }
+			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 0 && y >= 20 && x < 5 && y < 25) {
 			return 1;
@@ -61,15 +70,19 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		// making towers buttons
 		if (x >= 5 && y >= 15 && x < 10 && y < 20) {
 			button_state = 1;
+			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 5 && y >= 20 && x < 10 && y < 25) {
 			button_state = 2;
+			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 15 && x < 15 && y < 20) {
 			button_state = 3;
+			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 20 && x < 15 && y < 25) {
 			button_state = 4;
+			SoundEngineTD->play2D("select.mp3", false);
 		}
 	}
 	return 0;
@@ -136,6 +149,8 @@ void TowerDefense::init_level()
 		make_wave(150, 20, strong, 10);
 		make_wave(200, 20, fast, 10);
 		break;
+
+	
 	}
 
 }
@@ -239,6 +254,7 @@ void TowerDefense::advance_projectiles(int fps)
 					if (enemies[j].get_hp() <= 0) {
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
+						SoundEngineTD->play2D("Sounds/die.mp3", false);
 //						j = enemies.size();
 					}
 

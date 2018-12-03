@@ -12,7 +12,10 @@
 #include "Dungeon.h"
 #include <chrono>
 #include <thread>
+#include<Sound/irrKlang.h>
 
+// create main sound engine
+irrklang::ISoundEngine *SoundEngine = irrklang::createIrrKlangDevice();
 
 void processInput(GLFWwindow * window);
 
@@ -28,7 +31,10 @@ int main()
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1,3);
 
-	renderer.init(td);
+	if (state == 0)
+		renderer.init(td);
+	else
+		renderer.init(dungeon);
 	
 	
 	// initialize timer variables
@@ -37,12 +43,14 @@ int main()
 	int fps = 60; // change the render speed here (frames per second)
 	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
 	
+	// play theme_music
+	SoundEngine->play2D("theme_music.mp3", true); 
 
 	while (!glfwWindowShouldClose(window)) 
 	{
 		// start timer
 		start = Clock::now();
-
+		// SoundEngine->play2D("theme_music.mp3", true);
 		// input
 		glfwPollEvents();
 		processInput(window);
@@ -60,10 +68,17 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
+			std::cout << dungeon.get_hero().get_weapon() << std::endl;
 			system("cls");
-			renderer.renderASCII(dungeon);
-			dungeon.test();
-			std::cout << "main menu";
+			int p = dungeon.processInput(window);
+			int u = dungeon.update();
+			if (p == 0 || u == 0) {
+				std::cout << "You've completed the level!" << std::endl;
+			}
+			if (u == 2) {
+				std::cout << "You died. Game Over." << std::endl;
+			}
+			renderer.render(dungeon);
 			break;
 		}
 

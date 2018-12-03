@@ -30,13 +30,12 @@ public:
 	int update();
 
 	// get functions
-	auto& get_map() const { return map; }
+	const auto& get_map() const { return map; }
 	const Hero& get_hero() const { return hero; }
 	const std::vector<Monster>& get_monsters() const { return monsters; }
 	const std::vector<Bolt>& get_bolts() const { return bolts; }
 
 	// add other functionality as needed
-	void test();
 };
 
 #endif
