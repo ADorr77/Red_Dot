@@ -6,7 +6,7 @@
 #include "Maps.h"
 #include "Tower.h"
 
-enum { regen, normal, strong, fast, tank, boss };
+enum {normal, strong, fast, tank, miniboss, boss };
 // Generic Tower Defense Enemy
 class Enemy
 {

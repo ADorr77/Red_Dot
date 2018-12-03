@@ -146,7 +146,7 @@ void TowerDefense::init_level()
 		break;
 	case 4:
 		make_wave(0, 10, normal, 10);
-		make_wave(110, 20, boss, 1);
+		make_wave(110, 20, miniboss, 1);
 		break;
 	case 5:
 		make_wave(0, 15, strong, 10);
@@ -154,14 +154,14 @@ void TowerDefense::init_level()
 		make_wave(200, 20, fast, 10);
 		break;
 	case 6:
-		make_wave(0, 15, normal, 10);
-		make_wave(150, 20, strong, 10);
-		make_wave(200, 20, fast, 10);
+		make_wave(0, 5, normal, 10);
+		make_wave(50, 10, strong, 10);
+		make_wave(100, 10, tank, 10);
 		break;
 	case 7:
-		make_wave(0, 15, normal, 10);
-		make_wave(150, 20, strong, 10);
-		make_wave(200, 20, fast, 10);
+		make_wave(0, 7, tank, 5);
+		make_wave(0, 13, strong, 10);
+		make_wave(150, 15, fast, 10);
 		break;
 	}
 
@@ -246,7 +246,7 @@ void TowerDefense::advance_projectiles(int fps)
 
 
 		int c = towers[t].get_pnumber();
-		while (c > 0) {
+		while (c >= 1) {
 			if (!towers[t].advanceProjectiles((c - 1), fps)) {
 
 				//towers[t].eraseProjectile(c - 1);
@@ -259,7 +259,7 @@ void TowerDefense::advance_projectiles(int fps)
 				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						enemies[j].hit_response(towers[t].get_strength());
-						if (towers[t].get_pnumber() >= 1) {
+						if (c >= 1) {
 							towers[t].eraseProjectile(c - 1);
 						}
 					}
