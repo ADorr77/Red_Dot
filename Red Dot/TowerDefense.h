@@ -9,6 +9,7 @@
 #include "Maps.h"
 #include<iostream>
 #include "Includes.h"
+#include "Button.h"
 
 
 class TowerDefense
@@ -27,6 +28,7 @@ private:
 	Maps m;
 	std::vector<Enemy> enemies;
 	std::vector<Tower> towers;
+	std::vector<Button> buttons;
 
 
 public:
@@ -41,6 +43,7 @@ public:
 	void mapconstSet();
 	//keeps track of how many get through
 	void gotThru(int i);
+	void reset_through();
 
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
@@ -68,16 +71,18 @@ public:
 	int get_map_value(int x, int y);
 	const std::vector<Enemy>& get_enemies() const { return enemies; }
 	const std::vector<Tower>& get_towers() const { return towers; }
-
+	const std::vector<Button>& get_buttons() const { return buttons; }
 	// add other functionality as needed
 	void add_money(int m);
 	int get_money() const;
-	int thru() const;
+	int thru();
 	void make_wave(int offset, int spacing, int type, int quantity);
 	int get_lives() const;
 
 	const int height = 15;
 	const int width = 25;
+	void create_button(int x, int y, int s);
+	void reset_buttons();
 };
 
 #endif
