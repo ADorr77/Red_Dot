@@ -25,6 +25,7 @@ private:
 	int mouse_cooldown;
 	char map[25][15];
 	char mapconst[25][15];
+	int mapnumber;
 	// map that holds path that does not get changed or printed out
 	Maps m;
 	std::vector<Enemy> enemies;

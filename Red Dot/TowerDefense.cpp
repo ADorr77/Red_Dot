@@ -10,11 +10,13 @@ TowerDefense::TowerDefense() {
 	level = 0;
 	through = 0;
 	lives = 100;
-	m.init_map(1);
+	mapnumber = 1;
+	m.init_map(mapnumber);
 	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
 	print = 0;
+	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 3; j < 5; ++j) {
 			int s;
@@ -26,6 +28,20 @@ TowerDefense::TowerDefense() {
 	
 }
 
+
+void TowerDefense::reset()
+{
+	money = 1500;
+	level = 0;
+	through = 0;
+	lives = 100;
+	mapnumber += 1;
+	m.init_map(mapnumber);
+	state = 2;
+	button_state = 0;
+	mouse_cooldown = 0;
+	print = 0;
+}
 
 int TowerDefense::processEvents(GLFWwindow * window)
 {
@@ -199,7 +215,10 @@ void TowerDefense::init_level()
 		make_wave(0, 3, fast, 50);
 		make_wave(110, 10, boss, 1);
 		break;
+	
 	}
+	
+
 
 }
 

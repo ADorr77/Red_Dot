@@ -25,6 +25,30 @@ void Maps::init_map(int mapnum)
 					map[j][i] = -37;
 				}
 			}
+			if (mapnum == 3) {
+				if (Maplib_map_3[i][j]) {
+					map[j][i] = ' ';
+				}
+				else {
+					map[j][i] = -37;
+				}
+			}
+			if (mapnum == 4) {
+				if (Maplib_map_4[i][j]) {
+					map[j][i] = ' ';
+				}
+				else {
+					map[j][i] = -37;
+				}
+			}
+			if (mapnum == 5) {
+				if (Maplib_map_5[i][j]) {
+					map[j][i] = ' ';
+				}
+				else {
+					map[j][i] = -37;
+				}
+			}
 		}
 	}
 }
