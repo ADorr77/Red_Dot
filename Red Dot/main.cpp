@@ -27,9 +27,11 @@ int main()
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
-	int state = 0; // change this for now to switch between modes
+	int state = 1; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1);
+	bool dungeon_creator = true;
+	bool td_creator = true;
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -51,8 +53,6 @@ int main()
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		bool dungeon_creator = true;
-		bool td_creator = true;
 
 		switch (state)
 		{
