@@ -14,6 +14,14 @@ TowerDefense::TowerDefense() {
 	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 3; j < 5; ++j) {
+			int s;
+			if (j == 3 && i == 0) { s = 3; }
+			else { s = 0; }
+			create_button(i, j, s);
+		}
+	}
 	
 }
 
@@ -57,11 +65,16 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
 			if (state == 1) {
 				state = 3;
+				buttons[0].setState(3);
 			}
 			else if (state == 2) {
 				state = 0;
+				buttons[0].setState(4);
 			}
-			else if (state == 3 ) { state = 1; }
+			else if (state == 3 ) { 
+				state = 1;
+				buttons[0].setState(4);
+			}
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 0 && y >= 20 && x < 5 && y < 25) {
@@ -70,18 +83,26 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		// making towers buttons
 		if (x >= 5 && y >= 15 && x < 10 && y < 20) {
 			button_state = 1;
+			reset_buttons();
+			buttons[2].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 5 && y >= 20 && x < 10 && y < 25) {
 			button_state = 2;
+			reset_buttons();
+			buttons[3].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 15 && x < 15 && y < 20) {
 			button_state = 3;
+			reset_buttons();
+			buttons[4].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 20 && x < 15 && y < 25) {
 			button_state = 4;
+			reset_buttons();
+			buttons[5].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 	}
@@ -106,6 +127,7 @@ int TowerDefense::update(int fps)
 		if (enemies.size() == 0) { 
 			clear_Projectiles();
 			state = 2;
+			buttons[0].setState(3);
 		}
 		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		//renderAscii();
@@ -187,6 +209,7 @@ void TowerDefense::advance_enemies(int fps)
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 				clear_Projectiles();
 				state = 2;
+				buttons[0].setState(3);
 			}
 			//gotThru(enemies[j].get_strength());
 		}
@@ -296,6 +319,19 @@ void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
 int TowerDefense::get_lives() const
 {
 	return lives;
+}
+
+void TowerDefense::create_button(int x, int y, int s)
+{
+	Button *b = new Button(x, y, s);
+	buttons.push_back(*b);
+}
+
+void TowerDefense::reset_buttons()
+{
+	for (int j = 2; j < buttons.size(); ++j) {
+		buttons[j].setState(0);
+	}
 }
 
 
