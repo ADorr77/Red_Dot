@@ -43,6 +43,7 @@ public:
 	void mapconstSet();
 	//keeps track of how many get through
 	void gotThru(int i);
+	void reset_through();
 
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
@@ -74,7 +75,7 @@ public:
 	// add other functionality as needed
 	void add_money(int m);
 	int get_money() const;
-	int thru() const;
+	int thru();
 	void make_wave(int offset, int spacing, int type, int quantity);
 	int get_lives() const;
 

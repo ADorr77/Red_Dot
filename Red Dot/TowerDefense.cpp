@@ -317,9 +317,12 @@ int TowerDefense::get_money() const
 	return money;
 }
 
-int TowerDefense::thru() const
+int TowerDefense::thru() 
 {
-	return through;
+	int t = through;
+	through = 0;
+	//reset_through();
+	return t;
 }
 
 void TowerDefense::make_wave(int offset, int spacing, int type, int quantity)
@@ -400,6 +403,11 @@ void TowerDefense::gotThru(int i)
 {
 	through += 1;
 	lives -= i;
+}
+
+void TowerDefense::reset_through()
+{
+	through = 0;
 }
 
 

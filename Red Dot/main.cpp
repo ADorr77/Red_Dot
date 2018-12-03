@@ -67,7 +67,7 @@ int main()
 			break;
 		case 1:
 			for (dungeon_creator = true; dungeon_creator; dungeon_creator = false) {
-				Dungeon dungeon = Dungeon(1, 4); //Replace 4 with Got Through
+				Dungeon dungeon = Dungeon(1, td.thru()); //Replace 4 with Got Through
 			}
 			for (static bool first = true; first; first = false) {
 				renderer.init(dungeon);
