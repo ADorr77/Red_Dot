@@ -29,14 +29,7 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	Dungeon dungeon = Dungeon(1,3);
-
-	/*
-	if (state == 0)
-		renderer.init(td);
-	else
-		renderer.init(dungeon);
-	*/
+	Dungeon dungeon = Dungeon(1,4);
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -59,6 +52,7 @@ int main()
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		bool dungeon_creator = false;
 
 		switch (state)
 		{
@@ -72,17 +66,33 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
+			for (dungeon_creator = true; dungeon_creator; dungeon_creator = false) {
+				Dungeon dungeon = Dungeon(1, 4); //Replace 4 with Got Through
+			}
 			for (static bool first = true; first; first = false) {
 				renderer.init(dungeon);
 			}
 			system("cls");
+			std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
+			std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
 			int p = dungeon.processInput(window, fps);
 			int u = dungeon.update(fps);
+			if (p == 2) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+			}
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
+				state = 0;
+				dungeon_creator = true;
+				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+				break;
+
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
+				state = 0;
+				renderer.render(dungeon);
+				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 				break;
 			}
 			renderer.render(dungeon);

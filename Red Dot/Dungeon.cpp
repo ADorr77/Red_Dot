@@ -21,12 +21,14 @@ Dungeon::Dungeon(int level ,int num)
 		}
 	}
 
+	double speed = 0.1;
 	for (int i = 0; i < num; i++) {
-		monsters.emplace_back(Monster(map.size()));
+		monsters.emplace_back(Monster(map.size(),speed));
 		while (map[monsters[i].get_xPos()][monsters[i].get_yPos()] == 0) {
 			monsters.erase(monsters.begin() + i);
-			monsters.emplace_back(Monster(map.size()));
+			monsters.emplace_back(Monster(map.size(),speed));
 		}
+		speed += 0.02;
 	}
 	
 }
