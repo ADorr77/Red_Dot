@@ -11,43 +11,43 @@ Enemy::Enemy(int level) {
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 100;
+		reward = 50;
 		type_char = 'e';
 	}
 	if (level == strong) {
-		speed = 5;
-		hp = 2;
+		speed = 10;
+		hp = 3;
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 150;
+		reward = 100;
 		type_char = 's';
 	}
 	if (level == fast) {
-		speed = 20;
+		speed = 15;
 		hp = 1;
 		strength = 1;
 		xVel = 0;
 		yVel = 0;
-		reward = 150;
+		reward = 50;
 		type_char = 'f';
 	}
 	if (level == tank) {
-		speed = 3;
-		hp = 4;
+		speed = 6;
+		hp = 8;
 		strength = 2;
 		xVel = 0;
 		yVel = 0;
-		reward = 200;
+		reward = 150;
 		type_char = 'e';
 	}
 	if (level == boss) {
-		speed = 3;
-		hp = 50;
+		speed = 5;
+		hp = 100;
 		strength = 50;
 		xVel = 0;
 		yVel = 0;
-		reward = 200;
+		reward = 1000;
 		type_char = 'b';
 	}
 }
