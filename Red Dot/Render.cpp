@@ -417,12 +417,9 @@ void Render::render(const TowerDefense & game)
 			drawPolygon(4);
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
-		case (regen):
-			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
-			drawPolygon(20);
-			break;
 		}
 	}
+
 
 	
 	const std::vector<Tower>& towers = game.get_towers();
@@ -468,13 +465,15 @@ void Render::render(const TowerDefense & game)
 	}
 }
 
-void Render::drawPolygon(int sides)
-{
+void Render::drawPolygon(int sides){
 	if (sides < 3)
+	{
 		sides = 3;
+	}
 	if (sides > MAX_SIDES)
+	{
 		sides = MAX_SIDES;
-
+	}
 	glBindVertexArray(shapesArray[sides - 3]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shapesElements[sides - 3]);
 	glDrawElements(GL_TRIANGLES, (sides - 2) * 3, GL_UNSIGNED_INT, 0);
