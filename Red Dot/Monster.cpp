@@ -16,8 +16,8 @@ Monster::Monster()
 Monster::Monster(int mapSize, double vel) {
 	xPos = (mapSize/2) + (rand()%(int)(mapSize/2) - mapSize/2);
 	yPos = (mapSize / 2) + (rand() % (int)(mapSize / 2) - mapSize / 2);
-	damage = 1;
-	health = 10;
+	damage = 2;
+	health = 15;
 	hitbox = 1;
 	Vel = vel;
 	exp = 10;

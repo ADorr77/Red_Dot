@@ -27,7 +27,7 @@ int main()
 	Render renderer = Render();
 	GLFWwindow * window = renderer.get_window();
 
-	int state = 1; // change this for now to switch between modes
+	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
 	Dungeon dungeon = Dungeon(1);
 	bool dungeon_creator = true;
