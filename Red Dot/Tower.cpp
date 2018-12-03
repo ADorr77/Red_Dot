@@ -103,6 +103,7 @@ int Tower::advanceProjectiles(int pnum, int fps)
 
 void Tower::cool()
 {
+	pnumber = projectiles.size();
 	if (timer > 0) {
 		--timer;
 	}
