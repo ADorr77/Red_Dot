@@ -31,7 +31,7 @@ void Dungeon::createMonsters(int num) {
 			monsters.erase(monsters.begin() + i);
 			monsters.emplace_back(Monster(map.size(), speed));
 		}
-		speed += 0.02;
+		speed += 0.025;
 	}
 }
 int Dungeon::processInput(GLFWwindow* window, int fps) {
