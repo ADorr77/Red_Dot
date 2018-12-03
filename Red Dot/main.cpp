@@ -87,15 +87,15 @@ int main()
 				state = 0;
 				dungeon_creator = true;
 				td_creator = true;
-				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				break;
 
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
 				renderer.render(dungeon);
-				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-				break;
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				glfwSetWindowShouldClose(window, true);
 			}
 			renderer.render(dungeon);
 			break;
