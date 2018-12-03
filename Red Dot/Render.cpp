@@ -363,13 +363,13 @@ void Render::render(const Dungeon& dungeon)
 
 void Render::render(const TowerDefense & game)
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.453f, 0.278f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader.use();
 
 	// set the uniforms for tower map
-	shader.setUniform("color", 0.0f, 0.0f, 1.0f, 1.0f);
+	shader.setUniform("color", 0.0f, 0.5f, 0.0f, 1.0f);
 	shader.setUniform("radius", 1.0f);
 	shader.setUniform("shift", -12.5f, 12.5f);
 	shader.setUniform("scale", (1.0f / 12.5f));
@@ -382,6 +382,37 @@ void Render::render(const TowerDefense & game)
 	glBindVertexArray(buttonVAO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
 	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
+
+	const std::vector<Button>& buttons = game.get_buttons();
+	float shiftb[2];
+	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+	shader.setUniform("radius", 5);
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		int s = buttons[i].getState();
+		switch (s) {
+		case 0:
+			shader.setUniform("color", 0.4, 0.4, 0.4, 1.0);
+			break;
+		case 1:
+			shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
+			break;
+		case 2:
+			shader.setUniform("color", 0.737, 0.749, 0.0, 1.0);
+			break;
+		case 3:
+			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+			break;
+		case 4:
+			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+			break;
+		}
+		shiftb[0] = (5*buttons[i].get_x_Pos()) + 2.5 - 12.5;
+		shiftb[1] = (-5 * buttons[i].get_y_Pos()) - 2.5 + 12.5;
+		shader.setUniform("shift", shiftb[0], shiftb[1]);
+		drawPolygon(4);
+	}
+
 
 	float entityRadius = 0.6;
 
@@ -417,12 +448,9 @@ void Render::render(const TowerDefense & game)
 			drawPolygon(4);
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
-		case (regen):
-			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
-			drawPolygon(20);
-			break;
 		}
 	}
+
 
 	
 	const std::vector<Tower>& towers = game.get_towers();
@@ -468,13 +496,15 @@ void Render::render(const TowerDefense & game)
 	}
 }
 
-void Render::drawPolygon(int sides)
-{
+void Render::drawPolygon(int sides){
 	if (sides < 3)
+	{
 		sides = 3;
+	}
 	if (sides > MAX_SIDES)
+	{
 		sides = MAX_SIDES;
-
+	}
 	glBindVertexArray(shapesArray[sides - 3]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, shapesElements[sides - 3]);
 	glDrawElements(GL_TRIANGLES, (sides - 2) * 3, GL_UNSIGNED_INT, 0);

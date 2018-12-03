@@ -14,6 +14,15 @@ TowerDefense::TowerDefense() {
 	state = 2;
 	button_state = 0;
 	mouse_cooldown = 0;
+	print = 0;
+	for (int i = 0; i < 5; ++i) {
+		for (int j = 3; j < 5; ++j) {
+			int s;
+			if (j == 3 && i == 0) { s = 3; }
+			else { s = 0; }
+			create_button(i, j, s);
+		}
+	}
 	
 }
 
@@ -57,11 +66,16 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		if (x >= 0 && y >= 15 && x < 5 && y < 20) {
 			if (state == 1) {
 				state = 3;
+				buttons[0].setState(3);
 			}
 			else if (state == 2) {
 				state = 0;
+				buttons[0].setState(4);
 			}
-			else if (state == 3 ) { state = 1; }
+			else if (state == 3 ) { 
+				state = 1;
+				buttons[0].setState(4);
+			}
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 0 && y >= 20 && x < 5 && y < 25) {
@@ -70,24 +84,33 @@ int TowerDefense::processEvents(GLFWwindow * window)
 		// making towers buttons
 		if (x >= 5 && y >= 15 && x < 10 && y < 20) {
 			button_state = 1;
+			reset_buttons();
+			buttons[2].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 5 && y >= 20 && x < 10 && y < 25) {
 			button_state = 2;
+			reset_buttons();
+			buttons[3].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 15 && x < 15 && y < 20) {
 			button_state = 3;
+			reset_buttons();
+			buttons[4].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 		if (x >= 10 && y >= 20 && x < 15 && y < 25) {
 			button_state = 4;
+			reset_buttons();
+			buttons[5].setState(1);
 			SoundEngineTD->play2D("select.mp3", false);
 		}
 	}
 	return 0;
 }
 
+// updates the game state of tower defense for every iteration
 int TowerDefense::update(int fps)
 {
 	switch (state) {
@@ -96,7 +119,6 @@ int TowerDefense::update(int fps)
 		++level;
 		++state;
 		m.init_map(2);
-		//renderAscii();
 		break;
 	case 1:
 		m.init_map(2);
@@ -106,35 +128,41 @@ int TowerDefense::update(int fps)
 		if (enemies.size() == 0) { 
 			clear_Projectiles();
 			state = 2;
+			buttons[0].setState(3);
+			if (through > 0) { return 1; }
 		}
-		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		//renderAscii();
+
 		break;
 	case 2:
-		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+		if (through) { return 1; }
+		if (print == 0) {
+			std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
+				"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+			print = 30;
+		}
+		else { ++print;}
 		break;
-
-		//pause state
 	case 3:
-		std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		//renderAscii();
+		if (print == 0) {
+			std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+			print = 30;
+		}
+		else { ++print; }
 		break;
 	}
-
+	if (through && state == 2) { return 1; }
 	return 0;
 }
 
 void TowerDefense::init_level()
 {
-	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
 		make_wave(0, 10, normal, 10);
 		break;
 	case 1:
 		make_wave(0, 10, normal, 10);
-		make_wave(100, 20, strong, 5);
+		make_wave(100, 20, strong, 4);
 		break;
 	case 2:
 		make_wave(0, 10, normal, 10);
@@ -146,7 +174,7 @@ void TowerDefense::init_level()
 		break;
 	case 4:
 		make_wave(0, 10, normal, 10);
-		make_wave(110, 20, boss, 1);
+		make_wave(110, 20, miniboss, 1);
 		break;
 	case 5:
 		make_wave(0, 15, strong, 10);
@@ -154,14 +182,22 @@ void TowerDefense::init_level()
 		make_wave(200, 20, fast, 10);
 		break;
 	case 6:
-		make_wave(0, 15, normal, 10);
-		make_wave(150, 20, strong, 10);
-		make_wave(200, 20, fast, 10);
+		make_wave(0, 5, normal, 10);
+		make_wave(50, 10, strong, 10);
+		make_wave(100, 10, tank, 10);
 		break;
 	case 7:
-		make_wave(0, 15, normal, 10);
-		make_wave(150, 20, strong, 10);
-		make_wave(200, 20, fast, 10);
+		make_wave(0, 7, tank, 5);
+		make_wave(0, 13, strong, 10);
+		make_wave(150, 15, fast, 10);
+		break;
+	case 8:
+		make_wave(0, 5, strong, 20);
+		make_wave(100, 3, normal, 20);
+		break;
+	case 9:
+		make_wave(0, 10, fast, 10);
+		make_wave(110, 10, boss, 1);
 		break;
 	}
 
@@ -199,16 +235,16 @@ void TowerDefense::advance_enemies(int fps)
 					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 				clear_Projectiles();
 				state = 2;
+				buttons[0].setState(3);
+				
 			}
-			//gotThru(enemies[j].get_strength());
+		
 		}
 		else {
 			for (int t = 0; t < towers.size(); ++t) {
 				towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 			}
-			//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
-
-			// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
+			
 			if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
 			if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
 			{
@@ -221,7 +257,6 @@ void TowerDefense::advance_enemies(int fps)
 void TowerDefense::map_towers()
 {
 	for (int i = 0; i < towers.size(); ++i) {
-		//m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
 		towers[i].cool();
 	}
 	
@@ -246,20 +281,19 @@ void TowerDefense::advance_projectiles(int fps)
 
 
 		int c = towers[t].get_pnumber();
-		while (c > 0) {
+		while (c >= 1) {
 			if (!towers[t].advanceProjectiles((c - 1), fps)) {
 
-				//towers[t].eraseProjectile(c - 1);
-				//--c;
-				//if (towers[t].get_pnumber()) { --c; }
 				double x = towers[t].get_projectile_x(c - 1);
 				double y = towers[t].get_projectile_y(c - 1);
-				//m.set_map_value((int)x, (int)y, '.');
-				if (!enemies.size()) { state = 2; }
+				if (!enemies.size()) { 
+					state = 2; 
+				
+				}
 				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						enemies[j].hit_response(towers[t].get_strength());
-						if (towers[t].get_pnumber() >= 1) {
+						if (c >= 1) {
 							towers[t].eraseProjectile(c - 1);
 						}
 					}
@@ -267,7 +301,7 @@ void TowerDefense::advance_projectiles(int fps)
 						add_money(enemies[j].get_reward());
 						enemies.erase(enemies.begin() + j);
 						SoundEngineTD->play2D("Sounds/die.mp3", false);
-//						j = enemies.size();
+//					
 					}
 
 				}
@@ -288,7 +322,14 @@ int TowerDefense::get_money() const
 	return money;
 }
 
-int TowerDefense::thru() const
+int TowerDefense::thru() 
+{
+	int t = through;
+	through = 0;
+	return t;
+}
+
+int TowerDefense::get_thru()
 {
 	return through;
 }
@@ -310,14 +351,18 @@ int TowerDefense::get_lives() const
 	return lives;
 }
 
-
-
-/*std::vector<Projectile> TowerDefense::get_projectiles() const
+void TowerDefense::create_button(int x, int y, int s)
 {
-	return projectiles;
+	Button *b = new Button(x, y, s);
+	buttons.push_back(*b);
 }
-*/
 
+void TowerDefense::reset_buttons()
+{
+	for (int j = 2; j < buttons.size(); ++j) {
+		buttons[j].setState(0);
+	}
+}
 
 
 int TowerDefense::get_map_value(int x, int y)
@@ -358,6 +403,11 @@ void TowerDefense::gotThru(int i)
 {
 	through += 1;
 	lives -= i;
+}
+
+void TowerDefense::reset_through()
+{
+	through = 0;
 }
 
 

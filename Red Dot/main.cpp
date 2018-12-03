@@ -29,14 +29,7 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense td;
-	Dungeon dungeon = Dungeon(1,3);
-
-	/*
-	if (state == 0)
-		renderer.init(td);
-	else
-		renderer.init(dungeon);
-	*/
+	Dungeon dungeon = Dungeon(1);
 	
 	// initialize timer variables
 	auto start = Clock::now();
@@ -46,7 +39,7 @@ int main()
 	
 	// play theme_music
 	SoundEngine->play2D("theme_music.mp3", true); 
-
+	int counter = 0;
 	while (!glfwWindowShouldClose(window)) 
 	{
 		// start timer
@@ -59,31 +52,50 @@ int main()
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		bool dungeon_creator = true;
+		bool td_creator = true;
 
 		switch (state)
 		{
 		case 0:
-			for (static bool first = true; first; first = false) {
+			for (td_creator; td_creator; td_creator = false) {
 				renderer.init(td);
 			}
-			system("cls");
+			if (counter == 0) {
+				system("cls");
+				
+				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();
+				counter = 30;
+			}
+			else { --counter; }
 			state = td.update(fps);
-			state = td.processEvents(window);
+			if (!state) { state = td.processEvents(window); }
 			renderer.render(td);
 			break;
 		case 1:
-			for (static bool first = true; first; first = false) {
+			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
+				dungeon.createMonsters(td.thru());
 				renderer.init(dungeon);
 			}
 			system("cls");
+			std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
+			std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
 			int p = dungeon.processInput(window, fps);
 			int u = dungeon.update(fps);
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
+				state = 0;
+				dungeon_creator = true;
+				td_creator = true;
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				break;
+
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
-				break;
+				renderer.render(dungeon);
+				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				glfwSetWindowShouldClose(window, true);
 			}
 			renderer.render(dungeon);
 			break;
