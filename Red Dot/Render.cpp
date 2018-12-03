@@ -383,6 +383,37 @@ void Render::render(const TowerDefense & game)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buttonEBO);
 	glDrawElements(GL_TRIANGLES, numButtonPoints, GL_UNSIGNED_INT, 0);
 
+	const std::vector<Button>& buttons = game.get_buttons();
+	float shiftb[2];
+	shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+	shader.setUniform("radius", 5);
+	for (int i = 0; i < buttons.size(); i++)
+	{
+		int s = buttons[i].getState();
+		switch (s) {
+		case 0:
+			shader.setUniform("color", 0.4, 0.4, 0.4, 1.0);
+			break;
+		case 1:
+			shader.setUniform("color", 1.0, 0.0, 1.0, 1.0);
+			break;
+		case 2:
+			shader.setUniform("color", 0.737, 0.749, 0.0, 1.0);
+			break;
+		case 3:
+			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+			break;
+		case 4:
+			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
+			break;
+		}
+		shiftb[0] = (5*buttons[i].get_x_Pos()) + 2.5 - 12.5;
+		shiftb[1] = (-5 * buttons[i].get_y_Pos()) - 2.5 + 12.5;
+		shader.setUniform("shift", shiftb[0], shiftb[1]);
+		drawPolygon(4);
+	}
+
+
 	float entityRadius = 0.6;
 
 	// render enemies
