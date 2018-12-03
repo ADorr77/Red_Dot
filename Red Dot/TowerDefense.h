@@ -21,6 +21,7 @@ private:
 	int state;
 	int button_state;
 	int lives;
+	int print;
 	int mouse_cooldown;
 	char map[25][15];
 	char mapconst[25][15];
@@ -76,6 +77,7 @@ public:
 	void add_money(int m);
 	int get_money() const;
 	int thru();
+	int get_thru();
 	void make_wave(int offset, int spacing, int type, int quantity);
 	int get_lives() const;
 
