@@ -34,7 +34,7 @@ Enemy::Enemy(int level) {
 	}
 	if (level == tank) {
 		speed = 6;
-		hp = 8;
+		hp = 6;
 		strength = 2;
 		xVel = 0;
 		yVel = 0;
@@ -47,7 +47,7 @@ Enemy::Enemy(int level) {
 		strength = 50;
 		xVel = 0;
 		yVel = 0;
-		reward = 1000;
+		reward = 2000;
 		type_char = 'b';
 	}
 }
@@ -104,7 +104,7 @@ void Enemy::take_damage(int type)
 		hp -= 2;
 		break;
 	case (machine):
-		hp -= .25;
+		hp -= 1;
 		break;
 	}
 

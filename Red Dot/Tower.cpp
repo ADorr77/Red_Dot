@@ -15,22 +15,22 @@ Tower::Tower(int x, int y, int s)
 	switch (s)
 	{
 		case basic:
-			cooldown = 60;
+			cooldown = 50;
 			range = 5;
 			speed = 20;
 			break;
 		case ranged:
-			cooldown = 80;
+			cooldown = 75;
 			range = 15;
 			speed = 40;
 			break;
 		case machine:
-			cooldown = 15;
+			cooldown = 12;
 			range = 5;
 			speed = 20;
 			break;
 		case slow_t:
-			cooldown = 60;
+			cooldown = 50;
 			range = 5;
 			speed = 20;
 			break;

@@ -6,7 +6,7 @@
 irrklang::ISoundEngine *SoundEngineTD = irrklang::createIrrKlangDevice();
 
 TowerDefense::TowerDefense() {
-	money = 500;
+	money = 1500;
 	level = 0;
 	through = 0;
 	lives = 100;
