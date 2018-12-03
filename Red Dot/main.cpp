@@ -44,7 +44,6 @@ int main()
 	{
 		// start timer
 		start = Clock::now();
-		// SoundEngine->play2D("theme_music.mp3", true);
 		// input
 		glfwPollEvents();
 		processInput(window);
@@ -63,7 +62,6 @@ int main()
 			}
 			if (counter == 0) {
 				system("cls");
-				
 				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();
 				counter = 30;
 			}
@@ -96,6 +94,7 @@ int main()
 				renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				glfwSetWindowShouldClose(window, true);
+				SoundEngine->play2D("Sounds/you_lose.mp3", false);
 			}
 			renderer.render(dungeon);
 			break;
