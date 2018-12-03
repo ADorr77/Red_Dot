@@ -197,6 +197,14 @@ void TowerDefense::init_level()
 		make_wave(0, 13, strong, 10);
 		make_wave(150, 15, fast, 10);
 		break;
+	case 8:
+		make_wave(0, 5, strong, 20);
+		make_wave(100, 3, normal, 20);
+		break;
+	case 9:
+		make_wave(0, 10, fast, 10);
+		make_wave(110, 10, boss, 1);
+		break;
 	}
 
 }
