@@ -14,17 +14,19 @@ Hero::Hero()
 	yPos = 14;
 	Vel = 5;
 	weapon = 1;
+	damage = 2;
 }
 
-Hero::Hero(double level) {
+Hero::Hero(double level, int mapSize) {
 	maxHealth = 100 + (10 * level);
 	health = maxHealth;
 	this->level = level;
 	exp = 0;
-	xPos = 6;
-	yPos = 14;
+	xPos = mapSize/2;
+	yPos = mapSize/2;
 	Vel = 0.3;
 	weapon = 1;
+	damage = 2 + (level * 0.1);
 }
 
 void Hero::update() {
@@ -50,7 +52,7 @@ void Hero::set_direction(double x, double y) {
 }
 
 double Hero::melee_attack(double x, double y) {
-	double range = 2;
+	double range = 1;
 	// Distance to monster
 	double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
 	if (distM <= range) {
@@ -64,7 +66,7 @@ double Hero::melee_attack(double x, double y) {
 }
 
 Bolt Hero::ranged_attack() {
-	return Bolt::Bolt(2, 0.01, (xDir), (yDir), xPos, yPos);
+	return Bolt::Bolt((damage-1), 0.01, (xDir), (yDir), xPos, yPos);
 }
 
 void Hero::switch_Weapon() {

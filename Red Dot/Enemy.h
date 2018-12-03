@@ -12,7 +12,7 @@ class Enemy
 {
 private:
 	char type_char;
-	int type;
+	int type; 
 	int timer;
 	double speed;
 	double strength;
