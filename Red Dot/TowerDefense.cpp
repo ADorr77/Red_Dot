@@ -52,13 +52,13 @@ int TowerDefense::processEvents(GLFWwindow * window)
 			create_tower(x, y, 1);
 			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
-		if (button_state == 3 && money >= 1500 && y < 15 && isOccupied == -1) {
-			money -= 1500;
+		if (button_state == 3 && money >= 2500 && y < 15 && isOccupied == -1) {
+			money -= 2500;
 			create_tower(x, y, 2);
 			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
-		if (button_state == 4 && money >= 1000 && y < 15 && isOccupied == -1) {
-			money -= 1000;
+		if (button_state == 4 && money >= 1200 && y < 15 && isOccupied == -1) {
+			money -= 1200;
 			create_tower(x, y, slow_t);
 			SoundEngineTD->play2D("Place_tower.mp3", false); // play click sound
 		}
@@ -198,6 +198,18 @@ void TowerDefense::init_level()
 	case 9:
 		make_wave(0, 3, fast, 50);
 		make_wave(110, 10, boss, 1);
+		break;
+	case 10:
+		make_wave(0, 10, miniboss, 10);
+		make_wave(0, 5, fast, 20);
+		break;
+	case 11:
+		make_wave(0, 5, tank, 20);
+		make_wave(0, 3, fast, 40);
+		make_wave(0, 10, miniboss, 15);
+		break;
+	case 12:
+		make_wave(0, 10, boss, 10);
 		break;
 	}
 
