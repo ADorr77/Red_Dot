@@ -90,7 +90,6 @@ int main()
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
-				state = 0;
 				renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
 				break;
