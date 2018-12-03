@@ -363,13 +363,13 @@ void Render::render(const Dungeon& dungeon)
 
 void Render::render(const TowerDefense & game)
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.453f, 0.278f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader.use();
 
 	// set the uniforms for tower map
-	shader.setUniform("color", 0.0f, 0.0f, 1.0f, 1.0f);
+	shader.setUniform("color", 0.0f, 0.5f, 0.0f, 1.0f);
 	shader.setUniform("radius", 1.0f);
 	shader.setUniform("shift", -12.5f, 12.5f);
 	shader.setUniform("scale", (1.0f / 12.5f));
