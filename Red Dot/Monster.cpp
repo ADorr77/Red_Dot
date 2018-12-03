@@ -13,13 +13,13 @@ Monster::Monster()
 	exp = 10;
 }
 
-Monster::Monster(int mapSize) {
-	xPos = (mapSize/2) + (rand()%(mapSize/2) - mapSize/2);
-	yPos = (mapSize / 2) + (rand() % (mapSize / 2) - mapSize / 2);
+Monster::Monster(int mapSize, double vel) {
+	xPos = (mapSize/2) + (rand()%(int)(mapSize/2) - mapSize/2);
+	yPos = (mapSize / 2) + (rand() % (int)(mapSize / 2) - mapSize / 2);
 	damage = 1;
 	health = 10;
 	hitbox = 1;
-	Vel = 0.05;
+	Vel = vel;
 	exp = 10;
 }
 void Monster::take_damage(double attack) {
