@@ -24,7 +24,7 @@ Enemy::Enemy(int level) {
 		type_char = 's';
 	}
 	if (level == fast) {
-		speed = 20;
+		speed = 15;
 		hp = 1;
 		strength = 1;
 		xVel = 0;
