@@ -187,16 +187,16 @@ void TowerDefense::init_level()
 		make_wave(100, 10, tank, 10);
 		break;
 	case 7:
-		make_wave(0, 7, tank, 5);
-		make_wave(0, 13, strong, 10);
-		make_wave(150, 15, fast, 10);
+		make_wave(0, 7, tank, 12);
+		make_wave(0, 13, strong, 12);
+		make_wave(150, 15, fast, 1);
 		break;
 	case 8:
-		make_wave(0, 5, strong, 20);
-		make_wave(100, 3, normal, 20);
+		make_wave(0, 5, strong, 25);
+		make_wave(125, 3, normal, 80);
 		break;
 	case 9:
-		make_wave(0, 10, fast, 10);
+		make_wave(0, 3, fast, 50);
 		make_wave(110, 10, boss, 1);
 		break;
 	}
@@ -281,30 +281,39 @@ void TowerDefense::advance_projectiles(int fps)
 
 
 		int c = towers[t].get_pnumber();
-		while (c >= 1) {
+		while (c >= 1 && towers[t].get_projectiles_size()) {
 			if (!towers[t].advanceProjectiles((c - 1), fps)) {
 
-				double x = towers[t].get_projectile_x(c - 1);
-				double y = towers[t].get_projectile_y(c - 1);
-				if (!enemies.size()) { 
-					state = 2; 
+				//towers[t].eraseProjectile(c - 1);
+				//--c;
+				//if (towers[t].get_pnumber()) { --c; }
 				
-				}
-				for (unsigned int j = 0; j < enemies.size(); ++j) {
-					if (enemies[j].detect(x, y)) {
-						enemies[j].hit_response(towers[t].get_strength());
-						if (c >= 1) {
-							towers[t].eraseProjectile(c - 1);
-						}
-					}
-					if (enemies[j].get_hp() <= 0) {
-						add_money(enemies[j].get_reward());
-						enemies.erase(enemies.begin() + j);
-						SoundEngineTD->play2D("Sounds/die.mp3", false);
-//					
-					}
+				
+					double x = towers[t].get_projectile_x(c - 1);
+					double y = towers[t].get_projectile_y(c - 1);
+				
+				
+					//m.set_map_value((int)x, (int)y, '.');
+					if (!enemies.size()) {
+						state = 2;
 
-				}
+					}
+					for (unsigned int j = 0; j < enemies.size(); ++j) {
+						if (enemies[j].detect(x, y)) {
+							enemies[j].hit_response(towers[t].get_strength());
+							if (c >= 1) {
+								towers[t].eraseProjectile(c - 1);
+							}
+						}
+						if (enemies[j].get_hp() <= 0) {
+							add_money(enemies[j].get_reward());
+							enemies.erase(enemies.begin() + j);
+							SoundEngineTD->play2D("Sounds/die.mp3", false);
+							//						j = enemies.size();
+						}
+
+					}
+				
 			}
 			else { towers[t].eraseProjectile(c - 1); }
 			--c;

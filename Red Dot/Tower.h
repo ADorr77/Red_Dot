@@ -35,6 +35,7 @@ public:
 	int get_strength() const;
 	double get_xPos() const;
 	double get_yPos() const;
+	int get_projectiles_size();
 	const std::vector<Projectile>& get_projectiles() const { return projectiles; }
 
 	int get_cooldown() { return cooldown; }
