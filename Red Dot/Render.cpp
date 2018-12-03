@@ -395,7 +395,35 @@ void Render::render(const TowerDefense & game)
 		shift[0] = enemies[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * enemies[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
-		drawPolygon(20);
+		// drawPolygon(20);
+		switch (enemies[i].get_type())
+		{
+			case (normal):
+				shader.setUniform("color", 1, 0.0, 0.0, 1.0);
+				drawPolygon(20);
+				break;
+			case (fast):
+				shader.setUniform("color", 0.958, 0.898, 0.259, 1.0);
+				drawPolygon(4);
+				break;
+			case (strong):
+				shader.setUniform("color", 0.988, 0.184, 0.733, 1.0);
+				drawPolygon(5);
+				break;
+			case (tank):
+				shader.setUniform("color", 1.0, 1.0, 1.0, 1.0);
+				drawPolygon(20);
+				break;
+			case (boss):
+				shader.setUniform("color", 1.0, 1.0, 1.0, 1.0);
+				drawPolygon(4);
+				break;
+			case (regen):
+				shader.setUniform("color", 0.713, 0.25, 0.957, 1.0);
+				drawPolygon(4);
+				shader.setUniform("radius", entityRadius * 1.2);
+
+		}
 	}
 
 	
@@ -408,6 +436,25 @@ void Render::render(const TowerDefense & game)
 		shift[0] = towers[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * towers[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
+		
+		// define shape and color for towers
+		switch (towers[i].get_strength())
+		{
+		case(basic):
+			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
+			drawPolygon(20);
+			break;
+		case(ranged):
+			shader.setUniform("color", 0.153, 0.97, 0.8, 1.0);
+			drawPolygon(4);
+			break;
+		case (machine):
+			shader.setUniform("color", 0.93, .55, 0.0, 1.0);
+			drawPolygon(20);
+		case (slow_t):
+			shader.setUniform("color", 0.914, .93, 0.0, 1.0);
+			drawPolygon(3);
+		}
 		drawPolygon(20);
 
 		// render projectiles

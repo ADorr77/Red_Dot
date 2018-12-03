@@ -120,7 +120,7 @@ void Tower::clear_p()
 	projectiles.clear();
 }
 
-double Tower::get_strength() const
+int Tower::get_strength() const
 {
 	return strength;
 }
