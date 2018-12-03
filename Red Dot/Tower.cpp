@@ -1,7 +1,9 @@
 #include "Tower.h"
 #include<cmath>
 #include<iostream>
+#include<Sound/irrKlang.h>
 
+irrklang::ISoundEngine *SoundEngineTower = irrklang::createIrrKlangDevice();
 
 Tower::Tower(int x, int y, int s)
 {
@@ -64,6 +66,8 @@ void Tower::detect(double x, double y)
 			Projectile *p1 = new Projectile(xPos, yPos, xV, yV, strength);
 			projectiles.push_back(*p1);
 			timer += cooldown;
+
+			SoundEngineTower->play2D("pew.mp3", false); // play click sound
 			//std::cout << "SHOT";
 
 		
