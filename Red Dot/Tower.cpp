@@ -67,7 +67,23 @@ void Tower::detect(double x, double y)
 			projectiles.push_back(*p1);
 			timer += cooldown;
 
-			SoundEngineTower->play2D("pew.mp3", false); // play click sound
+			// play different sounds for different towers
+			switch (strength)
+			{
+			case(basic):
+				SoundEngineTower->play2D("pew.mp3", false); 
+				break;
+			case(ranged):
+				SoundEngineTower->play2D("Sounds/ranged_tower.mp3", false);
+				break;
+			case(machine):
+				SoundEngineTower->play2D("pew.mp3", false);
+				break;
+			case(slow_t):
+				SoundEngineTower->play2D("Sounds/slow.mp3", false);
+				break;
+			}
+	
 			//std::cout << "SHOT";
 
 		

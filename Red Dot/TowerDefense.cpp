@@ -110,6 +110,7 @@ int TowerDefense::processEvents(GLFWwindow * window)
 	return 0;
 }
 
+// updates the game state of tower defense for every iteration
 int TowerDefense::update(int fps)
 {
 	switch (state) {
@@ -118,7 +119,6 @@ int TowerDefense::update(int fps)
 		++level;
 		++state;
 		m.init_map(2);
-		//renderAscii();
 		break;
 	case 1:
 		m.init_map(2);
@@ -131,8 +131,7 @@ int TowerDefense::update(int fps)
 			buttons[0].setState(3);
 			if (through > 0) { return 1; }
 		}
-		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
-		//renderAscii();
+
 		break;
 	case 2:
 		if (through) { return 1; }
@@ -143,16 +142,12 @@ int TowerDefense::update(int fps)
 		}
 		else { ++print;}
 		break;
-
-		//pause state
 	case 3:
 		if (print == 0) {
 			std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 			print = 30;
 		}
 		else { ++print; }
-		
-		//renderAscii();
 		break;
 	}
 	if (through && state == 2) { return 1; }
@@ -161,7 +156,6 @@ int TowerDefense::update(int fps)
 
 void TowerDefense::init_level()
 {
-	// make_wave(offset, spacing, type, quantity);
 	switch (level) {
 	case 0:
 		make_wave(0, 10, normal, 10);
@@ -196,6 +190,14 @@ void TowerDefense::init_level()
 		make_wave(0, 7, tank, 5);
 		make_wave(0, 13, strong, 10);
 		make_wave(150, 15, fast, 10);
+		break;
+	case 8:
+		make_wave(0, 5, strong, 20);
+		make_wave(100, 3, normal, 20);
+		break;
+	case 9:
+		make_wave(0, 10, fast, 10);
+		make_wave(110, 10, boss, 1);
 		break;
 	}
 
@@ -236,15 +238,13 @@ void TowerDefense::advance_enemies(int fps)
 				buttons[0].setState(3);
 				
 			}
-			//gotThru(enemies[j].get_strength());
+		
 		}
 		else {
 			for (int t = 0; t < towers.size(); ++t) {
 				towers[t].detect(enemies[j].get_xPos(), enemies[j].get_yPos());
 			}
-			//m.set_map_value((int)enemies[j].get_xPos(), (int)enemies[j].get_yPos(), enemies[j].get_type_char());
-
-			// handle slow tower things -- would like to move out of td.cpp if possible but can't right now
+			
 			if (enemies[j].get_slow_timer() > 0) { enemies[j].decrement_slow(); } // count down the slow timer if enemy is being slowed.
 			if (enemies[j].get_slow_timer() == 1) // resets velocities once slow_timer is down.
 			{
@@ -257,7 +257,6 @@ void TowerDefense::advance_enemies(int fps)
 void TowerDefense::map_towers()
 {
 	for (int i = 0; i < towers.size(); ++i) {
-		//m.set_map_value(towers[i].get_xPos(), towers[i].get_yPos(), 't');
 		towers[i].cool();
 	}
 	
@@ -336,7 +335,6 @@ int TowerDefense::thru()
 {
 	int t = through;
 	through = 0;
-	//reset_through();
 	return t;
 }
 
@@ -374,15 +372,6 @@ void TowerDefense::reset_buttons()
 		buttons[j].setState(0);
 	}
 }
-
-
-
-/*std::vector<Projectile> TowerDefense::get_projectiles() const
-{
-	return projectiles;
-}
-*/
-
 
 
 int TowerDefense::get_map_value(int x, int y)
