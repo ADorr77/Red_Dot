@@ -45,7 +45,15 @@ int main()
 	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
 	
 	// play theme_music
-	SoundEngine->play2D("theme_music.mp3", true); 
+	switch (state)
+	{
+	case(0):
+		SoundEngine->play2D("theme_music.mp3", true);
+		break;
+	case(1):
+		SoundEngine->play2D("Sounds/Dungeon.mp3", true);
+		break;
+	} 
 
 	while (!glfwWindowShouldClose(window)) 
 	{
