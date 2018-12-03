@@ -66,7 +66,7 @@ double Hero::melee_attack(double x, double y) {
 }
 
 Bolt Hero::ranged_attack() {
-	return Bolt::Bolt((damage-0.5), 0.01, (xDir), (yDir), xPos, yPos);
+	return Bolt::Bolt((damage), 0.01, (xDir), (yDir), xPos, yPos);
 }
 
 void Hero::switch_Weapon() {
