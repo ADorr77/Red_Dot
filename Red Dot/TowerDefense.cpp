@@ -128,11 +128,13 @@ int TowerDefense::update(int fps)
 			clear_Projectiles();
 			state = 2;
 			buttons[0].setState(3);
+			if (through > 0) { return 1; }
 		}
 		//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 		//renderAscii();
 		break;
 	case 2:
+		if (through) { return 1; }
 		std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
 			"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
 		break;
@@ -143,7 +145,7 @@ int TowerDefense::update(int fps)
 		//renderAscii();
 		break;
 	}
-
+	if (through && state == 2) { return 1; }
 	return 0;
 }
 
@@ -222,6 +224,7 @@ void TowerDefense::advance_enemies(int fps)
 				clear_Projectiles();
 				state = 2;
 				buttons[0].setState(3);
+				
 			}
 			//gotThru(enemies[j].get_strength());
 		}
@@ -278,7 +281,10 @@ void TowerDefense::advance_projectiles(int fps)
 				double x = towers[t].get_projectile_x(c - 1);
 				double y = towers[t].get_projectile_y(c - 1);
 				//m.set_map_value((int)x, (int)y, '.');
-				if (!enemies.size()) { state = 2; }
+				if (!enemies.size()) { 
+					state = 2; 
+				
+				}
 				for (unsigned int j = 0; j < enemies.size(); ++j) {
 					if (enemies[j].detect(x, y)) {
 						enemies[j].hit_response(towers[t].get_strength());
