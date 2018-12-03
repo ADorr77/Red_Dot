@@ -63,17 +63,17 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
+			std::cout << dungeon.get_hero().get_weapon() << std::endl;
 			system("cls");
 			int p = dungeon.processInput(window);
 			int u = dungeon.update();
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
-				state = 0;
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
 			}
-			renderer.renderASCII(dungeon);
+			renderer.render(dungeon);
 			break;
 		}
 

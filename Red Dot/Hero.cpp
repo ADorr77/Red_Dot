@@ -23,12 +23,11 @@ Hero::Hero(double level) {
 	exp = 0;
 	xPos = 6;
 	yPos = 14;
-	Vel = 0.5;
+	Vel = 0.3;
 	weapon = 1;
 }
 
 void Hero::update() {
-
 }
 
 void Hero::move(int x, int y) {
@@ -51,30 +50,25 @@ void Hero::set_direction(double x, double y) {
 }
 
 double Hero::melee_attack(double x, double y) {
-		double range = 2;
-		// Distance to monster
-		double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
-		if (distM <= range) {
-			double angle_M = atan((y - yPos) / (x - xPos));	// Monster angle
-			double angle_C = atan(yDir / xDir);	// Cursor angle
-			if (angle_C - (3.14159265 / 6) < angle_M && angle_C + (3.1415926535 / 6) > angle_M) {
-				return 5;
-			}
+	double range = 2;
+	// Distance to monster
+	double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
+	if (distM <= range) {
+		double angle_M = atan((y - yPos) / (x - xPos));	// Monster angle
+		double angle_C = atan(yDir / xDir);	// Cursor angle
+		if (angle_C - (3.14159265 / 6) < angle_M && angle_C + (3.1415926535 / 6) > angle_M) {
+			return 5;
 		}
-		return 0;
+	}
+	return 0;
 }
 
 Bolt Hero::ranged_attack() {
-	return Bolt::Bolt(5, 1, (xDir), (yDir), xPos, yPos);
+	return Bolt::Bolt(2, 0.01, (xDir), (yDir), xPos, yPos);
 }
 
 void Hero::switch_Weapon() {
-	if (weapon == 1) {
-		weapon = 2;
-	}
-	if (weapon == 2) {
-		weapon = 1;
-	}
+	this->weapon = (weapon == 1 ? 0 : 1);
 }
 
 void Hero::take_damage(double attack) {

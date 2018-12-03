@@ -36,7 +36,6 @@ public:
 	const std::vector<Bolt>& get_bolts() const { return bolts; }
 
 	// add other functionality as needed
-	void test();
 };
 
 #endif

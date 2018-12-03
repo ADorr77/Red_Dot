@@ -1,4 +1,6 @@
 #include "Dungeon.h"
+#include<chrono>
+#include<thread>
 
 Dungeon::Dungeon(int level ,int num)
 {
@@ -46,7 +48,8 @@ int Dungeon::processInput(GLFWwindow* window) {
 	}
 
 	// Switching Weapons
-	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
 		hero.switch_Weapon();
 	}
 
@@ -62,12 +65,12 @@ int Dungeon::processInput(GLFWwindow* window) {
 
 	// Processing Attacks
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-		if (hero.get_weapon() == 1) {
+		if (hero.get_weapon()) {
 			for (int m = 0; m < monsters.size(); m++) {
 				monsters[m].take_damage(hero.melee_attack(monsters[m].get_xPos(), monsters[m].get_yPos()));
 			}
 		}
-		if (hero.get_weapon() == 2) {
+		if (!hero.get_weapon()) {
 			bolts.emplace_back(hero.ranged_attack());
 		}
 	}
@@ -87,11 +90,23 @@ int Dungeon::update() {
 	// Run through monster functions (movement and attacks)
 	for (int m = 0; m < monsters.size(); m++) {
 		monsters[m].move(hero.get_xPos(), hero.get_yPos());
+		if (map[monsters[m].get_xCoord()][monsters[m].get_yCoord()] == 0) {
+			monsters[m].move(-hero.get_xPos(), -hero.get_yPos());
+			if (monsters[m].get_xCoord() + (monsters[m].get_xPos() - hero.get_xPos() / abs((monsters[m].get_xPos() - hero.get_xPos()) == 0))) {
+				monsters[m].move(0, monsters[m].get_xPos() - hero.get_xPos() / abs((monsters[m].get_xPos() - hero.get_xPos())));
+			}
+			else if (monsters[m].get_yCoord() + (monsters[m].get_yPos() - hero.get_yPos() / abs((monsters[m].get_yPos() - hero.get_yPos()))) == 0) {
+				monsters[m].move(0, monsters[m].get_yPos() - hero.get_yPos() / abs((monsters[m].get_yPos() - hero.get_yPos())));
+			}
+			else {
+				monsters[m].move(-hero.get_xPos(), -hero.get_yPos());
+			}
+		}
 		hero.take_damage(monsters[m].attack(hero.get_xPos(), hero.get_yPos()));
 	}
 	// Run through bolt functions (movement and check_hit monsters and walls)
 	for (int b = 0; b < bolts.size(); b++) {
-		for (int x = 0; x < (monsters.size() -1); x++) {
+		for (int x = 0; x < (monsters.size()); ++x) {
 			if (bolts[b].check_hit(monsters[x].get_xPos(), monsters[x].get_yPos())) {
 				monsters[x].take_damage(bolts[b].get_damage());
 				bolts.erase(bolts.begin() + b);
