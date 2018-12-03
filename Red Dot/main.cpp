@@ -52,13 +52,13 @@ int main()
 		// render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-		bool dungeon_creator = false;
-		bool td_creator = false;
+		bool dungeon_creator = true;
+		bool td_creator = true;
 
 		switch (state)
 		{
 		case 0:
-			for (td_creator = true; td_creator; td_creator = false) {
+			for (td_creator; td_creator; td_creator = false) {
 				renderer.init(td);
 			}
 			if (counter == 0) {
@@ -73,7 +73,7 @@ int main()
 			renderer.render(td);
 			break;
 		case 1:
-			for (dungeon_creator = true; dungeon_creator; dungeon_creator = false) {
+			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
 				dungeon.createMonsters(td.thru());
 				renderer.init(dungeon);
 			}
@@ -82,22 +82,19 @@ int main()
 			std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
 			int p = dungeon.processInput(window, fps);
 			int u = dungeon.update(fps);
-			if (p == 2) {
-				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
-			}
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
 				state = 0;
 				dungeon_creator = true;
 				td_creator = true;
-				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				break;
 
 			}
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
 				renderer.render(dungeon);
-				std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				break;
 			}
 			renderer.render(dungeon);
