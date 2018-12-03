@@ -21,7 +21,8 @@ private:
 
 public:
 	// Constructs the class the first time (only called once)
-	Dungeon(int level, int num_of_monsters);
+	Dungeon(int level);
+	void createMonsters(int number_of_monsters);
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
 	// Tell the game to process input, return return game state (and other info potentially)
