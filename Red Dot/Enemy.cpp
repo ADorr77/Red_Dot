@@ -41,6 +41,15 @@ Enemy::Enemy(int level) {
 		reward = 150;
 		type_char = 'e';
 	}
+	if (level == miniboss) {
+		speed = 5;
+		hp = 50;
+		strength = 25;
+		xVel = 0;
+		yVel = 0;
+		reward = 1000;
+		type_char = 'b';
+	}
 	if (level == boss) {
 		speed = 5;
 		hp = 100;
