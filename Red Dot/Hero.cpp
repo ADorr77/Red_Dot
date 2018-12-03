@@ -52,7 +52,7 @@ void Hero::set_direction(double x, double y) {
 }
 
 double Hero::melee_attack(double x, double y) {
-	double range = 3;
+	double range = 1.5;
 	// Distance to monster
 	double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
 	if (distM <= range) {
