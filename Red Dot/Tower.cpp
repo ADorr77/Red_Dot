@@ -1,7 +1,9 @@
 #include "Tower.h"
 #include<cmath>
 #include<iostream>
+#include<Sound/irrKlang.h>
 
+irrklang::ISoundEngine *SoundEngineTower = irrklang::createIrrKlangDevice();
 
 Tower::Tower(int x, int y, int s)
 {
@@ -13,22 +15,22 @@ Tower::Tower(int x, int y, int s)
 	switch (s)
 	{
 		case basic:
-			cooldown = 20;
+			cooldown = 50;
 			range = 5;
 			speed = 20;
 			break;
 		case ranged:
-			cooldown = 30;
+			cooldown = 75;
 			range = 15;
 			speed = 40;
 			break;
 		case machine:
-			cooldown = 5;
+			cooldown = 12;
 			range = 5;
 			speed = 20;
 			break;
 		case slow_t:
-			cooldown = 15;
+			cooldown = 50;
 			range = 5;
 			speed = 20;
 			break;
@@ -64,6 +66,8 @@ void Tower::detect(double x, double y)
 			Projectile *p1 = new Projectile(xPos, yPos, xV, yV, strength);
 			projectiles.push_back(*p1);
 			timer += cooldown;
+
+			SoundEngineTower->play2D("pew.mp3", false); // play click sound
 			//std::cout << "SHOT";
 
 		
@@ -113,7 +117,10 @@ double Tower::get_projectile_y(int pnum)
 
 void Tower::clear_p()
 {
-	projectiles.clear();
+	for (int j = 0; j < projectiles.size(); ++j) {
+		projectiles.erase(projectiles.begin() + j);
+	}
+	
 }
 
 double Tower::get_strength() const

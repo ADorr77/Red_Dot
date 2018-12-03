@@ -408,7 +408,7 @@ void Render::render(const TowerDefense & game)
 		shift[0] = towers[i].get_xPos() + 0.5 - 12.5;
 		shift[1] = (-1 * towers[i].get_yPos()) - 0.5 + 12.5;
 		shader.setUniform("shift", shift[0], shift[1]);
-		drawPolygon(20);
+		drawPolygon(6);
 
 		// render projectiles
 		const std::vector<Projectile>& bolts = towers[i].get_projectiles();

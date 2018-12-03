@@ -12,7 +12,10 @@
 #include "Dungeon.h"
 #include <chrono>
 #include <thread>
+#include<Sound/irrKlang.h>
 
+// create main sound engine
+irrklang::ISoundEngine *SoundEngine = irrklang::createIrrKlangDevice();
 
 void processInput(GLFWwindow * window);
 
@@ -41,12 +44,14 @@ int main()
 	int fps = 60; // change the render speed here (frames per second)
 	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
 	
+	// play theme_music
+	SoundEngine->play2D("theme_music.mp3", true); 
 
 	while (!glfwWindowShouldClose(window)) 
 	{
 		// start timer
 		start = Clock::now();
-
+		// SoundEngine->play2D("theme_music.mp3", true);
 		// input
 		glfwPollEvents();
 		processInput(window);
