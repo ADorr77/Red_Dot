@@ -33,6 +33,10 @@ public:
 	void setUniform(const std::string &name, float one, float two);
 	void setUniform(const std::string &name, float one, float two, float three);
 	void setUniform(const std::string &name, float one, float two, float three, float four);
+
+	void setUniformi(const std::string &name, int one);
+
+	void setUniform(const std::string &name, glm::mat4 transform);
 };
 
 #endif

@@ -13,104 +13,161 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{cca2498c-3a71-4dcf-9c6b-22fa7065581b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Dungeon">
+      <UniqueIdentifier>{184a71ea-1ab6-4a9e-83cb-fbef334c45ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TowerDefense">
+      <UniqueIdentifier>{2389cd9e-e441-40f2-a4a3-f448ad38a32e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Shaders">
+      <UniqueIdentifier>{cc266ce8-fb0e-49b9-b809-aaf397c61577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{17d18821-1c27-48a3-a42f-d530cc6bf3ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Dungeon">
+      <UniqueIdentifier>{48955fdc-153b-472f-ba90-dbcd0d770b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TowerDefense">
+      <UniqueIdentifier>{d0f394bc-137c-4ff8-af3d-5e1c5c7c2dc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TowerDefense.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tower.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Render.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Hero.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Dungeon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Maps.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Bolt.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>Source Files\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Source Files\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Source Files\Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Maps.cpp">
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerDefense.cpp">
+      <Filter>Source Files\TowerDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TowerDefense.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tower.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hero.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Dungeon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Maplib.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Includes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bolt.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Bolt.h">
+      <Filter>Header Files\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>Header Files\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Header Files\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Header Files\Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Maplib.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerDefense.h">
+      <Filter>Header Files\TowerDefense</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="mapVertShader.txt">
-      <Filter>Source Files</Filter>
-    </Text>
     <Text Include="fragShader.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="mapVertShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
     </Text>
     <Text Include="vertShader.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\ColorAndTextureFragmentShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\ColorFragmentShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\PlainFragmentShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\TextFragmentShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\TextureFragmentShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
+    </Text>
+    <Text Include="Shaders\VertexShader.txt">
+      <Filter>Source Files\Graphics\Shaders</Filter>
     </Text>
   </ItemGroup>
 </Project>

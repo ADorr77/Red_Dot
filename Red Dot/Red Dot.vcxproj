@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)libs\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(VC_SourcePath)libs\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_SourcePath)Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(ProjectDir)libs\Include;$(IncludePath)$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
@@ -85,7 +85,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;freetype.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;irrKlang.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -130,10 +130,13 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maps.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Render.cpp" />
@@ -146,10 +149,13 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Maplib.h" />
     <ClInclude Include="Maps.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Render.h" />
@@ -160,6 +166,12 @@
   <ItemGroup>
     <Text Include="fragShader.txt" />
     <Text Include="mapVertShader.txt" />
+    <Text Include="Shaders\ColorAndTextureFragmentShader.txt" />
+    <Text Include="Shaders\ColorFragmentShader.txt" />
+    <Text Include="Shaders\PlainFragmentShader.txt" />
+    <Text Include="Shaders\TextFragmentShader.txt" />
+    <Text Include="Shaders\TextureFragmentShader.txt" />
+    <Text Include="Shaders\VertexShader.txt" />
     <Text Include="vertShader.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

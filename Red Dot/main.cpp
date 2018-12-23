@@ -4,7 +4,7 @@
 // Written by Aaron Dorrance
 // 11/26/18
 
-
+#define STB_IMAGE_IMPLEMENTATION
 #include "Render.h"
 #include "Includes.h" // works around issue including glad.h and glfw3.h
 #include"TowerDefense.h"
