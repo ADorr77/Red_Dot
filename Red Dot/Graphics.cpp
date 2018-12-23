@@ -176,6 +176,21 @@ void Graphics::loadMap(const std::vector<std::vector<int>> & vciMap, int idMapEl
 
 void Graphics::setMapTransform()
 {
+	// correction for flipped map
+	/*glm::mat4 reflection = {
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f
+	};
+	glm::mat4 reflectionTransform;
+	if (m_bMapFliped)
+	{
+		reflectionTransform = glm::translate(reflectionTransform, glm::vec3(0.0f, m_nMapHeight, 0.0f));
+		reflectionTransform = reflectionTransform * reflection;
+	}*/
+
+	// normal map transform
 	glm::mat4 mapTransform;
 	float fMapScale = 2.0f / (m_nMapWidth > m_nMapHeight ? m_nMapWidth : m_nMapHeight);
 	mapTransform = glm::scale(mapTransform, glm::vec3(fMapScale, fMapScale, 1.0));
@@ -188,6 +203,8 @@ void Graphics::setMapTransform()
 			glm::vec3(0.0f, (m_nMapWidth - m_nMapHeight) / 2.0f, 0.0f)
 		);
 	}
+
+	//mapTransform = mapTransform * reflectionTransform;
 
 	m_pPlainShader->use();
 	m_pPlainShader->setUniform("mapTransform", mapTransform);

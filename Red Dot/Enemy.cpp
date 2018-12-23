@@ -111,6 +111,41 @@ int Enemy::advance(int fps) {
 	//}
 }
 
+void Enemy::render(Graphics* pGraphics)
+{
+	switch(type)
+	{
+	case normal:
+		pGraphics->drawRegularPolygon(30, 0.3, 0.0f, xPos, yPos, 1.0);
+		break;
+	case strong:
+		pGraphics->drawRegularPolygon(30, 0.3, 0.0f, xPos, yPos, 1.0, 0.557, 0.91);
+		break;
+	case fast:
+		pGraphics->drawRegularPolygon(4, 0.3, 0.0f, xPos, yPos, 0.0, 1.0, 0.0);
+		break;
+	case tank:
+		pGraphics->drawRegularPolygon(30, 0.3, 0.0f, xPos, yPos, 1.0, 1.0, 1.0);
+		break;
+	case boss:
+		pGraphics->drawRegularPolygon(30, 0.4, 0.0f, xPos, yPos, 1.0, 0.0, 0.0);
+		break;
+	case miniboss:
+		pGraphics->drawRegularPolygon(30, 0.4, 0.0f, xPos, yPos, .188, 0.863, 0.5);
+		break;
+	case fastmini:
+		pGraphics->drawRegularPolygon(4, 0.4, 0.0f, xPos, yPos, 0, 0.9, 0);
+		break;
+	case fastboss:
+		pGraphics->drawRegularPolygon(4, 0.4, 0.0f, xPos, yPos, .188, 0.863, 1.0);
+		break;
+	case megaboss:
+		pGraphics->drawRegularPolygon(30, 0.4, 0.0f, xPos, yPos, 0, 0, 0);
+		break;
+	}
+}
+
+
 void Enemy::setTimer(int t) {
 	timer = t;
 }

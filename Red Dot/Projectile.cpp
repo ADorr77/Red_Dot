@@ -26,6 +26,12 @@ int Projectile::advance(int fps)
 	
 }
 
+void Projectile::render(Graphics* pGraphics)
+{
+	pGraphics->drawRegularPolygon(30, 0.15f, 0.0f, xPos, yPos, 1.0f, 0.0f, 1.0f);
+}
+
+
 void Projectile::setVals(double x, double y, double xV, double yV, int p)
 {
 	xPos = x;

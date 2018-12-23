@@ -33,6 +33,7 @@ private:
 	std::vector<Button> buttons;
 
 	Graphics * m_pGraphics;
+	Font * m_pFont;
 
 
 public:

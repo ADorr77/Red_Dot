@@ -2,6 +2,7 @@
 
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
+#include "Graphics.h"
 
 class Projectile
 {
@@ -18,6 +19,8 @@ public:
 	Projectile(double x, double y, double xV, double yV, int p);
 	// update method to move it
 	int advance(int fps);
+	// render
+	void render(Graphics * pGraphics);
 	//set values when firing from tower
 	void setVals(double x, double y, double xV, double yV, int p);
 	//getters

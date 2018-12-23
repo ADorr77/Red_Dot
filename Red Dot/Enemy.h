@@ -30,6 +30,8 @@ public:
 	Enemy(int level);
 	// update method to move it
 	void update();
+	// render method
+	void render(Graphics * pGraphics);
 	// advance position
 	int advance(int fps);
 	//set up timing of enemies entering

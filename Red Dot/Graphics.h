@@ -137,7 +137,19 @@ inline void Graphics::drawModel(Model* pModel,
 
 	pShader->use();
 	pShader->setUniform("Color", fRed, fGreen, fBlue, fAlpha);
+	
 
+	if (m_bMapFliped)
+		fYShift = m_nMapHeight - fYShift;
+
+	glm::mat4 posTransform;
+	posTransform = glm::translate(posTransform, glm::vec3(fXShift, fYShift, 0.0f));
+	posTransform = glm::rotate(posTransform, glm::radians(fDegreesRotated), glm::vec3(0.0f, 0.0f, 1.0f));
+	posTransform = glm::scale(posTransform, glm::vec3(fScale, fScale, 0.0f));
+
+	pShader->setUniform("posTransform", posTransform);
+
+	pModel->render();
 }
 
 

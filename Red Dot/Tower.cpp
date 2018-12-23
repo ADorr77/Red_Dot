@@ -53,6 +53,31 @@ Tower::Tower(int x, int y, int s)
 	*/
 }
 
+void Tower::render(Graphics* pGraphics)
+{
+	switch (strength)
+	{
+	case basic:
+		pGraphics->drawRegularPolygon(20, 0.3, 0.0, xPos, yPos, 0.0, 1.0, 0.0);
+		break;
+	case ranged:
+		pGraphics->drawRegularPolygon(3, 0.3, 0.0, xPos, yPos, .15, 0.976, 0.8);
+		break;
+	case machine:
+		pGraphics->drawRegularPolygon(4, 0.3, 0.0, xPos, yPos, .619, .35, 0.976);
+		break;
+	case slow_t:
+		pGraphics->drawRegularPolygon(5, 0.3, 90.0, xPos, yPos, 1, 1, 0.0);
+		break;
+	}
+
+	for (Projectile projectile : projectiles)
+	{
+		projectile.render(pGraphics);
+	}
+}
+
+
 void Tower::detect(double x, double y)
 {
 	if (timer == 0) {

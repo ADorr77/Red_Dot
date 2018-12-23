@@ -38,6 +38,8 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 
 	pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
 	pGraphics->loadMap(vciMap, ' ', "Resources/dirt.png", true);
+
+	m_pFont = new Font("Fonts/SmallFonts.bff");
 }
 
 
@@ -185,10 +187,64 @@ int TowerDefense::update(int fps)
 void TowerDefense::render()
 {
 	m_pGraphics->drawMap();
-	m_pGraphics->drawRegularPolygon(4.0f, 2.5f, 0.0f, 0.0f, 19.0f,
-		0.5f, 0.5f, 0.5f);
-	m_pGraphics->drawRegularPolygon(4.0f, 2.5f, 0.0f, 0.0f, 24.0f,
-		0.5f, 0.5f, 0.5f);
+
+	std::vector<unsigned int> vciIndices = { 0, 1, 2, 0, 2, 3 };
+	std::vector<float> vcfSquare = {
+		0.5, -0.5,
+		0.5, -4.5,
+		4.5, -4.5,
+		4.5, -0.5
+	};
+	std::vector<float> vcfDiamond = {
+		2.5, -0.0,
+		5.0, -2.5,
+		2.5, -5.0,
+		0.0, -2.5
+	};
+
+	Model * pSquare = new Model(vcfSquare, vciIndices);
+	Model * pDiamond = new Model(vcfDiamond, vciIndices);
+	int iIndex = 0;
+	
+	for (float xShift = 0; xShift < 24; xShift += 5)
+	{
+		for (float yShift = 15; yShift < 24; yShift += 5)
+		{
+			m_pGraphics->drawModel(pSquare, 1.0f, 0.0f, xShift, yShift, 0.5f, 0.5f, 0.5f);
+
+			switch (buttons[iIndex].getState())
+			{
+			case 0:
+				m_pGraphics->drawModel(pDiamond, 1.0f, 0.0f, xShift, yShift, 0.5f, 0.5f, 0.5f);
+				break;
+			case 1:
+				m_pGraphics->drawModel(pDiamond, 1.0f, 0.0f, xShift, yShift, 1.0f, 0.0f, 1.0f);
+				break;
+			case 3:
+				m_pGraphics->drawModel(pDiamond, 1.0f, 0.0f, xShift, yShift, 0.0f, 1.0f, 0.0f);
+				break;
+			case 4:
+				m_pGraphics->drawModel(pDiamond, 1.0f, 0.0f, xShift, yShift, 1.0f, 0.0f, 0.0f);
+				break;
+			default:
+				m_pGraphics->drawModel(pDiamond, 1.0f, 0.0f, xShift, yShift, 0.5f, 0.5f, 0.5f);
+			}
+			iIndex++;
+		}
+	}
+
+	for (Enemy enemy : enemies)
+	{
+		enemy.render(m_pGraphics);
+	}
+
+	for (Tower tower : towers)
+	{
+		tower.render(m_pGraphics);
+	}
+
+	
+
 }
 
 

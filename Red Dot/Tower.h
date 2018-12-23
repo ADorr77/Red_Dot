@@ -4,6 +4,7 @@
 #define TOWER_H
 #include "Projectile.h"
 #include<vector>
+#include "Graphics.h"
 
 enum { basic, ranged, machine , slow_t};
 class Tower
@@ -22,6 +23,8 @@ private:
 public:
 	// Tower constructor (pass in whatever you decide)
 	Tower(int x, int y, int s);
+	// render method
+	void render(Graphics * pGraphics);
 	// update method to fire from it
 	void detect(double x, double y);
 	int advanceProjectiles(int pnum, int fps);
