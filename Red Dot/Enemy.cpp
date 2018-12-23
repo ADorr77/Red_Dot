@@ -47,12 +47,39 @@ Enemy::Enemy(int level) {
 		strength = 25;
 		xVel = 0;
 		yVel = 0;
-		reward = 1000;
+		reward = 500;
+		type_char = 'b';
+	}
+	if (level == fastmini) {
+		speed = 10;
+		hp = 50;
+		strength = 25;
+		xVel = 0;
+		yVel = 0;
+		reward = 500;
 		type_char = 'b';
 	}
 	if (level == boss) {
 		speed = 5;
 		hp = 200;
+		strength = 50;
+		xVel = 0;
+		yVel = 0;
+		reward = 1000;
+		type_char = 'b';
+	}
+	if (level == fastboss) {
+		speed = 10;
+		hp = 200;
+		strength = 50;
+		xVel = 0;
+		yVel = 0;
+		reward = 1000;
+		type_char = 'b';
+	}
+	if (level == megaboss) {
+		speed = 5;
+		hp = 1000;
 		strength = 50;
 		xVel = 0;
 		yVel = 0;

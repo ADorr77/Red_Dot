@@ -227,6 +227,10 @@ void TowerDefense::init_level()
 	case 12:
 		make_wave(0, 10, boss, 10);
 		break;
+	case 13:
+		make_wave(0, 5, fastmini, 20);
+		make_wave(100, 5, boss, 5);
+		break;
 	}
 	
 

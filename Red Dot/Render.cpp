@@ -435,7 +435,7 @@ void Render::render(const TowerDefense & game)
 			break;
 		case (strong):
 			shader.setUniform("color", 1.0, 0.557, 0.91, 1.0);
-			drawPolygon(4);
+			drawPolygon(20);
 			break;
 		case (fast):
 			shader.setUniform("color", 0.0, 1.0, 0.0, 1.0);
@@ -447,13 +447,28 @@ void Render::render(const TowerDefense & game)
 			break;
 		case (boss):
 			shader.setUniform("color", 1.0, 0.0, 0.0, 1.0);
-			drawPolygon(4);
+			drawPolygon(20);
 			shader.setUniform("radius", entityRadius * 1.2);
 			break;
 		case (miniboss):
 			shader.setUniform("color", .188, 0.863, 0.5, 1.0);
+			drawPolygon(20);
+			shader.setUniform("radius", entityRadius * 1.2);
+			break;
+		case (fastmini):
+			shader.setUniform("color", 0, 0.9, 0, 1.0);
 			drawPolygon(4);
 			shader.setUniform("radius", entityRadius * 1.2);
+			break;
+		case (fastboss):
+			shader.setUniform("color", .188, 0.863, 1.0, 1.0);
+			drawPolygon(4);
+			shader.setUniform("radius", entityRadius * 1.2);
+			break;
+		case (megaboss):
+			shader.setUniform("color", 0, 0, 0, 1.0);
+			drawPolygon(20);
+			shader.setUniform("radius", entityRadius * 1.3);
 			break;
 		}
 	}
