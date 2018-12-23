@@ -152,15 +152,15 @@ int TowerDefense::update(int fps)
 	case 2:
 		if (through) { return 1; }
 		if (print == 0) {
-			std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
-				"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();
+			/*std::cout << "\n\n\n\t end level \n\t money: " << get_money() <<
+				"\n\t " << thru() << " enemies got through" << "\n\t Lives:" << get_lives();*/
 			print = 30;
 		}
 		else { ++print;}
 		break;
 	case 3:
 		if (print == 0) {
-			std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
+			//std::cout << "Money: " << get_money() << "\t\t got thru: " << thru() << "\t\t lives: " << get_lives() << std::endl;
 			print = 30;
 		}
 		else { ++print; }
@@ -261,8 +261,8 @@ void TowerDefense::advance_enemies(int fps)
 			}
 			else {
 				//gotThru(enemies[j].get_strength());
-				std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
-					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+				/*std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t end level \n\t money: " << get_money() <<
+					"\n\t " << thru() << " enemies got through \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";*/
 				clear_Projectiles();
 				state = 2;
 				buttons[0].setState(3);

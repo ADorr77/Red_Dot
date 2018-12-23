@@ -61,8 +61,8 @@ int main()
 				renderer.init(td);
 			}
 			if (counter == 0) {
-				system("cls");
-				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();
+				/*system("cls");
+				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();*/
 				counter = 30;
 			}
 			else { --counter; }
