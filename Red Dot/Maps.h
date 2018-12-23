@@ -3,6 +3,7 @@
 #ifndef MAPS_H
 #define MAPS_H
 #include "Maplib.h"
+#include "Graphics.h"
 
 
 class Maps

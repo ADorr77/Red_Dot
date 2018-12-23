@@ -10,7 +10,7 @@
 #include<iostream>
 #include "Includes.h"
 #include "Button.h"
-
+#include "Graphics.h"
 
 class TowerDefense
 {
@@ -32,13 +32,15 @@ private:
 	std::vector<Tower> towers;
 	std::vector<Button> buttons;
 
+	Graphics * m_pGraphics;
+
 
 public:
 
 	// Constructs the class the first time (only called once)
-	TowerDefense();
+	TowerDefense(Graphics * pGraphics);
 	// Initializes the map, sets up path and side bar menu
-	void mapinit();
+	void mapinit(Graphics * pGraphics);
 	//change a value of the map
 	void mapSet(int x, int y, char c);
 	// sets mapconst to original map state
@@ -53,6 +55,8 @@ public:
 	int processEvents(GLFWwindow * window);
 	// Updates the Game each tick, returns the game state 
 	int update(int fps);
+	// renders game
+	void render();
 	//function for testing out game functionality
 	void init_level();
 	void renderAscii();

@@ -5,7 +5,6 @@
 #include "Model.h"
 #include "Shader.h"
 #include <iostream>
-#include <stb_image.h>
 #include <vector>
 
 enum GraphcisInfo
@@ -41,7 +40,13 @@ public:
 	GLFWwindow * getWindow() const { return m_window; }
 	void setWindowSize(int nWidth, int nHeight);
 
+	void clear(float fRed, float fGreen, float fBlue, float fAlpha = 1.0f);
+
 	void drawMap();
+
+	void drawModel(Model * pModel,
+		float fScale, float fDegreesRotated, float fXShift, float fYShift,
+		float fRed = 0.0f, float fGreen = 0.0f, float fBlue = 0.0f, float fAlpha = 1.0f);
 
 	void drawRegularPolygon(int nSides,
 		float fRadius, float fDegreesRotated, float fXPos, float fYPos,
@@ -82,6 +87,13 @@ inline void Graphics::setWindowSize(int nWidth, int nHeight)
 	glViewport(0, 0, nWidth, nHeight);
 }
 
+inline void Graphics::clear(float fRed, float fGreen, float fBlue, float fAlpha)
+{
+	glClearColor(fRed, fGreen, fBlue, fAlpha);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
 inline void Graphics::drawMap()
 {
 	for (int i = 0; i < m_mapElements.size(); ++i)
@@ -109,6 +121,25 @@ inline void Graphics::drawMap()
 	
 }
 
+inline void Graphics::drawModel(Model* pModel,
+	float fScale, float fDegreesRotated, float fXShift, float fYShift,
+	float fRed, float fGreen, float fBlue, float fAlpha)
+{
+	Shader * pShader;
+	if (pModel->hasColor() && pModel->hasTexture())
+		pShader = m_pColorTextureShader;
+	else if (pModel->hasTexture())
+		pShader = m_pTextureShader;
+	else if (pModel->hasColor())
+		pShader = m_pColorShader;
+	else
+		pShader = m_pPlainShader;
+
+	pShader->use();
+	pShader->setUniform("Color", fRed, fGreen, fBlue, fAlpha);
+
+}
+
 
 inline void Graphics::drawRegularPolygon(int nSides, 
 	float fRadius, float fDegreesRotated, float fXPos, float fYPos,
@@ -121,7 +152,10 @@ inline void Graphics::drawRegularPolygon(int nSides,
 		fYPos = m_nMapHeight - fYPos - 1;
 
 	glm::mat4 posTransform;
-	posTransform = glm::translate(posTransform, glm::vec3(fXPos + 0.5f, fYPos + 0.5f, 0.0f));
+	if(fRadius <= 0.5)
+		posTransform = glm::translate(posTransform, glm::vec3(fXPos + 0.5f, fYPos + 0.5f, 0.0f));
+	else
+		posTransform = glm::translate(posTransform, glm::vec3(fXPos + fRadius, fYPos + fRadius, 0.0f));
 	posTransform = glm::rotate(posTransform, glm::radians(fDegreesRotated), glm::vec3(0.0f, 0.0f, 1.0f));
 	posTransform = glm::scale(posTransform, glm::vec3(fRadius, fRadius, 0.0f));
 
@@ -135,7 +169,6 @@ inline void Graphics::drawRegularPolygon(int nSides,
 
 	m_regularPolygons[nSides]->render();
 }
-
 
 inline void Graphics::drawText(const std::string & strText, const Font & font,
 	float fHeight, float fWidth, float fDegreesRotated, float fXPos, float fYPos, 

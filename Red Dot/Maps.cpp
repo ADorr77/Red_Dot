@@ -7,6 +7,7 @@ Maps::Maps()
 
 void Maps::init_map(int mapnum)
 {
+
 	for (int j = 0; j < 25; ++j) {
 		for (int i = 0; i < 15; ++i) {
 			if (mapnum == 1) {

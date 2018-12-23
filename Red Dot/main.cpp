@@ -24,11 +24,15 @@ typedef std::chrono::high_resolution_clock Clock;
 int main()
 {
 	// initialize Game window and renderer
-	Render renderer = Render();
-	GLFWwindow * window = renderer.get_window();
+	//Render renderer = Render();
+	//GLFWwindow * window = renderer.get_window();
+
+	Graphics * pGraphics = new Graphics(800, 800);
+
+	GLFWwindow * window = pGraphics->getWindow();
 
 	int state = 0; // change this for now to switch between modes
-	TowerDefense td;
+	TowerDefense * td = new TowerDefense(pGraphics);
 	Dungeon dungeon = Dungeon(1);
 	bool dungeon_creator = true;
 	bool td_creator = true;
@@ -51,14 +55,13 @@ int main()
 		processInput(window);
 		
 		// render
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		pGraphics->clear(0.0f, 0.0f, 0.0f);
 
 		switch (state)
 		{
 		case 0:
 			for (td_creator; td_creator; td_creator = false) {
-				renderer.init(td);
+				//renderer.init(*td);
 			}
 			if (counter == 0) {
 				/*system("cls");
@@ -66,15 +69,16 @@ int main()
 				counter = 30;
 			}
 			else { --counter; }
-			state = td.update(fps);
+			state = td->update(fps);
 			if (state) { SoundEngine->play2D("Dungeon.mp3", true); }
-			if (!state) { state = td.processEvents(window); }
-			renderer.render(td);
+			if (!state) { state = td->processEvents(window); }
+			td->render();
+			//renderer.render(*td);
 			break;
 		case 1:
 			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
-				dungeon.createMonsters(td.thru());
-				renderer.init(dungeon);
+				dungeon.createMonsters(td->thru());
+				//renderer.init(dungeon);
 			}
 			system("cls");
 			std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
@@ -93,11 +97,11 @@ int main()
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
 				SoundEngine->play2D("Sounds/you_lose.mp3", false);
-				renderer.render(dungeon);
+				//renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 				glfwSetWindowShouldClose(window, true);
 			}
-			renderer.render(dungeon);
+			//renderer.render(dungeon);
 			break;
 		}
 

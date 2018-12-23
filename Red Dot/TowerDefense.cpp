@@ -5,7 +5,7 @@
 
 irrklang::ISoundEngine *SoundEngineTD = irrklang::createIrrKlangDevice();
 
-TowerDefense::TowerDefense() {
+TowerDefense::TowerDefense(Graphics * pGraphics) {
 	money = 1500;
 	level = 0;
 	through = 0;
@@ -16,6 +16,7 @@ TowerDefense::TowerDefense() {
 	button_state = 0;
 	mouse_cooldown = 0;
 	print = 0;
+	m_pGraphics = pGraphics;
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 3; j < 5; ++j) {
@@ -25,7 +26,18 @@ TowerDefense::TowerDefense() {
 			create_button(i, j, s);
 		}
 	}
-	
+
+	std::vector<std::vector<int>> vciMap(width, std::vector<int>(height, 0));
+	for (int x = 0; x < vciMap.size(); ++x)
+	{
+		for (int y = 0; y < vciMap[0].size(); ++y)
+		{
+			vciMap[x][y] = m.get_map_value(x, y);
+		}
+	}
+
+	pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
+	pGraphics->loadMap(vciMap, ' ', "Resources/dirt.png", true);
 }
 
 
@@ -169,6 +181,16 @@ int TowerDefense::update(int fps)
 	if (through && state == 2) { return 1; }
 	return 0;
 }
+
+void TowerDefense::render()
+{
+	m_pGraphics->drawMap();
+	m_pGraphics->drawRegularPolygon(4.0f, 2.5f, 0.0f, 0.0f, 19.0f,
+		0.5f, 0.5f, 0.5f);
+	m_pGraphics->drawRegularPolygon(4.0f, 2.5f, 0.0f, 0.0f, 24.0f,
+		0.5f, 0.5f, 0.5f);
+}
+
 
 void TowerDefense::init_level()
 {
@@ -416,14 +438,18 @@ int TowerDefense::get_map_value(int x, int y)
 	return -1;
 }
 
-void TowerDefense::mapinit() {
+void TowerDefense::mapinit(Graphics * pGraphics) 
+{
+	std::vector<std::vector<int>> vciMap(25, std::vector<int>(15, 0));
+
 	for (int i = 0; i < 15; i++) {
 		//set up blank map
 		for (int j = 0; j < 25; j++) {
 			map[j][i] = m.get_map_value(j, i);
+			vciMap[j][i] = map[j][i];
 		}
 	}
-
+	pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
 }
 
 void TowerDefense::mapSet(int x, int y, char c)
