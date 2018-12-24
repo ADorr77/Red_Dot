@@ -8,6 +8,7 @@
 #include "Hero.h"
 #include <array>
 #include "Includes.h"
+#include "Graphics.h"
 #include <iostream>
 
 class Dungeon
@@ -19,9 +20,13 @@ private:
 	Hero hero;
 	std::vector<Bolt> bolts;
 
+	Graphics * m_pGraphics;
+
 public:
 	// Constructs the class the first time (only called once)
-	Dungeon(int level);
+	Dungeon(int level, Graphics * pGraphics);
+	// load the map to the graphics class
+	void loadMap();
 	void createMonsters(int number_of_monsters);
 	// Resets the class for the next level (call before returning different state other than paused)
 	void reset();
@@ -29,6 +34,8 @@ public:
 	int processInput(GLFWwindow* window, int fps);
 	// Updates the Game each tick, returns the game state 
 	int update(int fps);
+	// Renders the Game each frame
+	void render();
 
 	// get functions
 	const auto& get_map() const { return map; }

@@ -41,7 +41,7 @@ public:
 	// Constructs the class the first time (only called once)
 	TowerDefense(Graphics * pGraphics);
 	// Initializes the map, sets up path and side bar menu
-	void mapinit(Graphics * pGraphics);
+	void mapinit();
 	//change a value of the map
 	void mapSet(int x, int y, char c);
 	// sets mapconst to original map state

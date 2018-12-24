@@ -2,9 +2,11 @@
 #include<chrono>
 #include<thread>
 
-Dungeon::Dungeon(int level)
+Dungeon::Dungeon(int level, Graphics * pGraphics)
 {
 	hero = Hero(level, map.size());
+	
+
 	for (int x = 0; x < map.size(); x++)
 	{
 		for (int y = 0; y < map[0].size(); y++)
@@ -20,8 +22,32 @@ Dungeon::Dungeon(int level)
 			map[x][y] = 1;
 		}
 	}
-	
+	m_pGraphics = pGraphics;
 }
+
+void Dungeon::loadMap()
+{
+	m_pGraphics->clearMap();
+	std::vector<std::vector<int>> vciMap(map.size(), std::vector<int>(map[0].size(), 0));
+	
+	for (int x = 0; x < map.size(); x++)
+	{
+		for (int y = 0; y < map[0].size(); y++)
+		{
+			vciMap[x][y] = map[x][y];
+		}
+	}
+
+	std::vector<float> vcfMapElement = {
+		0.1, 0.1,
+		1.0, 0.0,
+		1.0, 1.0,
+		0.0, 1.0
+	};
+	std::vector<unsigned int> vciElementIndices = { 0,1,2,0,2,3 };
+	m_pGraphics->loadMap(vciMap, 0, vcfMapElement, vciElementIndices, 0, 0, 1);
+}
+
 
 void Dungeon::createMonsters(int num) {
 	double speed = 0.11;
@@ -34,6 +60,7 @@ void Dungeon::createMonsters(int num) {
 		speed += 0.025;
 	}
 }
+
 int Dungeon::processInput(GLFWwindow* window, int fps) {
 	static int count = 0;
 	static int reload = 0;
@@ -146,3 +173,9 @@ int Dungeon::update(int fps) {
 
 	return 0;
 }
+
+void Dungeon::render()
+{
+	m_pGraphics->drawMap();
+}
+

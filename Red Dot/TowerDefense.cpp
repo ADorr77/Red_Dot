@@ -17,6 +17,7 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 	mouse_cooldown = 0;
 	print = 0;
 	m_pGraphics = pGraphics;
+	m_pFont = new Font("Fonts/SmallFonts.bff");
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 3; j < 5; ++j) {
@@ -26,13 +27,19 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 			create_button(i, j, s);
 		}
 	}
+}
 
-	std::vector<std::vector<int>> vciMap(width, std::vector<int>(height, 0));
-	for (int x = 0; x < vciMap.size(); ++x)
-	{
-		for (int y = 0; y < vciMap[0].size(); ++y)
-		{
-			vciMap[x][y] = m.get_map_value(x, y);
+void TowerDefense::mapinit()
+{
+	m_pGraphics->clearMap();
+
+	std::vector<std::vector<int>> vciMap(25, std::vector<int>(15, 0));
+
+	for (int i = 0; i < 15; i++) {
+		//set up blank map
+		for (int j = 0; j < 25; j++) {
+			
+			vciMap[j][i] = m.get_map_value(j, i);;
 		}
 	}
 
@@ -44,13 +51,10 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 	};
 	std::vector<unsigned int> vciElementIndices = { 0,1,2,0,2,3 };
 
-	pGraphics->loadMap(vciMap, -37, vcfMapElement, vciElementIndices, 0, 0.5f, 0, true);
+	m_pGraphics->loadMap(vciMap, -37, vcfMapElement, vciElementIndices, 0, 0.5f, 0, true);
 	//pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
-	pGraphics->loadMap(vciMap, ' ', "Resources/dirt.png", true);
-
-	m_pFont = new Font("Fonts/SmallFonts.bff");
+	m_pGraphics->loadMap(vciMap, ' ', "Resources/dirt.png", true);
 }
-
 
 void TowerDefense::reset()
 {
@@ -505,20 +509,6 @@ int TowerDefense::get_map_value(int x, int y)
 		return m.get_map_value(x, y);
 	}
 	return -1;
-}
-
-void TowerDefense::mapinit(Graphics * pGraphics) 
-{
-	std::vector<std::vector<int>> vciMap(25, std::vector<int>(15, 0));
-
-	for (int i = 0; i < 15; i++) {
-		//set up blank map
-		for (int j = 0; j < 25; j++) {
-			map[j][i] = m.get_map_value(j, i);
-			vciMap[j][i] = map[j][i];
-		}
-	}
-	pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
 }
 
 void TowerDefense::mapSet(int x, int y, char c)

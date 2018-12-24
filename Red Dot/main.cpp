@@ -33,7 +33,7 @@ int main()
 
 	int state = 0; // change this for now to switch between modes
 	TowerDefense * td = new TowerDefense(pGraphics);
-	Dungeon dungeon = Dungeon(1);
+	Dungeon dungeon = Dungeon(1, pGraphics);
 	bool dungeon_creator = true;
 	bool td_creator = true;
 	
@@ -61,7 +61,7 @@ int main()
 		{
 		case 0:
 			for (td_creator; td_creator; td_creator = false) {
-				//renderer.init(*td);
+				td->mapinit();
 			}
 			if (counter == 0) {
 				/*system("cls");
@@ -78,6 +78,7 @@ int main()
 		case 1:
 			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
 				dungeon.createMonsters(td->thru());
+				dungeon.loadMap();
 				//renderer.init(dungeon);
 			}
 			system("cls");
@@ -97,10 +98,12 @@ int main()
 			if (u == 2) {
 				std::cout << "You died. Game Over." << std::endl;
 				SoundEngine->play2D("Sounds/you_lose.mp3", false);
+				dungeon.render();
 				//renderer.render(dungeon);
 				std::this_thread::sleep_for(std::chrono::milliseconds(1500));
 				glfwSetWindowShouldClose(window, true);
 			}
+			dungeon.render();
 			//renderer.render(dungeon);
 			break;
 		}
