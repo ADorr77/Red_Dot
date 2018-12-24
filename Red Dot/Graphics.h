@@ -53,7 +53,7 @@ public:
 		float fRed = 0.0f, float fGreen = 0.0f, float fBlue = 0.0f, float fAlpha = 1.0f);
 
 	void drawText(const std::string & strText, const Font & font,
-		float fHeight, float fWidth, float fDegreesRotated, float fXPos, float fYPos,
+		float fXPos, float fYPos, float fWidth, float fHeight, float fDegreesRotated,
 		float fRed = 0.0f, float fGreen = 0.0f, float fBlue = 0.0f, float fAlpha = 1.0f);
 	
 	static unsigned int getTexture(const std::string & strTexture,
@@ -183,7 +183,7 @@ inline void Graphics::drawRegularPolygon(int nSides,
 }
 
 inline void Graphics::drawText(const std::string & strText, const Font & font,
-	float fHeight, float fWidth, float fDegreesRotated, float fXPos, float fYPos, 
+	float fXPos, float fYPos, float fWidth, float fHeight, float fDegreesRotated,
 	float fRed, float fGreen, float fBlue, float fAlpha)
 {
 	m_pTextShader->use();

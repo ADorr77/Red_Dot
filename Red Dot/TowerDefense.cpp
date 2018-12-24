@@ -36,7 +36,16 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 		}
 	}
 
-	pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
+	std::vector<float> vcfMapElement = {
+		0.1, 0.1,
+		0.9, 0.1,
+		0.9, 0.9,
+		0.1, 0.9
+	};
+	std::vector<unsigned int> vciElementIndices = { 0,1,2,0,2,3 };
+
+	pGraphics->loadMap(vciMap, -37, vcfMapElement, vciElementIndices, 0, 0.5f, 0, true);
+	//pGraphics->loadMap(vciMap, -37, "Resources/grass.png", true);
 	pGraphics->loadMap(vciMap, ' ', "Resources/dirt.png", true);
 
 	m_pFont = new Font("Fonts/SmallFonts.bff");
@@ -243,7 +252,11 @@ void TowerDefense::render()
 		tower.render(m_pGraphics);
 	}
 
-	
+	m_pGraphics->drawText("Money", *m_pFont, 15.5, 16.5, 4, 2, 0, 1, 0, 1);
+	m_pGraphics->drawText(std::to_string(money), *m_pFont, 15.5, 18.5, 4, 2, 0, 1, 0, 1);
+
+	m_pGraphics->drawText("Level", *m_pFont, 15.5, 21.5, 4, 2, 0, 1, 0, 1);
+	m_pGraphics->drawText(std::to_string(level), *m_pFont, 16.5, 23.5, 2, 2, 0, 1, 0, 1);
 
 }
 
