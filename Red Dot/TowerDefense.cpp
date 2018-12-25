@@ -17,7 +17,7 @@ TowerDefense::TowerDefense(Graphics * pGraphics) {
 	mouse_cooldown = 0;
 	print = 0;
 	m_pGraphics = pGraphics;
-	m_pFont = new Font("Fonts/SmallFonts.bff");
+	m_pFont = new Font("Fonts/TimesNewRoman.bff");
 	
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 3; j < 5; ++j) {
@@ -261,6 +261,12 @@ void TowerDefense::render()
 
 	m_pGraphics->drawText("Level", *m_pFont, 15.5, 21.5, 4, 2, 0, 1, 0, 1);
 	m_pGraphics->drawText(std::to_string(level), *m_pFont, 16.5, 23.5, 2, 2, 0, 1, 0, 1);
+
+	m_pGraphics->drawText("Basic", *m_pFont, 5.5, 17.5, 4, 2, 0, 0, 0, 1);
+	m_pGraphics->drawText("Ranged", *m_pFont, 5.5, 22.5, 4, 2, 0, 0, 0, 1);
+	m_pGraphics->drawText("Machine", *m_pFont, 10.5, 17.5, 4, 2, 0, 0, 0, 1);
+	m_pGraphics->drawText("Slow", *m_pFont, 10.5, 22.5, 4, 2, 0, 0, 0, 1);
+
 
 }
 
