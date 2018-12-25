@@ -32,6 +32,13 @@ Hero::Hero(double level, int mapSize) {
 void Hero::update() {
 }
 
+void Hero::render(Graphics * pGraphics)
+{
+	pGraphics->drawRegularPolygon(30, 0.3f, 0.0f, xPos, yPos, 0.0f, 1.0f, 0.0f);
+	pGraphics->drawLoadingBar(xPos, yPos - 0.2, 1.0f, 0.15f, health / maxHealth);
+}
+
+
 void Hero::move(int x, int y) {
 	// x and y are just trackers to check "wasd" moves 
 	if (x && y) {

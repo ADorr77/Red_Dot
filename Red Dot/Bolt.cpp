@@ -17,6 +17,12 @@ void Bolt::move()
 	yPos += yVel;
 }
 
+void Bolt::render(Graphics* pGraphics)
+{
+	pGraphics->drawRegularPolygon(30, 0.3f, 0.0f, xPos, yPos, 1.0f, 0.0f, 1.0f);
+}
+
+
 int Bolt::check_hit(double x, double y) {
 	if (abs(xPos - x) < hitbox_d && abs(yPos - y) < hitbox_d) {
 		return 1;

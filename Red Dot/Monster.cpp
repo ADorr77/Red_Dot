@@ -22,6 +22,13 @@ Monster::Monster(int mapSize, double vel) {
 	Vel = vel;
 	exp = 10;
 }
+
+void Monster::render(Graphics* pGraphics)
+{
+	pGraphics->drawRegularPolygon(30, 0.3f, 0.0f, xPos, yPos, 1.0f, 0.0f, 0.0f);
+}
+
+
 void Monster::take_damage(double attack) {
 	health -= attack;
 }

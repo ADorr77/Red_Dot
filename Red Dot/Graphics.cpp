@@ -68,6 +68,20 @@ Graphics::Graphics(int nWidth, int nHeight)
 		m_regularPolygons.push_back(new Model(vcfVertices, vciIndices));
 		vcfVertices.clear();
 	}
+
+	std::vector<float> vcfSquarePoints = {
+		0.0f, 0.0f,		
+		1.0f, 0.0f,		
+		1.0f, 1.0f,		
+		0.0f, 1.0f,		
+	};
+
+	std::vector<unsigned int> puiSquareIndices = {  
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
+	};
+
+	m_pSquareModel = new Model(vcfSquarePoints, vciIndices);
 }
 
 void Graphics::loadMap(const std::vector<std::vector<int>> & vciMap, int idMapElement,

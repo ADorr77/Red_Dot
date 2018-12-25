@@ -177,5 +177,14 @@ int Dungeon::update(int fps) {
 void Dungeon::render()
 {
 	m_pGraphics->drawMap();
+	hero.render(m_pGraphics);
+	for (Monster monster : monsters)
+	{
+		monster.render(m_pGraphics);
+	}
+	for (Bolt bolt : bolts)
+	{
+		bolt.render(m_pGraphics);
+	}
 }
 

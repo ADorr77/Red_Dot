@@ -28,6 +28,7 @@ int main()
 	//GLFWwindow * window = renderer.get_window();
 
 	Graphics * pGraphics = new Graphics(800, 800);
+	Font * font = new Font("Fonts/SmallFonts.bff");
 
 	GLFWwindow * window = pGraphics->getWindow();
 
@@ -42,6 +43,10 @@ int main()
 	auto end = start;
 	int fps = 60; // change the render speed here (frames per second)
 	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
+	std::string strFPSText;
+	double dBegin = glfwGetTime(), dDone = 0;
+	double dElapsed = 0;
+	int frameCounter = 0;
 	
 	// play theme_music
 	SoundEngine->play2D("theme_music.mp3", true); 
@@ -56,7 +61,6 @@ int main()
 		
 		// render
 		pGraphics->clear(0.0f, 0.0f, 0.0f);
-
 		switch (state)
 		{
 		case 0:
@@ -77,13 +81,14 @@ int main()
 			break;
 		case 1:
 			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
-				dungeon.createMonsters(td->thru());
+				//dungeon.createMonsters(td->thru());
+				dungeon.createMonsters(1);
 				dungeon.loadMap();
 				//renderer.init(dungeon);
 			}
-			system("cls");
-			std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
-			std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
+			//system("cls");
+			//std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
+			//std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
 			int p = dungeon.processInput(window, fps);
 			int u = dungeon.update(fps);
 			if (p == 0 || u == 0) {
@@ -108,6 +113,7 @@ int main()
 			break;
 		}
 
+		//pGraphics->drawText(strFPSText, *font, 0, 2, 6, 2, 0, 1, 0, 1);
 		// swap buffer to show screen
 		glfwSwapBuffers(window);
 
@@ -115,6 +121,17 @@ int main()
 		end = Clock::now();
 		duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 		std::this_thread::sleep_for(std::chrono::nanoseconds(period - duration));
+		/*if (frameCounter == 30)
+		{
+			dDone = glfwGetTime();
+			dElapsed = dDone - dBegin;
+			strFPSText = "FPS: ";
+			strFPSText += std::to_string(int(30.0 / dElapsed));
+			dBegin = glfwGetTime();
+			frameCounter = 0;
+		}
+		frameCounter++;*/
+		
 	}
 
 	glfwTerminate();

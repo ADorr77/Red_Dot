@@ -55,6 +55,9 @@ public:
 	void drawText(const std::string & strText, const Font & font,
 		float fXPos, float fYPos, float fWidth, float fHeight, float fDegreesRotated,
 		float fRed = 0.0f, float fGreen = 0.0f, float fBlue = 0.0f, float fAlpha = 1.0f);
+
+	void drawLoadingBar(float fXPos, float fYPos, float fWidth, float fHeight, float fPercentFull, 
+		float fRed = 0.0f, float fGreen = 1.0f, float fBlue = 0.0f, float fAlpha = 1.0f);
 	
 	static unsigned int getTexture(const std::string & strTexture,
 		int iBorderCondition = GL_REPEAT, int iFilterParam = GL_NEAREST);
@@ -78,6 +81,8 @@ private:
 	Shader * m_pTextureShader;
 	Shader * m_pColorTextureShader;
 	Shader * m_pTextShader;
+
+	Model * m_pSquareModel;
 };
 
 inline void Graphics::setWindowSize(int nWidth, int nHeight)
@@ -222,6 +227,24 @@ inline void Graphics::drawText(const std::string & strText, const Font & font,
 	}
 }
 
+
+inline void Graphics::drawLoadingBar(float fXPos, float fYPos, float fWidth, float fHeight, 
+	float fPercentFull, float fRed, float fGreen, float fBlue, float fAlpha)
+{
+	m_pPlainShader->use();
+	m_pPlainShader->setUniform("Color", fRed, fGreen, fBlue, fAlpha);
+
+	if (m_bMapFliped)
+		fYPos = m_nMapHeight - fYPos - 1;
+
+	glm::mat4 posTransform;
+	posTransform = glm::translate(posTransform, glm::vec3(fXPos, fYPos, 0.0f));
+	posTransform = glm::scale(posTransform, glm::vec3(fWidth * fPercentFull, fHeight, 0.0f));
+
+	m_pPlainShader->setUniform("posTransform", posTransform);
+
+	m_pSquareModel->render();
+}
 
 
 inline unsigned int Graphics::getTexture(const std::string & strTexture, 

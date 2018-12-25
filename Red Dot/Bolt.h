@@ -2,6 +2,7 @@
 
 #ifndef BOLT_H
 #define BOLT_H
+#include "Graphics.h"
 
 // Generic Dungeon Crawler Enemy
 class Bolt
@@ -18,6 +19,8 @@ public:
 	Bolt(double d, double v, double xv, double yv, double xp, double yp);
 	// update method
 	void move();
+	// render method
+	void render(Graphics * pGraphics);
 
 	// get Functions
 	double get_damage() const { return damage; }

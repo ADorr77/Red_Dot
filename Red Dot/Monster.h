@@ -2,6 +2,7 @@
 
 #ifndef MONSTER_H
 #define MONSTER_H
+#include "Graphics.h"
 
 // Generic Dungeon Crawler Enemy
 class Monster
@@ -20,7 +21,8 @@ public:
 	Monster(int mapSize, double vel);
 	// update method
 	void update();
-
+	// render method
+	void render(Graphics * pGraphics);
 	// get Functions
 	double get_damage() const { return damage; }
 	double get_health() const { return health; }

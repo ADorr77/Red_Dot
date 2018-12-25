@@ -4,6 +4,7 @@
 #define HERO_H
 #include<vector>
 #include"Bolt.h"
+#include "Graphics.h"
 
 class Hero
 {
@@ -24,7 +25,8 @@ public:
 	Hero(double level, int mapSize);
 	// update method
 	void update();
-
+	// render
+	void render(Graphics * pGraphics);
 	// getters
 	double get_health() const { return health; }
 	double get_maxHealth() const { return health; }
