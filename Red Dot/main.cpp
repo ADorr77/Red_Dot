@@ -81,8 +81,7 @@ int main()
 			break;
 		case 1:
 			for (dungeon_creator; dungeon_creator; dungeon_creator = false) {
-				//dungeon.createMonsters(td->thru());
-				dungeon.createMonsters(1);
+				dungeon.createMonsters(td->thru());
 				dungeon.loadMap();
 				//renderer.init(dungeon);
 			}
