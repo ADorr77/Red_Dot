@@ -5,6 +5,7 @@
 #include<vector>
 #include"Bolt.h"
 #include "Graphics.h"
+#include "Model.h"
 
 class Hero
 {
@@ -18,6 +19,11 @@ private:
 	double xDir, yDir;
 	int weapon;
 	double damage;
+	float m_dMeleRange;
+	float m_dMeleAngle;
+	float m_dHeroRadius;
+
+	Model * m_pSwordSwing;
 
 public:
 	// Hero constructor (pass in whatever you decide)
@@ -27,6 +33,7 @@ public:
 	void update();
 	// render
 	void render(Graphics * pGraphics);
+	void renderAttack(Graphics * pGraphics);
 	// getters
 	double get_health() const { return health; }
 	double get_maxHealth() const { return health; }

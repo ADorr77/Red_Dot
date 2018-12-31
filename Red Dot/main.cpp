@@ -21,6 +21,11 @@ void processInput(GLFWwindow * window);
 
 typedef std::chrono::high_resolution_clock Clock;
 
+inline void sleep(double dSleepTime)
+{
+	std::this_thread::sleep_for(std::chrono::nanoseconds(int(dSleepTime * 1.0e9)));
+}
+
 int main()
 {
 	// initialize Game window and renderer
@@ -28,7 +33,6 @@ int main()
 	//GLFWwindow * window = renderer.get_window();
 
 	Graphics * pGraphics = new Graphics(800, 800);
-	Font * font = new Font("Fonts/SmallFonts.bff");
 
 	GLFWwindow * window = pGraphics->getWindow();
 
@@ -39,11 +43,14 @@ int main()
 	bool td_creator = true;
 	
 	// initialize timer variables
-	auto start = Clock::now();
-	auto end = start;
-	int fps = 60; // change the render speed here (frames per second)
-	__int64 duration, period = __int64((1.0 / fps) * 1000000000);
-	std::string strFPSText;
+	double dStartTime = glfwGetTime();
+	double dEndTime = glfwGetTime();
+	const int nFPS = 60;
+	const double dPeriod = 1.0 / nFPS;
+	double duration = 0;
+
+	// variables for the FPS Monitor
+	std::string strFPSText = "";
 	double dBegin = glfwGetTime(), dDone = 0;
 	double dElapsed = 0;
 	int frameCounter = 0;
@@ -54,7 +61,8 @@ int main()
 	while (!glfwWindowShouldClose(window)) 
 	{
 		// start timer
-		start = Clock::now();
+		dStartTime = glfwGetTime();
+
 		// input
 		glfwPollEvents();
 		processInput(window);
@@ -67,15 +75,21 @@ int main()
 			for (td_creator; td_creator; td_creator = false) {
 				td->mapinit();
 			}
-			if (counter == 0) {
-				/*system("cls");
-				std::cout << "Money: " << td.get_money() << "\t\t Got through:" << td.get_thru();*/
-				counter = 30;
+
+			state = td->update(nFPS);
+			try
+			{
+				if (!state) { state = td->processEvents(window); }
 			}
-			else { --counter; }
-			state = td->update(fps);
-			if (state) { SoundEngine->play2D("Dungeon.mp3", true); }
-			if (!state) { state = td->processEvents(window); }
+			catch (int e)
+			{
+				std::cout << "An exception occured. Exception Nr. " << e << std::endl;
+				while (true);
+				return -1;
+			}
+			
+			//if (state) { SoundEngine->play2D("Dungeon.mp3", true); }
+			
 			td->render();
 			//renderer.render(*td);
 			break;
@@ -88,8 +102,8 @@ int main()
 			//system("cls");
 			//std::cout << "Health: " << dungeon.get_hero().get_health() << std::endl;
 			//std::cout << "Weapon: " << (dungeon.get_hero().get_weapon() == 0 ? "Magic Missile" : "Sword") << std::endl;
-			int p = dungeon.processInput(window, fps);
-			int u = dungeon.update(fps);
+			int p = dungeon.processInput(window, nFPS);
+			int u = dungeon.update(nFPS);
 			if (p == 0 || u == 0) {
 				std::cout << "You've completed the level!" << std::endl;
 				state = 0;
@@ -112,15 +126,15 @@ int main()
 			break;
 		}
 
-		//pGraphics->drawText(strFPSText, *font, 0, 2, 6, 2, 0, 1, 0, 1);
+		
 		// swap buffer to show screen
 		glfwSwapBuffers(window);
 
-		// stop timer and sleep
-		end = Clock::now();
-		duration = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
-		std::this_thread::sleep_for(std::chrono::nanoseconds(period - duration));
-		/*if (frameCounter == 30)
+		dEndTime = glfwGetTime();
+		
+		sleep(dPeriod - (dEndTime - dStartTime));
+
+		if (frameCounter == 30)
 		{
 			dDone = glfwGetTime();
 			dElapsed = dDone - dBegin;
@@ -128,8 +142,9 @@ int main()
 			strFPSText += std::to_string(int(30.0 / dElapsed));
 			dBegin = glfwGetTime();
 			frameCounter = 0;
+			glfwSetWindowTitle(window, strFPSText.c_str());
 		}
-		frameCounter++;*/
+		frameCounter++;
 		
 	}
 

@@ -114,6 +114,11 @@ int Dungeon::processInput(GLFWwindow* window, int fps) {
 			bolts.emplace_back(hero.ranged_attack());
 		}
 	}
+	// todo change this to a percent
+	if ((reload - (3 * fps / 16) > count) && hero.get_weapon())
+	{
+		hero.renderAttack(m_pGraphics);
+	}
 	++count;
 	return 1;
 }

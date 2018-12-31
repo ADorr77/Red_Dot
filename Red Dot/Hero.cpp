@@ -2,7 +2,6 @@
 #include"Hero.h"
 #include<cmath>
 #include"Dungeon.h"
-#include<iostream>
 
 Hero::Hero()
 {
@@ -15,6 +14,18 @@ Hero::Hero()
 	Vel = 5;
 	weapon = 0;
 	damage = 2;
+	m_dMeleRange = 1.5;
+	m_dMeleAngle = 3.14159265 / 6;
+	m_dHeroRadius = 0.3;
+
+	std::vector<float> vcfPoints = {
+		m_dHeroRadius,							0.0f,
+		(m_dMeleRange * cos(m_dMeleAngle)),		(m_dMeleRange * sin(m_dMeleAngle)),
+		(m_dMeleRange),							0.0f,
+		(m_dMeleRange * cos(m_dMeleAngle)),		0.0f - (m_dMeleRange * sin(m_dMeleAngle))
+	};
+	std::vector<unsigned int> vciIndices = { 0, 1, 2, 0, 2, 3 };
+	m_pSwordSwing = new Model(vcfPoints, vciIndices);
 }
 
 Hero::Hero(double level, int mapSize) {
@@ -27,6 +38,19 @@ Hero::Hero(double level, int mapSize) {
 	Vel = 0.3;
 	weapon = 0;
 	damage = 2 + (level * 0.1);
+
+	m_dMeleRange = 1.5;
+	m_dMeleAngle = 3.14159265 / 6;
+	m_dHeroRadius = 0.3;
+
+	std::vector<float> vcfPoints = {
+		m_dHeroRadius,							0.0f,
+		(m_dMeleRange * cos(m_dMeleAngle)),		(m_dMeleRange * sin(m_dMeleAngle)),
+		(m_dMeleRange),							0.0f,
+		(m_dMeleRange * cos(m_dMeleAngle)),		0.0f - (m_dMeleRange * sin(m_dMeleAngle))
+	};
+	std::vector<unsigned int> vciIndices = { 0, 1, 2, 0, 2, 3 };
+	m_pSwordSwing = new Model(vcfPoints, vciIndices);
 }
 
 void Hero::update() {
@@ -34,10 +58,17 @@ void Hero::update() {
 
 void Hero::render(Graphics * pGraphics)
 {
-	pGraphics->drawRegularPolygon(30, 0.3f, 0.0f, xPos, yPos, 0.0f, 1.0f, 0.0f);
+	pGraphics->drawRegularPolygon(30, m_dHeroRadius, 0.0f, xPos, yPos, 0.0f, 1.0f, 0.0f);
 	pGraphics->drawLoadingBar(xPos, yPos - 0.2, 1.0f, 0.15f, health / maxHealth);
 }
 
+void Hero::renderAttack(Graphics* pGraphics)
+{
+	double dAngle = (atan(yDir / xDir) * 180.0) / 3.14159265;
+	if (xDir < 0)
+		dAngle += 180.0;
+	pGraphics->drawModel(m_pSwordSwing, 1.0, dAngle, xPos + 0.5f, yPos + 0.5f, 1.0f, 1.0f, 1.0f);
+}
 
 void Hero::move(int x, int y) {
 	// x and y are just trackers to check "wasd" moves 
@@ -59,13 +90,12 @@ void Hero::set_direction(double x, double y) {
 }
 
 double Hero::melee_attack(double x, double y) {
-	double range = 1.5;
 	// Distance to monster
 	double distM = sqrt(pow(x - xPos, 2) + pow(y - yPos, 2));
-	if (distM <= range) {
+	if (distM <= m_dMeleRange) {
 		double angle_M = atan((y - yPos) / (x - xPos));	// Monster angle
 		double angle_C = atan(yDir / xDir);	// Cursor angle
-		if (angle_C - (3.14159265 / 6) < angle_M && angle_C + (3.1415926535 / 6) > angle_M) {
+		if (angle_C - (m_dMeleAngle) < angle_M && angle_C + (m_dMeleAngle) > angle_M) {
 			return 5;
 		}
 	}
